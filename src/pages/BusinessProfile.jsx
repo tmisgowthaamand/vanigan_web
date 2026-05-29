@@ -276,7 +276,7 @@ const BusinessProfile = () => {
 
                                 <div className="space-y-3">
                                     <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 pl-2">Your Phone (Optional)</label>
-                                    <input type="text" value={phone} readOnly placeholder="e.g. 9876543210" className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl p-5 text-sm font-bold text-slate-400 outline-none cursor-not-allowed" title="System uses registered phone for verification" />
+                                    <input type="text" value={phone || ''} readOnly placeholder="e.g. 9876543210" className="w-full bg-slate-50/50 border border-slate-200 rounded-2xl p-5 text-sm font-bold text-slate-400 outline-none cursor-not-allowed" title="System uses registered phone for verification" />
                                 </div>
 
                                 <button type="button" className="w-full bg-slate-900 text-white p-6 rounded-2xl font-black text-xs uppercase tracking-[0.4em] hover:bg-rose-600 transition-all shadow-2xl shadow-slate-900/20 active:scale-95">
