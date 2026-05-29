@@ -97,6 +97,11 @@ const BusinessList = () => {
         if (categoryFromUrl) {
             setSelectedCategory(categoryFromUrl);
         }
+        const searchFromUrl = searchParams.get('search');
+        if (searchFromUrl) {
+            setSearchTerm(searchFromUrl);
+            setFinalizedSearch(searchFromUrl);
+        }
     }, [searchParams]);
 
     const handleCategorySelect = (cat) => {

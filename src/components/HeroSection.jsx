@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+    const [query, setQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        if (e) e.preventDefault();
+        if (query.trim()) {
+            navigate(`/business-list?search=${encodeURIComponent(query.trim())}&category=All%20Categories`);
+        }
+    };
+
     return (
         <section className="relative w-full min-h-[70vh] md:min-h-[85vh] flex flex-col items-center justify-center overflow-hidden">
             {/* Background Image - Using a more robust background handling */}
@@ -38,22 +49,30 @@ const HeroSection = () => {
                     </p>
 
                     {/* Highly Responsive Search Bar */}
-                    <div className="w-full max-w-3xl mx-auto relative group px-2 sm:px-0">
+                    <form
+                        onSubmit={handleSearch}
+                        className="w-full max-w-3xl mx-auto relative group px-2 sm:px-0"
+                    >
                         <div className="absolute -inset-1 bg-primary/20 blur-2xl group-hover:bg-primary/30 transition-all rounded-full" />
                         <div className="relative bg-white rounded-2xl sm:rounded-full p-2 flex flex-col sm:flex-row items-center shadow-2xl transition-transform hover:scale-[1.01]">
                             <div className="w-full flex-1 flex items-center px-6 py-2 sm:py-0">
                                 <Search className="text-slate-400 mr-4 shrink-0" size={20} />
                                 <input
                                     type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
                                     placeholder="Search name, service or keyword..."
                                     className="w-full bg-transparent border-none focus:outline-none text-slate-800 font-bold text-sm md:text-base placeholder:text-slate-400 h-10 md:h-12"
                                 />
                             </div>
-                            <button className="w-full sm:w-auto bg-[#FF3D4D] text-white px-10 py-4 rounded-xl sm:rounded-full font-black text-sm md:text-base shadow-xl hover:bg-[#E63946] active:scale-95 transition-all">
+                            <button
+                                type="submit"
+                                className="w-full sm:w-auto bg-[#FF3D4D] text-white px-10 py-4 rounded-xl sm:rounded-full font-black text-sm md:text-base shadow-xl hover:bg-[#E63946] active:scale-95 transition-all"
+                            >
                                 Search Now
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
