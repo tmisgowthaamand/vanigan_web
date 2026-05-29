@@ -113,13 +113,18 @@ const Home = () => {
                         <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto font-medium">Download the Vanigan AI app to manage your listings, respond to inquiries, and track your business growth from anywhere.</p>
 
                         <div className="flex justify-center">
-                            <button className="bg-white text-slate-900 px-8 py-4 rounded-2xl font-black flex items-center gap-4 hover:bg-slate-50 transition-all shadow-xl">
-                                <Smartphone size={24} className="text-primary" />
-                                <div className="text-left leading-none">
-                                    <p className="text-[10px] uppercase font-bold text-slate-400 mb-1">Get it on</p>
-                                    <p className="text-xl">Google Play</p>
-                                </div>
-                            </button>
+                            <a
+                                href="https://play.google.com/store/apps/details?id=io.vanigan.ai&pcampaignid=web_share"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="transition-all hover:scale-110 active:scale-95"
+                            >
+                                <img
+                                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                                    alt="Get it on Google Play"
+                                    className="h-20 w-auto"
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>
