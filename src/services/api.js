@@ -121,15 +121,14 @@ export const businessService = {
     // Get category-wise statistics
     getStats: async () => {
         try {
-            // Fetching a larger limit to calculate accurate counts if a dedicated stats endpoint doesn't exist
-            // Or better, if the backend supports it, use a specialized endpoint
-            const response = await api.get('/api/public/businesses?limit=100000');
-            const list = response.data.businesses || [];
-            const counts = list.reduce((acc, biz) => {
-                acc[biz.category] = (acc[biz.category] || 0) + 1;
-                return acc;
-            }, {});
-            return { total: list.length, categories: counts };
+            // NEVER fetch 100,000 records in one go. It crashes the server.
+            // We just fetch 1 record to get the 'total' count from pagination metadata.
+            const response = await api.get('/api/public/businesses?limit=1');
+            const total = response.data.total || 0;
+
+            // If the backend doesn't provide a category breakdown, we return the total.
+            // In a production app, you should have a dedicated /stats endpoint.
+            return { total, categories: {} };
         } catch (error) {
             console.error('Error fetching stats:', error);
             return { total: 0, categories: {} };
