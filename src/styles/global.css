@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #FF3D4D;
+    --color-dark: #0F172A;
+    --color-bg-light: #F8FAFC;
+}
+
+@layer base {
+    :root {
+        --primary: #FF3D4D;
+        --dark: #0F172A;
+        --gray-light: #F3F4F6;
+    }
+
+    body {
+        @apply bg-white text-slate-900 overflow-x-hidden w-full scroll-smooth;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@layer components {
+    .container-custom {
+        @apply max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16;
+    }
+
+    /* Specific Screenshot Components */
+    .category-card {
+        @apply bg-white p-8 rounded-xl border border-slate-100 flex flex-col items-center justify-center text-center transition-all hover:shadow-lg hover:border-primary/20;
+    }
+
+    .business-card-original {
+        @apply bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all;
+    }
+
+    .btn-primary {
+        @apply bg-[#FF3D4D] text-white px-6 py-2 rounded-lg font-bold transition-transform active:scale-95;
+    }
+
+    .section-title-original {
+        @apply text-3xl font-black text-slate-900 text-center mb-4;
+    }
+
+    .section-subtitle-original {
+        @apply text-slate-500 text-center mb-12;
+    }
+}
