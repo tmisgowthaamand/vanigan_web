@@ -74,13 +74,13 @@ const Footer = () => {
                         <div className="space-y-4">
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">We are in Play Store</p>
                             <div className="flex flex-col gap-3">
-                                <a href="#" className="flex items-center gap-3 bg-black border border-white/10 px-4 py-2 rounded-xl hover:border-rose-600/50 transition-all">
-                                    <div className="w-6 h-6 bg-rose-600 rounded flex items-center justify-center text-white">
+                                <a href="https://play.google.com/store/apps/details?id=io.vanigan.ai&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 bg-black border border-white/10 px-4 py-2 rounded-xl hover:border-rose-600/50 transition-all group">
+                                    <div className="w-6 h-6 bg-rose-600 rounded flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                                         <Smartphone size={14} />
                                     </div>
                                     <span className="text-[10px] font-black tracking-widest uppercase">Google Play</span>
                                 </a>
-                                <a href="#" className="flex items-center gap-3 bg-black border border-white/10 px-4 py-2 rounded-xl hover:border-rose-600/50 transition-all">
+                                <a href="#" className="flex items-center gap-3 bg-black border border-white/10 px-4 py-2 rounded-xl hover:border-blue-600/50 transition-all group opacity-50 cursor-not-allowed">
                                     <div className="w-6 h-6 bg-slate-700 rounded flex items-center justify-center text-white">
                                         <Smartphone size={14} />
                                     </div>

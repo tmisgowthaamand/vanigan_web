@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, LayoutGrid, Plus, User, Phone } from 'lucide-react';
+import { Menu, X, ChevronDown, LayoutGrid, Plus, User, Phone, Smartphone } from 'lucide-react';
 import { businessService } from '../services/api';
 
 const Navbar = ({ dark = false }) => {
@@ -133,6 +133,17 @@ const Navbar = ({ dark = false }) => {
                         ))}
                         <NavLink to="/my-business" className={({ isActive }) => `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`}>My Business</NavLink>
                         <NavLink to="/contact" className={({ isActive }) => `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`}>Contact</NavLink>
+
+                        <a
+                            href="https://play.google.com/store/apps/details?id=io.vanigan.ai&pcampaignid=web_share"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 bg-slate-900 text-white px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-rose-600 transition-all shadow-lg active:scale-95 group"
+                        >
+                            <Smartphone size={16} className="group-hover:rotate-12 transition-transform" />
+                            Download App
+                        </a>
+
                         <Link to="/add-business" className="shrink-0">
                             <button className="bg-rose-600 text-white px-8 py-3 rounded-2xl text-[13px] font-black uppercase tracking-widest shadow-xl shadow-rose-600/20 hover:bg-rose-500 hover:shadow-rose-600/30 transition-all active:scale-95 flex items-center gap-2 whitespace-nowrap">
                                 <Plus size={16} /> Register Business
