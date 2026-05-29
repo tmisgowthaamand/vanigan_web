@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PhoneCall, MapPin, Smartphone } from 'lucide-react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaXTwitter, FaInstagram, FaYoutube } from 'react-icons/fa6';
 
 const Footer = () => {
     return (
@@ -65,9 +65,20 @@ const Footer = () => {
                     <div>
                         <h4 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8 border-b border-rose-600/30 pb-4 inline-block">Our Social Circle</h4>
                         <div className="flex gap-4 mb-10">
-                            {[FaFacebookF, FaTwitter, FaInstagram, FaYoutube].map((Icon, i) => (
-                                <a key={i} href="#" className="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-white/10">
-                                    <Icon size={16} />
+                            {[
+                                { Icon: FaFacebookF, url: 'https://www.facebook.com/vanigan.org' },
+                                { Icon: FaXTwitter, url: 'https://x.com/vaniganconnect?lang=ar-x-fm' },
+                                { Icon: FaInstagram, url: 'https://www.instagram.com/tnvs2020' },
+                                { Icon: FaYoutube, url: 'https://www.youtube.com/channel/UCGGPiZyq4RAOEeohzYhfmfg' }
+                            ].map((social, i) => (
+                                <a
+                                    key={i}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center text-slate-400 hover:bg-rose-600 hover:text-white transition-all border border-white/10 group"
+                                >
+                                    <social.Icon size={16} className="group-hover:scale-110 transition-transform" />
                                 </a>
                             ))}
                         </div>
