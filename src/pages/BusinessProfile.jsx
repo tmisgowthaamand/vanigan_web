@@ -14,11 +14,15 @@ const BusinessProfile = () => {
     const [business, setBusiness] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [sharing, setSharing] = useState(false);
     const [rating, setRating] = useState(0);
 
     const handleShare = async () => {
+        if (sharing) return;
+
         try {
             if (navigator.share) {
+                setSharing(true);
                 await navigator.share({
                     title: business?.name || 'Vanigan Business',
                     text: `Check out ${business?.name} on Vanigan!`,
@@ -29,11 +33,26 @@ const BusinessProfile = () => {
                 alert('Profile link copied to clipboard!');
             }
         } catch (err) {
-            console.error('Error sharing:', err);
+            if (err.name !== 'AbortError') {
+                console.error('Error sharing:', err);
+            }
+        } finally {
+            setSharing(false);
         }
     };
 
-    const cleanPhone = (p) => p ? p.replace(/\s+/g, '').replace(/[^\d+]/g, '') : '';
+    const getWhatsAppLink = (p) => {
+        if (!p) return '#';
+        let clean = p.replace(/\D/g, '');
+        if (clean.length === 10) clean = '91' + clean;
+        return `https://wa.me/${clean}`;
+    };
+
+    const getTelLink = (p) => {
+        if (!p) return '#';
+        const clean = p.replace(/[^\d+]/g, '');
+        return `tel:${clean}`;
+    };
 
     useEffect(() => {
         const fetchBusiness = async () => {
@@ -93,25 +112,25 @@ const BusinessProfile = () => {
 
     return (
         <main className="bg-slate-50/30 min-h-screen pb-20 sm:pb-32 overflow-x-hidden">
-            {/* Navigation Header */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 mb-6 sm:mb-10 flex items-center justify-between">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl sm:rounded-2xl shadow-sm hover:text-rose-600 transition-all font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
-                >
-                    <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                    Back
-                </button>
-                <button
-                    onClick={handleShare}
-                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 hover:text-rose-600 transition-all shadow-sm border border-slate-50 group"
-                >
-                    <Share2 size={18} className="group-hover:scale-110 transition-transform" />
-                </button>
-            </div>
+            {/* Main Content Hub */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 mb-12 sm:mb-16">
+                {/* Unified Navigation Row */}
+                <div className="flex items-center justify-between mb-6 sm:mb-8">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl sm:rounded-2xl shadow-sm hover:text-rose-600 transition-all font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
+                    >
+                        <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                        Back
+                    </button>
+                    <button
+                        onClick={handleShare}
+                        className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 hover:text-rose-600 transition-all shadow-sm border border-slate-50 group"
+                    >
+                        <Share2 size={18} className="group-hover:scale-110 transition-transform" />
+                    </button>
+                </div>
 
-            {/* Profile Frame Center Hub */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16">
                 <div className="bg-white rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.03)] overflow-hidden">
                     {/* Hero Banner with Auto-Alignment */}
                     <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-slate-100 border-b border-slate-100">
@@ -171,10 +190,10 @@ const BusinessProfile = () => {
 
                             {/* CTA Action Buttons */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-wrap gap-3 sm:gap-4 pb-4">
-                                <a href={`https://wa.me/${cleanPhone(phone)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#0f172a] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg hover:-translate-y-1">
+                                <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#0f172a] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg hover:-translate-y-1">
                                     <MessageCircle size={18} /> WhatsApp
                                 </a>
-                                <a href={`tel:${cleanPhone(phone)}`} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-rose-400 hover:text-rose-600 transition-all shadow-sm hover:-translate-y-1">
+                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-rose-400 hover:text-rose-600 transition-all shadow-sm hover:-translate-y-1">
                                     <Phone size={18} /> Call
                                 </a>
                                 <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-blue-400 hover:text-blue-600 transition-all shadow-sm hover:-translate-y-1">
@@ -192,18 +211,18 @@ const BusinessProfile = () => {
                 {/* Main Content Area */}
                 <div className="lg:col-span-8 space-y-8 sm:space-y-12">
                     {/* About Section */}
-                    <section className="bg-white p-8 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             About <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
-                        <p className="text-slate-500 font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg">
+                        <p className="text-slate-600 font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] break-words">
                             {description || `${name} is an established destination for ${category} in ${district}. We offer professional services tailored to community needs with a focus on quality and consistency.`}
                         </p>
                     </section>
 
                     {/* Services Grid - Dynamic auto-alignment */}
                     {(services && services.length > 0) && (
-                        <section className="bg-white p-8 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Services & Pricing <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
@@ -226,7 +245,7 @@ const BusinessProfile = () => {
 
                     {/* Gallery Hub */}
                     {(galleryImages && galleryImages.length > 0) && (
-                        <section className="bg-white p-8 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Gallery ({galleryImages.length}) <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
@@ -246,7 +265,7 @@ const BusinessProfile = () => {
                     )}
 
                     {/* Review Form - Responsive layout */}
-                    <section className="bg-white p-8 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             Reviews <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
@@ -288,7 +307,8 @@ const BusinessProfile = () => {
                                     </div>
                                     <div>
                                         <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Phone</p>
-                                        <p className="text-sm font-black text-slate-900 tracking-widest">{phone}</p>
+                                        <p className="text-sm font-black text-slate-900 tracking-widest">{phone || 'N/A'}</p>
+                                        {phone2 && <p className="text-sm font-black text-slate-900 tracking-widest mt-1">{phone2}</p>}
                                     </div>
                                 </div>
                                 {email && (

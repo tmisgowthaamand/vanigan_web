@@ -178,18 +178,40 @@ const BusinessList = () => {
                             <span className="text-slate-900">{selectedCategory}</span>
                         </nav>
 
-                        <div className="flex flex-col gap-2 mb-4">
-                            <span className="text-[14px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-3">
-                                <div className="w-2 h-2 rounded-full bg-rose-600 animate-pulse shadow-[0_0_10px_rgba(225,29,72,0.5)]"></div>
-                                {new Intl.NumberFormat('en-IN').format(totalCount)} BUSINESSES FOUND IN TAMIL NADU
+                        <div className="flex flex-col gap-3 mb-4">
+                            <span className="text-[12px] sm:text-[14px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-2 sm:gap-3">
+                                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-rose-600 animate-pulse shadow-[0_0_10px_rgba(225,29,72,0.5)]"></div>
+                                {new Intl.NumberFormat('en-IN').format(totalCount)} BUSINESSES FOUND
                             </span>
-                            <h2 className="text-6xl font-black text-slate-900 tracking-tighter">{selectedCategory}</h2>
+                            <h2 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1] uppercase">{selectedCategory}</h2>
                         </div>
                     </div>
 
-                    <div className="grid lg:grid-cols-4 gap-12">
-                        {/* Sidebar Filters */}
-                        <aside className="lg:col-span-1">
+                    <div className="grid lg:grid-cols-4 gap-8 lg:gap-12">
+                        {/* Mobile Category Selector - Only visible on small screens */}
+                        <div className="lg:hidden mb-8">
+                            <div className="relative group">
+                                <div className="absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none text-rose-600">
+                                    <LayoutGrid size={18} />
+                                </div>
+                                <select
+                                    value={selectedCategory}
+                                    onChange={(e) => handleCategorySelect(e.target.value)}
+                                    className="w-full bg-[#0f172a] text-white rounded-2xl p-5 pl-14 text-[11px] font-black uppercase tracking-[0.2em] outline-none shadow-2xl appearance-none border border-slate-800 transition-all focus:border-rose-500"
+                                >
+                                    <option value="All Categories">All Categories</option>
+                                    {Object.keys(categorySubMap).map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                    <ChevronDown size={14} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Desktop Sidebar Filters - Hidden on mobile */}
+                        <aside className="hidden lg:block lg:col-span-1">
                             <div className="bg-[#0f172a] rounded-[2rem] p-6 shadow-2xl sticky top-28 border border-slate-800 overflow-hidden">
                                 <h4 className="text-sm font-black text-slate-400 mb-8 uppercase tracking-[0.2em] px-4">Categories</h4>
                                 <div className="max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
@@ -242,9 +264,9 @@ const BusinessList = () => {
                         <div className="lg:col-span-3">
                             {/* Search Bar & Dropdowns */}
                             <div className="flex flex-col gap-6 mb-12">
-                                <div className="flex gap-4">
-                                    <div className="flex-1 bg-white rounded-2xl border border-slate-100 p-4 shadow-sm flex items-center group focus-within:border-primary transition-all">
-                                        <Search className="text-slate-400 ml-4 mr-4 group-focus-within:text-primary transition-colors" size={20} />
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                    <div className="flex-1 bg-white rounded-2xl border border-slate-100 p-3 sm:p-4 shadow-sm flex items-center group focus-within:border-rose-400 transition-all">
+                                        <Search className="text-slate-400 ml-2 sm:ml-4 mr-3 sm:mr-4 group-focus-within:text-rose-600 transition-colors" size={20} />
                                         <input
                                             type="text"
                                             value={searchTerm}
@@ -256,7 +278,7 @@ const BusinessList = () => {
                                     </div>
                                     <button
                                         onClick={() => setFinalizedSearch(searchTerm)}
-                                        className="bg-slate-900 text-white px-10 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20"
+                                        className="bg-slate-900 text-white px-8 sm:px-10 py-4 sm:py-0 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20"
                                     >
                                         Search
                                     </button>
