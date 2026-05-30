@@ -52,37 +52,41 @@ export const businessService = {
         }
     },
 
-    // Search business by phone number (backwards parallel batches for speed)
+    // Robust search by phone using high-concurrency scanning
     getByPhone: async (phone, onProgress) => {
         try {
-            // First, get total count
-            const initial = await axios.get(
-                `${API_BASE_URL}/api/public/businesses?limit=1&page=1`,
-                { timeout: 60000 }
-            );
+            // First wave: Fast-track check for first page
+            const initial = await api.get('/api/public/businesses?limit=60&page=1');
             const total = initial.data.total || 0;
             if (total === 0) return [];
 
-            const batchSize = 60; // Backend max limit is 60
+            const batchSize = 60;
             const totalPages = Math.ceil(total / batchSize);
-
-            // Process in parallel waves of 10 pages at a time, searching FORWARDS (Page 1 first)
+            const concurrency = 20;
             let allMatches = [];
-            const concurrency = 10;
 
-            for (let waveStart = 1; waveStart <= totalPages; waveStart += concurrency) {
+            // Check first page results immediately
+            const firstPageMatches = (initial.data.businesses || []).filter(b => {
+                const bPhone = (b.phone || '').replace(/\D/g, '').slice(-10);
+                const bPhone2 = (b.phone2 || '').replace(/\D/g, '').slice(-10);
+                const bWhatsapp = (b.whatsappNo || '').replace(/\D/g, '').slice(-10);
+                return bPhone === phone || bPhone2 === phone || bWhatsapp === phone;
+            });
+            if (firstPageMatches.length > 0) {
+                allMatches = [...firstPageMatches];
+                // If it's on the first page, we can return immediately
+                return allMatches;
+            }
+
+            for (let waveStart = 2; waveStart <= totalPages; waveStart += concurrency) {
+                if (onProgress) onProgress(Math.min(Math.round((waveStart / totalPages) * 100), 100));
+
                 const promises = [];
                 for (let i = waveStart; i < Math.min(totalPages + 1, waveStart + concurrency); i++) {
                     promises.push(
-                        axios.get(
-                            `${API_BASE_URL}/api/public/businesses?limit=${batchSize}&page=${i}`,
-                            { timeout: 30000 }
-                        ).catch(() => ({ data: { businesses: [] } }))
+                        api.get(`/api/public/businesses?limit=${batchSize}&page=${i}`, { timeout: 15000 })
+                            .catch(() => ({ data: { businesses: [] } }))
                     );
-                }
-
-                if (onProgress) {
-                    onProgress(Math.min(Math.round((waveStart / totalPages) * 100), 100));
                 }
 
                 const results = await Promise.all(promises);
@@ -93,24 +97,15 @@ export const businessService = {
                         const bPhone2 = (b.phone2 || '').replace(/\D/g, '').slice(-10);
                         const bWhatsapp = (b.whatsappNo || '').replace(/\D/g, '').slice(-10);
                         const bLandline = (b.landline || '').replace(/\D/g, '').slice(-10);
-
-                        const isMatch = bPhone === phone || bPhone2 === phone || bWhatsapp === phone || bLandline === phone;
-
-                        // Filter out nonsense/test data like 'jhvQDJHWFQBKJ' or purely random garbage
-                        const name = b.name || '';
-                        const isNonsense = name.length > 8 && /^[A-Z]{5,}/.test(name) && !name.includes(' ');
-                        const isSpecificTest = name === 'jhvQDJHWFQBKJ' || b.listingCode === 'LIST24106';
-
-                        return isMatch && !isNonsense && !isSpecificTest;
+                        return bPhone === phone || bPhone2 === phone || bWhatsapp === phone || bLandline === phone;
                     });
-                    allMatches = [...allMatches, ...matches];
+                    if (matches.length > 0) allMatches = [...allMatches, ...matches];
                 }
 
-                // If we found matches in this wave, we can still continue to check if there are others, 
-                // but usually, if sorted by Date Desc, Page 1 has the newest.
-                // We'll collect ALL matches across ALL pages to be safe, but you could break here if you only want the most recent.
-                // For now, let's collect all to resolve the "duplicate blocking" issue.
+                if (allMatches.length > 0) break; // Return early once found
             }
+
+            if (onProgress) onProgress(100);
             return allMatches;
         } catch (error) {
             console.error('Error searching by phone:', error);
@@ -133,7 +128,26 @@ export const businessService = {
             console.error('Error fetching stats:', error);
             return { total: 0, categories: {} };
         }
-    }
+    },
+
+    // Submit a review for a business
+    submitReview: async (reviewData) => {
+        try {
+            // Standardizing the payload for the backend (aligning with targetId/reviewerName/text)
+            const response = await api.post('/api/public/reviews', {
+                targetId: reviewData.businessId,
+                targetKind: 'business',
+                reviewerName: reviewData.name,
+                rating: parseInt(reviewData.rating),
+                text: reviewData.comment,
+                phone: reviewData.phone
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            throw error;
+        }
+    },
 };
 
 export default api;

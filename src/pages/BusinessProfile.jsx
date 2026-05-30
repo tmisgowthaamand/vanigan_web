@@ -13,9 +13,43 @@ const BusinessProfile = () => {
     const navigate = useNavigate();
     const [business, setBusiness] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reviews, setReviews] = useState([]);
     const [error, setError] = useState(null);
     const [sharing, setSharing] = useState(false);
     const [rating, setRating] = useState(0);
+    const [reviewName, setReviewName] = useState('');
+    const [reviewComment, setReviewComment] = useState('');
+    const [submittingReview, setSubmittingReview] = useState(false);
+
+    const handleReviewSubmit = async (e) => {
+        if (e) e.preventDefault();
+        if (rating === 0) {
+            alert('Please select a rating');
+            return;
+        }
+        if (!reviewName.trim()) {
+            alert('Please enter your name');
+            return;
+        }
+
+        setSubmittingReview(true);
+        try {
+            await businessService.submitReview({
+                businessId: id,
+                name: reviewName,
+                rating: rating,
+                comment: reviewComment,
+            });
+            alert('Review submitted successfully!');
+            setReviewName('');
+            setRating(0);
+            setReviewComment('');
+        } catch (err) {
+            alert('Failed to submit review. Please try again.');
+        } finally {
+            setSubmittingReview(false);
+        }
+    };
 
     const handleShare = async () => {
         if (sharing) return;
@@ -60,6 +94,8 @@ const BusinessProfile = () => {
                 setLoading(true);
                 const data = await businessService.getById(id);
                 setBusiness(data);
+
+                setReviews(data.reviews || []);
             } catch (err) {
                 setError('Failed to load business details');
             } finally {
@@ -228,14 +264,24 @@ const BusinessProfile = () => {
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                 {services.map((item, idx) => (
-                                    <div key={idx} className="flex flex-col sm:flex-row gap-5 p-6 rounded-[2rem] bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
-                                        <div className="w-full sm:w-24 h-48 sm:h-24 bg-white rounded-2xl overflow-hidden border border-slate-100 shrink-0 shadow-sm">
-                                            {item.photo ? <img src={item.photo} className="w-full h-full object-cover" alt={item.name} /> : <div className="w-full h-full flex items-center justify-center text-slate-200"><LayoutGrid size={24} /></div>}
+                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-[2rem] bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
+                                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl overflow-hidden border border-slate-100 shrink-0 shadow-sm">
+                                            {item.image ? (
+                                                <img
+                                                    src={item.image}
+                                                    className="w-full h-full object-contain p-2"
+                                                    alt={item.name}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-slate-200">
+                                                    <LayoutGrid size={24} />
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="flex-1 justify-center flex flex-col">
-                                            <h4 className="font-black text-slate-900 uppercase tracking-tight mb-1 sm:mb-2">{item.name}</h4>
-                                            <p className="text-rose-600 font-black text-lg sm:text-xl">₹ {item.price}</p>
-                                            <p className="text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-widest line-clamp-2">{item.details}</p>
+                                            <h4 className="font-black text-slate-900 uppercase tracking-tight text-xs sm:text-sm mb-1">{item.name}</h4>
+                                            <p className="text-rose-600 font-black text-base sm:text-xl">₹ {item.price}</p>
+                                            <p className="text-[9px] text-slate-400 font-bold mt-1 uppercase tracking-widest line-clamp-1">{item.detail}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -272,22 +318,95 @@ const BusinessProfile = () => {
                         <div className="bg-slate-50/50 rounded-[2rem] p-6 sm:p-10 border border-slate-100 mb-10">
                             <h3 className="text-lg font-black text-slate-900 mb-2">Leave a Review</h3>
                             <p className="text-[10px] sm:text-xs font-bold text-slate-400 mb-8 uppercase tracking-widest">Share your feedback to help others.</p>
-                            <form className="space-y-6 sm:space-y-8">
+                            <form onSubmit={handleReviewSubmit} className="space-y-6 sm:space-y-8">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <input type="text" placeholder="Your Name" className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-5 text-sm font-bold shadow-sm outline-none focus:border-rose-300" />
+                                    <input
+                                        type="text"
+                                        value={reviewName}
+                                        onChange={(e) => setReviewName(e.target.value)}
+                                        placeholder="Your Name"
+                                        className="w-full bg-white border border-slate-200 rounded-xl p-4 sm:p-5 text-sm font-bold shadow-sm outline-none focus:border-rose-300"
+                                        required
+                                    />
                                     <div className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm">
                                         {[1, 2, 3, 4, 5].map(star => (
-                                            <button key={star} type="button" onClick={() => setRating(star)} className={`transition-all ${rating >= star ? 'text-amber-400' : 'text-slate-200'}`}>
-                                                <Star size={18} fill={rating >= star ? "currentColor" : "none"} strokeWidth={rating >= star ? 0 : 2} />
+                                            <button
+                                                key={star}
+                                                type="button"
+                                                onClick={() => setRating(star)}
+                                                className={`transition-all ${rating >= star ? 'text-amber-400' : 'text-slate-200'}`}
+                                            >
+                                                <Star
+                                                    size={18}
+                                                    className={rating >= star ? "fill-amber-400" : ""}
+                                                    strokeWidth={rating >= star ? 0 : 2}
+                                                />
                                             </button>
                                         ))}
+                                        <span className="text-[10px] font-black text-slate-400 uppercase ml-auto">
+                                            {rating > 0 ? `${rating} / 5` : 'Rate'}
+                                        </span>
                                     </div>
                                 </div>
-                                <textarea rows={4} placeholder="Your review..." className="w-full bg-white border border-slate-200 rounded-xl p-6 sm:p-8 text-sm font-bold shadow-sm outline-none focus:border-rose-300 resize-none" />
-                                <button type="button" className="w-full bg-slate-900 text-white p-5 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] hover:bg-rose-600 transition-all shadow-xl">
-                                    Submit Review
+                                <textarea
+                                    rows={4}
+                                    value={reviewComment}
+                                    onChange={(e) => setReviewComment(e.target.value)}
+                                    placeholder="Your review..."
+                                    className="w-full bg-white border border-slate-200 rounded-xl p-6 sm:p-8 text-sm font-bold shadow-sm outline-none focus:border-rose-300 resize-none"
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={submittingReview}
+                                    className="w-full bg-slate-900 text-white p-5 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] hover:bg-rose-600 transition-all shadow-xl disabled:opacity-50"
+                                >
+                                    {submittingReview ? 'Submitting...' : 'Submit Review'}
                                 </button>
                             </form>
+                        </div>
+
+                        {/* Recent Reviews List */}
+                        <div className="space-y-8">
+                            <div className="flex items-center justify-between pb-4 border-b border-slate-50">
+                                <h3 className="text-[10px] font-black text-rose-600 uppercase tracking-[0.3em]">Recent Feedbacks</h3>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{reviews.length} Total</span>
+                                </div>
+                            </div>
+
+                            {reviews.length > 0 ? (
+                                <div className="space-y-6">
+                                    {reviews.map((r, idx) => (
+                                        <div key={idx} className="p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-rose-600 font-black shadow-sm group-hover:scale-110 transition-transform">
+                                                        {(r.reviewerName || r.name || 'A').charAt(0).toUpperCase()}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-black text-slate-900 tracking-tight">{r.reviewerName || r.name}</p>
+                                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                            {r.createdAt ? new Date(r.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recently'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-1 bg-white px-3 py-1.5 rounded-lg border border-slate-100 shadow-sm">
+                                                    <Star size={12} className="text-amber-400 fill-amber-400" />
+                                                    <span className="text-[11px] font-black text-slate-900">{r.rating}</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-slate-600 font-medium leading-relaxed text-[15px] italic pl-2 border-l-2 border-rose-100">
+                                                "{r.text || r.comment || 'Excellent service and great experience!'}"
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="bg-slate-50/30 rounded-[2rem] border border-dashed border-slate-200 py-16 text-center">
+                                    <MessageCircle size={32} className="text-slate-300 mx-auto mb-4 opacity-50" />
+                                    <p className="text-slate-400 font-bold italic text-sm">No reviews yet. Be the first to share your thoughts!</p>
+                                </div>
+                            )}
                         </div>
                     </section>
                 </div>
