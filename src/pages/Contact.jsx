@@ -69,12 +69,21 @@ const Contact = () => {
             {/* Map Section matching screenshot placeholder */}
             <section className="container-custom pb-24">
                 <div className="aspect-[21/9] bg-slate-100 rounded-3xl overflow-hidden border border-slate-100 shadow-xl relative group">
-                    <div className="absolute inset-0 bg-slate-100 flex items-center justify-center italic text-slate-300 font-bold">
-                        Interactive Google Map Placeholder
-                    </div>
-                    <div className="absolute top-8 left-8 bg-white px-6 py-3 rounded-xl shadow-lg border border-slate-100 group-hover:bg-primary group-hover:text-white transition-all cursor-pointer">
-                        <p className="font-black text-sm">Open in Maps ↗</p>
-                    </div>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.756247493208!2d80.1260481!3d12.9234191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f0535e5d36b%3A0xe7f9b88a853e30f!2sChromepet%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1717056000000!5m2!1sen!2sin"
+                        className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700"
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                    <a
+                        href="https://www.google.com/maps/search/?api=1&query=50,+Surya+Avenue+Main+Road,+Kuruniji+Nagar+Ext,+Chrompet,+Chennai+-+600044"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-8 left-8 bg-white px-6 py-3 rounded-xl shadow-lg border border-slate-100 hover:bg-rose-600 hover:text-white transition-all cursor-pointer font-black text-sm"
+                    >
+                        Open in Maps ↗
+                    </a>
                 </div>
             </section>
         </main>

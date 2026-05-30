@@ -466,6 +466,28 @@ const BusinessProfile = () => {
                                         <p className="text-[12px] sm:text-sm font-black text-slate-900">{district}</p>
                                     </div>
                                 </div>
+
+                                {/* Interactive Map Embed */}
+                                <div className="mt-8 aspect-video rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-50 relative group">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        frameBorder="0"
+                                        style={{ border: 0 }}
+                                        src={`https://maps.google.com/maps?q=${encodeURIComponent(googleMap || `${name} ${address}`)}&output=embed`}
+                                        allowFullScreen
+                                        loading="lazy"
+                                        className="grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
+                                    ></iframe>
+                                    <a
+                                        href={googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest shadow-sm hover:bg-rose-600 hover:text-white transition-all"
+                                    >
+                                        View Large Map
+                                    </a>
+                                </div>
                             </div>
                         </section>
 
