@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
     MapPin, Phone, MessageCircle, Navigation, ChevronLeft,
-    Share2, Star, LayoutGrid, Clock, Mail, Globe,
-    AlertCircle, Loader2, Map as MapIcon, Send,
-    Video, Play, ExternalLink, Link as LinkIcon, Info
+    Share2, Star, LayoutGrid, Clock, Mail,
+    AlertCircle, Loader2, Map as MapIcon,
+    Video, ExternalLink, Link as LinkIcon
 } from 'lucide-react';
 import { businessService } from '../services/api';
 
@@ -44,7 +44,7 @@ const BusinessProfile = () => {
             setReviewName('');
             setRating(0);
             setReviewComment('');
-        } catch (err) {
+        } catch {
             alert('Failed to submit review. Please try again.');
         } finally {
             setSubmittingReview(false);
@@ -96,7 +96,7 @@ const BusinessProfile = () => {
                 setBusiness(data);
 
                 setReviews(data.reviews || []);
-            } catch (err) {
+            } catch {
                 setError('Failed to load business details');
             } finally {
                 setLoading(false);
@@ -120,7 +120,7 @@ const BusinessProfile = () => {
     if (error || !business) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
-                <div className="text-center p-8 sm:p-12 bg-white rounded-[2rem] sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-slate-100">
+                <div className="text-center p-8 sm:p-12 bg-white rounded-4xl sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-slate-100">
                     <AlertCircle size={64} className="text-[#E87722] mx-auto mb-6" />
                     <h2 className="text-2xl font-black text-slate-900 mb-2">Business Not Found</h2>
                     <p className="text-slate-500 font-bold mb-8">{error || 'The business record could not be retrieved.'}</p>
@@ -136,11 +136,11 @@ const BusinessProfile = () => {
     }
 
     const {
-        name, category, subCategory, phone, phone2, address,
-        district, landmark, assembly, pincode, email,
-        description, website, avgRating, reviewCount,
+        name, category, phone, phone2, address,
+        district, assembly, email,
+        description, avgRating, reviewCount,
         listingCode, image, coverImage, galleryImages = [],
-        services = [], fbLink, twitterLink, instaLink, googleMap, videoUrl,
+        services = [], fbLink, instaLink, googleMap, videoUrl,
         openTime, closeTime, openDays = ""
     } = business;
 
@@ -154,20 +154,20 @@ const BusinessProfile = () => {
                 <div className="flex items-center justify-between mb-6 sm:mb-8">
                     <button
                         onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl sm:rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:text-[#E87722] transition-all font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
+                        className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl sm:rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:text-[#E87722] font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
                     >
                         <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                         Back
                     </button>
                     <button
                         onClick={handleShare}
-                        className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 hover:text-[#E87722] transition-all shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-slate-50 group"
+                        className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center text-slate-400 hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-slate-50 group"
                     >
                         <Share2 size={18} className="group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
 
-                <div className="bg-white rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden">
+                <div className="bg-white rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden">
                     {/* Hero Banner with Auto-Alignment */}
                     <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-slate-100 border-b border-slate-100">
                         {coverImage ? (
@@ -183,21 +183,21 @@ const BusinessProfile = () => {
                                 <p className="mt-4 text-[9px] font-black uppercase tracking-[0.2em]">No Banner Available</p>
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                     </div>
 
                     {/* Meta Hub - Flex Column on Mobile, Row on Desktop */}
-                    <div className="px-6 sm:px-10 lg:px-16 -mt-16 sm:-mt-20 lg:-mt-24 relative z-10">
+                    <div className="px-6 sm:px-10 lg:px-16 pt-5 sm:pt-6 lg:pt-8 relative z-10">
                         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-10">
-                            <div className="flex flex-col sm:flex-row sm:items-end gap-6 sm:gap-10">
-                                <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-[1.5rem] sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+                                <div className="-mt-16 sm:-mt-20 lg:-mt-24 w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
                                     {image ? (
                                         <img src={image} alt="Logo" className="w-full h-full object-contain" />
                                     ) : (
                                         <div className="text-4xl sm:text-5xl">🏢</div>
                                     )}
                                 </div>
-                                <div className="pb-2 text-center sm:text-left">
+                                <div className="text-center sm:text-left min-w-0">
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
                                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
                                             {name}
@@ -229,10 +229,10 @@ const BusinessProfile = () => {
                                 <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#E87722] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#D36B1E] transition-all shadow-lg hover:-translate-y-1">
                                     <MessageCircle size={18} /> WhatsApp
                                 </a>
-                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] transition-all shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:-translate-y-1">
+                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                     <Phone size={18} /> Call
                                 </a>
-                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] transition-all shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:-translate-y-1">
+                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                     <Navigation size={18} /> Directions
                                 </button>
                             </div>
@@ -247,24 +247,24 @@ const BusinessProfile = () => {
                 {/* Main Content Area */}
                 <div className="lg:col-span-8 space-y-8 sm:space-y-12">
                     {/* About Section */}
-                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             About <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
-                        <p className="text-slate-600 font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] break-words">
+                        <p className="text-slate-600 font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] wrap-break-word">
                             {description || `${name} is an established destination for ${category} in ${district}. We offer professional services tailored to community needs with a focus on quality and consistency.`}
                         </p>
                     </section>
 
                     {/* Services Grid - Dynamic auto-alignment */}
                     {(services && services.length > 0) && (
-                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Services & Pricing <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                 {services.map((item, idx) => (
-                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-[2rem] bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
+                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-4xl bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
                                         <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl overflow-hidden border border-slate-100 shrink-0 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                             {item.image ? (
                                                 <img
@@ -291,13 +291,13 @@ const BusinessProfile = () => {
 
                     {/* Gallery Hub */}
                     {(galleryImages && galleryImages.length > 0) && (
-                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Gallery ({galleryImages.length}) <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                                 {galleryImages.map((img, idx) => (
-                                    <div key={idx} className="aspect-square rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden bg-slate-100 border border-slate-50 group cursor-pointer relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                    <div key={idx} className="aspect-square rounded-3xl sm:rounded-4xl overflow-hidden bg-slate-100 border border-slate-50 group cursor-pointer relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                         <img
                                             src={img.url || img}
                                             alt={`Gallery ${idx}`}
@@ -311,11 +311,11 @@ const BusinessProfile = () => {
                     )}
 
                     {/* Review Form - Responsive layout */}
-                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             Reviews <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
-                        <div className="bg-slate-50/50 rounded-[2rem] p-6 sm:p-10 border border-slate-100 mb-10">
+                        <div className="bg-slate-50/50 rounded-4xl p-6 sm:p-10 border border-slate-100 mb-10">
                             <h3 className="text-lg font-black text-slate-900 mb-2">Leave a Review</h3>
                             <p className="text-[10px] sm:text-xs font-bold text-slate-400 mb-8 uppercase tracking-widest">Share your feedback to help others.</p>
                             <form onSubmit={handleReviewSubmit} className="space-y-6 sm:space-y-8">
@@ -377,10 +377,10 @@ const BusinessProfile = () => {
                             {reviews.length > 0 ? (
                                 <div className="space-y-6">
                                     {reviews.map((r, idx) => (
-                                        <div key={idx} className="p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                        <div key={idx} className="p-8 bg-slate-50/50 rounded-4xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-[#E87722] font-black shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 group-hover:scale-110 transition-transform">
+                                                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-[#E87722] font-black shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 group-hover:scale-110">
                                                         {(r.reviewerName || r.name || 'A').charAt(0).toUpperCase()}
                                                     </div>
                                                     <div>
@@ -402,7 +402,7 @@ const BusinessProfile = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="bg-[#F9FAFB] rounded-[2rem] border border-dashed border-slate-200 py-16 text-center">
+                                <div className="bg-[#F9FAFB] rounded-4xl border border-dashed border-slate-200 py-16 text-center">
                                     <MessageCircle size={32} className="text-slate-300 mx-auto mb-4 opacity-50" />
                                     <p className="text-slate-400 font-bold italic text-sm">No reviews yet. Be the first to share your thoughts!</p>
                                 </div>
@@ -483,7 +483,7 @@ const BusinessProfile = () => {
                                         href={googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:bg-[#E87722] hover:text-white transition-all"
+                                        className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:bg-[#E87722] hover:text-white"
                                     >
                                         View Large Map
                                     </a>
@@ -536,7 +536,7 @@ const BusinessProfile = () => {
 const SocialButton = ({ icon: Icon, label, url }) => {
     if (!url) return null;
     return (
-        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 bg-white border border-slate-100 text-slate-600 rounded-xl hover:bg-slate-900 hover:text-white shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
             <Icon size={14} />
             <span className="text-[9px] font-black uppercase tracking-widest">{label}</span>
         </a>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Phone, LayoutGrid, ArrowRight, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -8,7 +7,6 @@ const BusinessCard = ({ business }) => {
     const {
         name,
         category,
-        subCategory,
         avgRating,
         address,
         phone,
@@ -27,7 +25,7 @@ const BusinessCard = ({ business }) => {
             className="bg-white rounded-[20px] border border-[#E5E7EB] overflow-hidden hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-2 hover:border-[#E87722]/30 transition-all duration-500 group flex flex-col h-full"
         >
             {/* Image */}
-            <div className="h-56 bg-gradient-to-br from-[#FFF8F0] to-[#F9FAFB] flex items-center justify-center relative overflow-hidden group-hover:bg-[#FFF8F0] transition-colors duration-500">
+            <div className="h-56 bg-linear-to-br from-[#FFF8F0] to-[#F9FAFB] flex items-center justify-center relative overflow-hidden group-hover:bg-[#FFF8F0] transition-colors duration-500">
                 {image ? (
                     <img
                         src={image}
@@ -58,7 +56,7 @@ const BusinessCard = ({ business }) => {
 
             <div className="p-6 flex-1 flex flex-col relative">
                 {/* Decorative glow on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#E87722]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#E87722]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <div className="mb-4 relative z-10">
                     <p className="text-[11px] font-bold text-[#E87722] uppercase tracking-[0.15em] mb-2">
