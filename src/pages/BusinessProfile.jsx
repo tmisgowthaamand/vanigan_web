@@ -120,7 +120,7 @@ const BusinessProfile = () => {
     if (error || !business) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
-                <div className="text-center p-8 sm:p-12 bg-white rounded-[2rem] sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-slate-100">
+                <div className="text-center p-8 sm:p-12 bg-white rounded-4xl sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-slate-100">
                     <AlertCircle size={64} className="text-rose-500 mx-auto mb-6" />
                     <h2 className="text-2xl font-black text-slate-900 mb-2">Business Not Found</h2>
                     <p className="text-slate-500 font-bold mb-8">{error || 'The business record could not be retrieved.'}</p>
@@ -167,7 +167,7 @@ const BusinessProfile = () => {
                     </button>
                 </div>
 
-                <div className="bg-white rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.03)] overflow-hidden">
+                <div className="bg-white rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.03)] overflow-hidden">
                     {/* Hero Banner with Auto-Alignment */}
                     <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-slate-100 border-b border-slate-100">
                         {coverImage ? (
@@ -183,14 +183,14 @@ const BusinessProfile = () => {
                                 <p className="mt-4 text-[9px] font-black uppercase tracking-[0.2em]">No Banner Available</p>
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                     </div>
 
                     {/* Meta Hub - Centered stacked layout */}
                     <div className="px-6 sm:px-10 lg:px-16 -mt-16 sm:-mt-20 lg:-mt-24 relative z-10">
                         <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
                             {/* Logo - centered in its box */}
-                            <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-[1.5rem] sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0">
+                            <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0">
                                 {image ? (
                                     <img src={image} alt="Logo" className="w-full h-full object-contain" />
                                 ) : (
@@ -246,24 +246,24 @@ const BusinessProfile = () => {
                 {/* Main Content Area */}
                 <div className="lg:col-span-8 space-y-8 sm:space-y-12">
                     {/* About Section */}
-                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             About <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
-                        <p className="text-slate-600 font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] break-words">
+                        <p className="text-slate-600 font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] wrap-break-word">
                             {description || `${name} is an established destination for ${category} in ${district}. We offer professional services tailored to community needs with a focus on quality and consistency.`}
                         </p>
                     </section>
 
                     {/* Services Grid - Dynamic auto-alignment */}
                     {(services && services.length > 0) && (
-                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Services & Pricing <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                 {services.map((item, idx) => (
-                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-[2rem] bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
+                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-4xl bg-slate-50/50 border border-slate-100 group transition-all hover:bg-white hover:shadow-xl">
                                         <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl overflow-hidden border border-slate-100 shrink-0 shadow-sm">
                                             {item.image ? (
                                                 <img
@@ -290,13 +290,13 @@ const BusinessProfile = () => {
 
                     {/* Gallery Hub */}
                     {(galleryImages && galleryImages.length > 0) && (
-                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                        <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                             <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Gallery ({galleryImages.length}) <div className="h-px bg-slate-100 flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                                 {galleryImages.map((img, idx) => (
-                                    <div key={idx} className="aspect-square rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden bg-slate-100 border border-slate-50 group cursor-pointer relative shadow-sm">
+                                    <div key={idx} className="aspect-square rounded-3xl sm:rounded-4xl overflow-hidden bg-slate-100 border border-slate-50 group cursor-pointer relative shadow-sm">
                                         <img
                                             src={img.url || img}
                                             alt={`Gallery ${idx}`}
@@ -310,11 +310,11 @@ const BusinessProfile = () => {
                     )}
 
                     {/* Review Form - Responsive layout */}
-                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-[2rem] sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
+                    <section className="bg-white px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-sm">
                         <h2 className="text-xl sm:text-2xl font-black text-slate-900 mb-8 uppercase tracking-tighter flex items-center gap-4">
                             Reviews <div className="h-px bg-slate-100 flex-1"></div>
                         </h2>
-                        <div className="bg-slate-50/50 rounded-[2rem] p-6 sm:p-10 border border-slate-100 mb-10">
+                        <div className="bg-slate-50/50 rounded-4xl p-6 sm:p-10 border border-slate-100 mb-10">
                             <h3 className="text-lg font-black text-slate-900 mb-2">Leave a Review</h3>
                             <p className="text-[10px] sm:text-xs font-bold text-slate-400 mb-8 uppercase tracking-widest">Share your feedback to help others.</p>
                             <form onSubmit={handleReviewSubmit} className="space-y-6 sm:space-y-8">
@@ -376,7 +376,7 @@ const BusinessProfile = () => {
                             {reviews.length > 0 ? (
                                 <div className="space-y-6">
                                     {reviews.map((r, idx) => (
-                                        <div key={idx} className="p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                        <div key={idx} className="p-8 bg-slate-50/50 rounded-4xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-rose-600 font-black shadow-sm group-hover:scale-110 transition-transform">
@@ -401,7 +401,7 @@ const BusinessProfile = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="bg-slate-50/30 rounded-[2rem] border border-dashed border-slate-200 py-16 text-center">
+                                <div className="bg-slate-50/30 rounded-4xl border border-dashed border-slate-200 py-16 text-center">
                                     <MessageCircle size={32} className="text-slate-300 mx-auto mb-4 opacity-50" />
                                     <p className="text-slate-400 font-bold italic text-sm">No reviews yet. Be the first to share your thoughts!</p>
                                 </div>
