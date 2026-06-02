@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, Utensils, Car, HeartPulse, GraduationCap, ShoppingBag, Bed, Monitor, Shield, Zap, DollarSign, Smartphone } from 'lucide-react';
+import { Truck, Utensils, Car, HeartPulse, GraduationCap, ShoppingBag, Bed, Monitor, Shield, Zap, DollarSign, ArrowUpRight } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import BusinessCard from '../components/BusinessCard';
-import SectionTitle from '../components/SectionTitle';
 
 const Home = () => {
     const categories = [
@@ -28,103 +27,121 @@ const Home = () => {
     ];
 
     return (
-        <main className="bg-white min-h-screen">
+        <main className="bg-paper min-h-screen">
             <HeroSection />
 
             {/* Browse by Category */}
-            <section className="py-24 bg-white">
-                <div className="container-custom px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter text-slate-900">Browse by <span className="text-rose-600">Category</span></h2>
-                        <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">Find the right service provider by exploring our top categories.</p>
-                        <div className="w-12 h-1 bg-rose-600 mx-auto mt-6" />
+            <section className="py-20 md:py-24">
+                <div className="container-custom">
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+                        <div>
+                            <p className="eyebrow mb-4">Explore the directory</p>
+                            <h2 className="display-head text-4xl md:text-5xl text-ink">Browse by category</h2>
+                        </div>
+                        <p className="text-ink-2 text-sm max-w-sm md:text-right">
+                            Find the right provider by exploring the categories businesses list under.
+                        </p>
                     </div>
 
-                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-line border border-line rounded-2xl overflow-hidden">
                         {categories.map((cat, i) => (
-                            <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-100 flex flex-col items-center justify-center text-center transition-all hover:shadow-2xl hover:border-rose-500/20 group cursor-pointer">
-                                <div className="w-20 h-20 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 mb-6 transition-all group-hover:bg-rose-600 group-hover:text-white group-hover:rotate-6 group-hover:shadow-xl group-hover:shadow-rose-600/20">
-                                    <cat.icon size={36} strokeWidth={1.5} />
+                            <Link
+                                key={i}
+                                to={`/business-list?category=${encodeURIComponent(cat.name)}`}
+                                className="bg-paper p-6 md:p-8 flex items-start gap-4 group transition-colors hover:bg-paper-2"
+                            >
+                                <div className="w-12 h-12 rounded-xl bg-paper-2 flex items-center justify-center text-ink-2 shrink-0 transition-colors group-hover:bg-ink group-hover:text-paper">
+                                    <cat.icon size={22} strokeWidth={1.6} />
                                 </div>
-                                <h4 className="font-black text-slate-900 mb-1 uppercase text-sm tracking-tight">{cat.name}</h4>
-                                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{cat.count}</p>
-                            </div>
+                                <div className="min-w-0">
+                                    <h4 className="font-medium text-ink text-base leading-tight group-hover:text-accent transition-colors" style={{ fontFamily: 'var(--font-display)' }}>{cat.name}</h4>
+                                    <p className="text-[12px] text-ink-3 mt-1">{cat.count}</p>
+                                </div>
+                                <ArrowUpRight size={16} className="text-ink-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                            </Link>
                         ))}
                     </div>
                 </div>
             </section>
 
             {/* Featured Businesses */}
-            <section className="py-24 bg-slate-50/50">
-                <div className="container-custom px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter text-slate-900">Featured <span className="text-rose-600">Businesses</span></h2>
-                        <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">Hand-picked verified businesses that offer premium services.</p>
-                        <div className="w-12 h-1 bg-rose-600 mx-auto mt-6" />
+            <section className="py-20 md:py-24 bg-paper-2/60 border-y border-line">
+                <div className="container-custom">
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+                        <div>
+                            <p className="eyebrow mb-4">Hand-picked</p>
+                            <h2 className="display-head text-4xl md:text-5xl text-ink">Featured businesses</h2>
+                        </div>
+                        <Link to="/business-list" className="text-[13px] font-medium text-ink hover:text-accent transition-colors inline-flex items-center gap-2">
+                            View all listings <ArrowUpRight size={16} />
+                        </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {featured.map(biz => (
                             <BusinessCard key={biz.id} business={biz} />
                         ))}
-                    </div>
-
-                    <div className="text-center">
-                        <Link to="/business-list" className="inline-flex items-center gap-3 px-10 py-4 bg-slate-900 text-white rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-rose-600 transition-all shadow-xl shadow-slate-900/10">
-                            View All Directory Listings
-                        </Link>
                     </div>
                 </div>
             </section>
 
             {/* Why Choose Vanigan */}
-            <section className="py-24">
+            <section className="py-20 md:py-24">
                 <div className="container-custom">
-                    <div className="text-center mb-20">
-                        <h2 className="text-4xl font-black mb-4">Why Choose Vanigan?</h2>
-                        <p className="text-slate-500">We are more than just a directory; we are your local growth partner.</p>
-                        <div className="w-12 h-1 bg-primary mx-auto mt-4" />
+                    <div className="mb-14 max-w-2xl">
+                        <p className="eyebrow mb-4">What you get</p>
+                        <h2 className="display-head text-4xl md:text-5xl text-ink mb-4">More than a directory</h2>
+                        <p className="text-ink-2">We are your local growth partner — built to help businesses get found and customers find them.</p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-12">
+                    <div className="grid md:grid-cols-3 gap-px bg-line border border-line rounded-2xl overflow-hidden">
                         {[
-                            { title: 'Verified Listings', icon: Shield, desc: 'Every business listed on our platform undergoes a verification process to ensure authenticity.' },
-                            { title: 'Easy to Find', icon: Zap, desc: 'Our advanced filter and search system makes it incredibly easy to find businesses in your local area.' },
-                            { title: 'Free to List', icon: DollarSign, desc: 'We support small businesses by allowing them to list their basic services absolutely free of cost.' }
+                            { num: '01', title: 'Verified listings', icon: Shield, desc: 'Every business listed undergoes a verification process to ensure authenticity.' },
+                            { num: '02', title: 'Easy to find', icon: Zap, desc: 'Our search and filter system makes it simple to find businesses in your local area.' },
+                            { num: '03', title: 'Free to list', icon: DollarSign, desc: 'We support small businesses by letting them list their basic services free of cost.' }
                         ].map((item, i) => (
-                            <div key={i} className="text-center group">
-                                <div className="w-20 h-20 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-500 mx-auto mb-8 group-hover:bg-sky-500 group-hover:text-white transition-all">
-                                    <item.icon size={36} />
+                            <div key={i} className="bg-paper p-8 md:p-10 group">
+                                <div className="flex items-center justify-between mb-8">
+                                    <div className="w-12 h-12 rounded-xl bg-paper-2 flex items-center justify-center text-ink transition-colors group-hover:bg-accent group-hover:text-white">
+                                        <item.icon size={22} strokeWidth={1.6} />
+                                    </div>
+                                    <span className="text-[13px] font-medium text-ink-3 tabular-nums">{item.num}</span>
                                 </div>
-                                <h4 className="text-2xl font-black text-slate-900 mb-4">{item.title}</h4>
-                                <p className="text-slate-500 leading-relaxed text-sm">{item.desc}</p>
+                                <h4 className="text-xl font-medium text-ink mb-3" style={{ fontFamily: 'var(--font-display)' }}>{item.title}</h4>
+                                <p className="text-ink-2 leading-relaxed text-sm">{item.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Mobile App CTA Section */}
-            <section className="py-20 mb-20">
+            {/* Mobile App CTA */}
+            <section className="pb-24">
                 <div className="container-custom">
-                    <div className="bg-[#1e293b] rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                        <h2 className="text-4xl md:text-5xl font-black mb-6">Manage Your Business On The Go</h2>
-                        <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto font-medium">Download the Vanigan AI app to manage your listings, respond to inquiries, and track your business growth from anywhere.</p>
-
-                        <div className="flex justify-center">
-                            <a
-                                href="https://play.google.com/store/apps/details?id=io.vanigan.ai&pcampaignid=web_share"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="transition-all hover:scale-110 active:scale-95"
-                            >
-                                <img
-                                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                                    alt="Get it on Google Play"
-                                    className="h-20 w-auto"
-                                />
-                            </a>
+                    <div className="bg-ink rounded-3xl px-8 py-14 md:p-16 relative overflow-hidden">
+                        <div className="absolute -top-24 -right-24 w-72 h-72 bg-accent/15 rounded-full blur-3xl" />
+                        <div className="relative grid lg:grid-cols-2 gap-10 items-center">
+                            <div>
+                                <p className="eyebrow text-paper/60 mb-5">Vanigan AI app</p>
+                                <h2 className="display-head text-3xl md:text-4xl text-paper mb-4">Manage your business on the go</h2>
+                                <p className="text-paper/60 text-base max-w-md">
+                                    Manage listings, respond to inquiries, and track your growth from anywhere.
+                                </p>
+                            </div>
+                            <div className="lg:justify-self-end">
+                                <a
+                                    href="https://play.google.com/store/apps/details?id=io.vanigan.ai&pcampaignid=web_share"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block transition-transform hover:scale-105 active:scale-95"
+                                >
+                                    <img
+                                        src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                                        alt="Get it on Google Play"
+                                        className="h-16 w-auto"
+                                    />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

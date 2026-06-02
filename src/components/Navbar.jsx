@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, LayoutGrid, Plus, User, Phone } from 'lucide-react';
+import { Menu, X, ChevronDown, LayoutGrid, Plus } from 'lucide-react';
 import { businessService } from '../services/api';
 
-const Navbar = ({ dark = false }) => {
+const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showCategories, setShowCategories] = useState(false);
     const [stats, setStats] = useState({ total: 18424, categories: {} });
@@ -38,69 +38,70 @@ const Navbar = ({ dark = false }) => {
         { name: 'Business List', path: '/business-list' },
     ];
 
-    const navBg = 'bg-white/90 backdrop-blur-md shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border-slate-100';
-    const textColor = 'text-slate-700';
-    const activeTextColor = 'text-rose-600';
+    const linkBase = "text-[13px] font-medium tracking-tight transition-colors whitespace-nowrap";
+    const linkRest = "text-ink-2 hover:text-ink";
+    const linkActive = "text-accent";
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-[2000] border-b transition-all duration-300 ${navBg}`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
+        <nav className="fixed top-0 left-0 right-0 z-[2000] border-b border-line bg-paper/85 backdrop-blur-md">
+            <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-12">
+                <div className="flex justify-between h-[72px] items-center gap-6">
                     {/* Logo */}
-                    <Link to="/" className="flex-shrink-0 flex items-center gap-4 group">
+                    <Link to="/" className="flex-shrink-0 flex items-center gap-3 group min-w-0">
                         <img
                             src="https://vanigan.org/front/images/home/tnvslogo.png"
                             alt="Vanigan Logo"
-                            className="h-10 w-auto md:h-12 transition-all group-hover:scale-105"
+                            className="h-9 w-auto md:h-10 transition-transform group-hover:scale-105"
                         />
-                        <span className="text-2xl font-black text-slate-900 tracking-tighter uppercase group-hover:text-rose-600 transition-colors">Vanigan</span>
+                        <span className="text-xl md:text-2xl font-display font-medium text-ink tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+                            Vanigan
+                        </span>
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center gap-6 xl:gap-10 ml-8">
-                        <NavLink to="/" className={({ isActive }) => `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`}>Home</NavLink>
+                    <div className="hidden lg:flex items-center gap-7 xl:gap-9">
+                        <NavLink to="/" className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkRest}`}>Home</NavLink>
 
                         {/* Categories Dropdown */}
                         <div className="relative" onMouseEnter={() => setShowCategories(true)} onMouseLeave={() => setShowCategories(false)}>
-                            <button className={`flex items-center gap-2 text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${showCategories ? 'text-rose-600' : textColor} hover:text-rose-600`}>
+                            <button className={`flex items-center gap-1.5 ${linkBase} ${showCategories ? linkActive : linkRest}`}>
                                 Categories <ChevronDown size={14} className={`transition-transform duration-300 ${showCategories ? 'rotate-180' : ''}`} />
                             </button>
 
                             {showCategories && (
-                                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[850px] animate-in fade-in slide-in-from-top-2 duration-300">
-                                    <div className="bg-white rounded-[2.5rem] shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)] border border-slate-100 overflow-hidden">
-                                        <div className="p-8 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-rose-600/20">
-                                                    <LayoutGrid size={20} />
+                                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 w-[820px] animate-in fade-in slide-in-from-top-2 duration-200">
+                                    <div className="bg-paper rounded-2xl shadow-[0_24px_60px_-20px_rgba(26,22,19,0.25)] border border-line overflow-hidden">
+                                        <div className="px-8 py-6 bg-paper-2 border-b border-line flex items-center justify-between gap-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 bg-ink rounded-xl flex items-center justify-center text-paper">
+                                                    <LayoutGrid size={18} />
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest">Premium Directory</h4>
-                                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Discover verified local businesses</p>
+                                                    <h4 className="text-sm font-semibold text-ink tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Directory categories</h4>
+                                                    <p className="text-[11px] text-ink-3 mt-0.5">Browse verified local businesses</p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-3 bg-white px-5 py-2.5 rounded-2xl border border-slate-100 shadow-sm">
-                                                <LayoutGrid size={16} className="text-rose-600" />
-                                                <span className="text-xs font-black text-rose-600 tracking-widest">{categories.length} CATEGORIES FOUND</span>
-                                            </div>
+                                            <span className="text-[11px] font-medium text-ink-2 bg-paper px-3 py-1.5 rounded-full border border-line whitespace-nowrap">
+                                                {categories.length} categories
+                                            </span>
                                         </div>
 
-                                        <div className="p-8 grid grid-cols-3 gap-x-12 gap-y-4 max-h-[480px] overflow-y-auto custom-scrollbar">
+                                        <div className="p-6 grid grid-cols-3 gap-x-8 gap-y-1 max-h-[440px] overflow-y-auto custom-scrollbar">
                                             {categories.map((cat) => (
                                                 <Link
                                                     key={cat}
                                                     to={`/business-list?category=${encodeURIComponent(cat)}`}
                                                     onClick={() => setShowCategories(false)}
-                                                    className="flex items-center justify-between group py-1.5 transition-all"
+                                                    className="flex items-center justify-between group py-2 border-b border-line/60"
                                                 >
-                                                    <span className="text-[11px] font-bold text-slate-600 group-hover:text-rose-600 transition-colors uppercase tracking-wider">{cat}</span>
-                                                    <span className="text-[10px] font-black bg-rose-600 text-white min-w-[24px] h-[20px] px-1.5 rounded-lg flex items-center justify-center shadow-lg shadow-rose-600/20 transition-all opacity-0 group-hover:opacity-100 group-hover:scale-110">
+                                                    <span className="text-[13px] text-ink-2 group-hover:text-accent transition-colors">{cat}</span>
+                                                    <span className="text-[11px] font-medium text-ink-3 tabular-nums opacity-0 group-hover:opacity-100 transition-opacity">
                                                         {new Intl.NumberFormat('en-IN').format(stats.categories[cat] || 0)}
                                                     </span>
                                                 </Link>
                                             ))}
                                         </div>
-                                        <div className="p-8 bg-slate-50/50 text-center border-t border-slate-100">
+                                        <div className="px-8 py-5 bg-paper-2 text-center border-t border-line">
                                             <Link
                                                 to="/business-list?category=All%20Categories"
                                                 onClick={() => {
@@ -109,10 +110,10 @@ const Navbar = ({ dark = false }) => {
                                                         window.location.href = '/business-list?category=All%20Categories';
                                                     }
                                                 }}
-                                                className="text-[12px] font-black text-rose-600 uppercase tracking-[0.3em] hover:tracking-[0.4em] transition-all flex items-center justify-center gap-4 group/btn"
+                                                className="text-[13px] font-medium text-ink hover:text-accent transition-colors inline-flex items-center justify-center gap-2 group/btn"
                                             >
-                                                <span>VIEW ALL PREMIUM LISTINGS</span>
-                                                <span className="text-xl transition-transform group-hover/btn:translate-x-2">→</span>
+                                                <span>View all listings</span>
+                                                <span className="transition-transform group-hover/btn:translate-x-1">&rarr;</span>
                                             </Link>
                                         </div>
                                     </div>
@@ -124,27 +125,25 @@ const Navbar = ({ dark = false }) => {
                             <NavLink
                                 key={link.path}
                                 to={link.path}
-                                className={({ isActive }) =>
-                                    `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`
-                                }
+                                className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkRest}`}
                             >
                                 {link.name}
                             </NavLink>
                         ))}
-                        <NavLink to="/my-business" className={({ isActive }) => `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`}>My Business</NavLink>
-                        <NavLink to="/contact" className={({ isActive }) => `text-[13px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${isActive ? activeTextColor : `${textColor} hover:text-rose-600`}`}>Contact</NavLink>
+                        <NavLink to="/my-business" className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkRest}`}>My Business</NavLink>
+                        <NavLink to="/contact" className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkRest}`}>Contact</NavLink>
 
                         <Link to="/add-business" className="shrink-0">
-                            <button className="bg-rose-600 text-white px-8 py-3 rounded-2xl text-[13px] font-black uppercase tracking-widest shadow-xl shadow-rose-600/20 hover:bg-rose-500 hover:shadow-rose-600/30 transition-all active:scale-95 flex items-center gap-2 whitespace-nowrap">
-                                <Plus size={16} /> Register Business
+                            <button className="bg-ink text-paper px-5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:bg-accent active:translate-y-px flex items-center gap-1.5 whitespace-nowrap">
+                                <Plus size={15} /> Register Business
                             </button>
                         </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
                     <div className="lg:hidden flex items-center">
-                        <button onClick={() => setIsOpen(!isOpen)} className={dark ? 'text-white' : 'text-slate-900'}>
-                            {isOpen ? <X size={28} /> : <Menu size={28} />}
+                        <button onClick={() => setIsOpen(!isOpen)} className="text-ink p-1" aria-label="Toggle menu">
+                            {isOpen ? <X size={26} /> : <Menu size={26} />}
                         </button>
                     </div>
                 </div>
@@ -152,17 +151,17 @@ const Navbar = ({ dark = false }) => {
 
             {/* Mobile Menu Panel */}
             {isOpen && (
-                <div className={`lg:hidden border-b animate-in slide-in-from-top-4 duration-300 ${dark ? 'bg-[#1e293b] border-slate-800' : 'bg-white border-slate-100'}`}>
-                    <div className="px-6 pt-2 pb-8 space-y-2 max-h-[80vh] overflow-y-auto">
-                        <NavLink to="/" onClick={() => setIsOpen(false)} className={({ isActive }) => `block px-4 py-4 text-sm font-black uppercase tracking-widest rounded-2xl ${isActive ? 'bg-rose-50 text-rose-600' : `${textColor}`}`}>Home</NavLink>
+                <div className="lg:hidden border-b border-line bg-paper animate-in slide-in-from-top-4 duration-300">
+                    <div className="px-5 pt-2 pb-8 space-y-1 max-h-[80vh] overflow-y-auto">
+                        <NavLink to="/" onClick={() => setIsOpen(false)} className={({ isActive }) => `block px-4 py-3.5 text-sm font-medium rounded-xl ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-2'}`}>Home</NavLink>
 
                         <div className="px-4 py-4">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">Categories</p>
-                            <div className="grid grid-cols-1 gap-2">
+                            <p className="eyebrow mb-3">Categories</p>
+                            <div className="grid grid-cols-1 gap-1">
                                 {categories.slice(0, 8).map(cat => (
-                                    <Link key={cat} to={`/business-list?category=${encodeURIComponent(cat)}`} onClick={() => setIsOpen(false)} className="text-[11px] font-bold text-slate-600 py-1 uppercase">{cat}</Link>
+                                    <Link key={cat} to={`/business-list?category=${encodeURIComponent(cat)}`} onClick={() => setIsOpen(false)} className="text-[13px] text-ink-2 py-1.5">{cat}</Link>
                                 ))}
-                                <Link to="/business-list" onClick={() => setIsOpen(false)} className="text-[11px] font-black text-rose-600 py-1 uppercase underline decoration-rose-200">View All Categories</Link>
+                                <Link to="/business-list" onClick={() => setIsOpen(false)} className="text-[13px] font-medium text-accent py-1.5">View all categories &rarr;</Link>
                             </div>
                         </div>
 
@@ -171,28 +170,21 @@ const Navbar = ({ dark = false }) => {
                                 key={link.path}
                                 to={link.path}
                                 onClick={() => setIsOpen(false)}
-                                className={({ isActive }) =>
-                                    `block px-4 py-4 text-sm font-black uppercase tracking-widest rounded-2xl transition-all ${isActive ? 'bg-rose-50 text-rose-600' : `${textColor} hover:bg-slate-50`}`
-                                }
+                                className={({ isActive }) => `block px-4 py-3.5 text-sm font-medium rounded-xl transition-all ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-2 hover:bg-paper-2'}`}
                             >
                                 {link.name}
                             </NavLink>
                         ))}
-                        <Link to="/add-business" className="block pt-4">
-                            <button className="w-full bg-rose-600 text-white py-4 rounded-2xl text-[13px] font-black uppercase tracking-wider shadow-lg">
-                                List Your Business
+                        <NavLink to="/my-business" onClick={() => setIsOpen(false)} className={({ isActive }) => `block px-4 py-3.5 text-sm font-medium rounded-xl transition-all ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-2 hover:bg-paper-2'}`}>My Business</NavLink>
+                        <NavLink to="/contact" onClick={() => setIsOpen(false)} className={({ isActive }) => `block px-4 py-3.5 text-sm font-medium rounded-xl transition-all ${isActive ? 'bg-accent-soft text-accent' : 'text-ink-2 hover:bg-paper-2'}`}>Contact</NavLink>
+                        <Link to="/add-business" onClick={() => setIsOpen(false)} className="block pt-4">
+                            <button className="w-full bg-ink text-paper py-3.5 rounded-full text-[13px] font-semibold">
+                                Register Business
                             </button>
                         </Link>
                     </div>
                 </div>
             )}
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-                .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-            `}} />
         </nav>
     );
 };

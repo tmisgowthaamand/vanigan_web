@@ -1,49 +1,172 @@
+/* Hallmark · macrostructure: Editorial Index · genre: editorial-utilitarian
+ * tone: trustworthy / editorial · anchor hue: warm-red (Vanigan brand)
+ * pre-emit critique: P5 H4 E4 S4 R5 V4
+ * NOTE: visual shell only — routing, data, search & API logic untouched.
+ */
 @import "tailwindcss";
 
 @theme {
+    /* ---- Paper & ink (warm editorial neutrals) ---- */
+    --color-paper: #FBFAF8;
+    --color-paper-2: #F4F1EA;
+    --color-paper-3: #ECE7DD;
+    --color-ink: #1A1613;
+    --color-ink-2: #57514A;
+    --color-ink-3: #8B8278;
+
+    /* ---- Brand accent (kept, used sparingly) ---- */
+    --color-accent: #FF3D4D;
+    --color-accent-deep: #D72638;
+    --color-accent-soft: #FCE8E9;
+
+    /* ---- Lines & support ---- */
+    --color-line: #E6E0D6;
+    --color-line-strong: #D6CEC1;
+    --color-rating: #E0A100;
+    --color-verify: #2F8F6B;
+
+    /* ---- Back-compat aliases (old code referencing primary) ---- */
     --color-primary: #FF3D4D;
-    --color-dark: #0F172A;
-    --color-bg-light: #F8FAFC;
+    --color-dark: #1A1613;
+    --color-bg-light: #FBFAF8;
+
+    /* ---- Type families ---- */
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "Inter", ui-monospace, monospace;
+
+    /* ---- Editorial type scale ---- */
+    --text-display: clamp(3rem, 7vw, 6rem);
+    --text-display-s: clamp(2.25rem, 5vw, 4rem);
+    --text-4xl: clamp(1.9rem, 3.5vw, 2.75rem);
+
+    /* ---- Motion ---- */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast: 180ms;
+    --dur-mid: 320ms;
 }
 
 @layer base {
     :root {
+        /* legacy variables some pages still read */
         --primary: #FF3D4D;
-        --dark: #0F172A;
-        --gray-light: #F3F4F6;
+        --dark: #1A1613;
+        --gray-light: #F4F1EA;
+    }
+
+    html,
+    body {
+        overflow-x: clip;
+        width: 100%;
     }
 
     body {
-        @apply bg-white text-slate-900 overflow-x-hidden w-full scroll-smooth;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--color-paper);
+        color: var(--color-ink);
+        font-family: var(--font-body);
+        scroll-behavior: smooth;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
+        overflow-wrap: anywhere;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-display);
+        font-optical-sizing: auto;
+        overflow-wrap: anywhere;
+        min-width: 0;
+    }
+
+    ::selection {
+        background: var(--color-accent);
+        color: #fff;
     }
 }
 
 @layer components {
     .container-custom {
-        @apply max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16;
+        @apply max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-12;
     }
 
-    /* Specific Screenshot Components */
+    /* Editorial eyebrow label */
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-ink-3;
+    }
+
+    /* Display heading */
+    .display-head {
+        font-family: var(--font-display);
+        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+    }
+
+    /* Primary button — editorial, restrained */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 bg-ink text-paper px-6 py-3 rounded-full text-sm font-semibold transition-all;
+        transition-timing-function: var(--ease-out);
+    }
+
+    .btn-primary:hover {
+        @apply bg-accent;
+    }
+
+    .btn-primary:active {
+        transform: translateY(1px);
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center gap-2 bg-accent text-white px-6 py-3 rounded-full text-sm font-semibold transition-all;
+        transition-timing-function: var(--ease-out);
+    }
+
+    .btn-accent:hover {
+        @apply bg-accent-deep;
+    }
+
+    .btn-accent:active {
+        transform: translateY(1px);
+    }
+
+    /* Hairline rule */
+    .rule {
+        @apply h-px w-full bg-line;
+    }
+
+    /* legacy aliases kept so un-redesigned pages don't break */
     .category-card {
-        @apply bg-white p-8 rounded-xl border border-slate-100 flex flex-col items-center justify-center text-center transition-all hover:shadow-lg hover:border-primary/20;
+        @apply bg-paper p-8 rounded-2xl border border-line flex flex-col items-center justify-center text-center transition-all hover:border-accent/30;
     }
 
     .business-card-original {
-        @apply bg-white rounded-xl border border-slate-100 overflow-hidden hover:shadow-xl transition-all;
-    }
-
-    .btn-primary {
-        @apply bg-[#FF3D4D] text-white px-6 py-2 rounded-lg font-bold transition-transform active:scale-95;
+        @apply bg-paper rounded-2xl border border-line overflow-hidden transition-all;
     }
 
     .section-title-original {
-        @apply text-3xl font-black text-slate-900 text-center mb-4;
+        @apply text-3xl font-medium text-ink text-center mb-4;
+        font-family: var(--font-display);
     }
 
     .section-subtitle-original {
-        @apply text-slate-500 text-center mb-12;
+        @apply text-ink-2 text-center mb-12;
+    }
+}
+
+@layer utilities {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--color-line-strong);
+        border-radius: 10px;
     }
 }

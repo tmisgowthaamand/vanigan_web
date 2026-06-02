@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, LayoutGrid, Plus } from 'lucide-react';
+import { MapPin, Phone, LayoutGrid, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const BusinessCard = ({ business }) => {
@@ -10,75 +10,70 @@ const BusinessCard = ({ business }) => {
         category,
         subCategory,
         avgRating,
-        description,
         address,
         phone,
-        email,
         district,
         assembly,
         image
     } = business;
 
     return (
-        <div className="bg-white rounded-3xl border border-slate-100 overflow-hidden hover:shadow-2xl transition-all group flex flex-col h-full">
-            {/* Top Image Placeholder */}
-            <div className="h-56 bg-slate-50 flex items-center justify-center border-b border-slate-100 relative overflow-hidden">
+        <Link
+            to={`/business/${id}`}
+            className="group bg-paper rounded-2xl border border-line overflow-hidden hover:border-line-strong transition-all flex flex-col h-full hover:shadow-[0_18px_40px_-22px_rgba(26,22,19,0.3)]"
+        >
+            {/* Image */}
+            <div className="h-48 bg-paper-2 flex items-center justify-center border-b border-line relative overflow-hidden">
                 {image ? (
                     <img
                         src={image}
                         alt={name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                 ) : (
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm text-slate-300">
-                        <LayoutGrid size={32} strokeWidth={1.5} />
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-ink-3">
+                        <LayoutGrid size={28} strokeWidth={1.5} />
                     </div>
                 )}
                 {avgRating > 0 && (
-                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-xl border border-slate-100">
-                        <span className="text-amber-500 font-bold text-xs">★</span>
-                        <span className="text-[10px] font-black text-slate-900 uppercase tracking-tighter">{avgRating.toFixed(1)}</span>
+                    <div className="absolute top-3 right-3 bg-paper/95 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1 border border-line">
+                        <span className="text-rating text-xs">★</span>
+                        <span className="text-[11px] font-semibold text-ink tabular-nums">{avgRating.toFixed(1)}</span>
                     </div>
                 )}
             </div>
 
-            <div className="p-8 flex-1 flex flex-col">
-                <div className="mb-6">
-                    <h3 className="text-xl font-black text-slate-900 group-hover:text-rose-600 transition-colors mb-2 line-clamp-1 uppercase tracking-tight">
-                        {name}
-                    </h3>
-                    <p className="text-[11px] font-black text-rose-600 uppercase tracking-[0.2em] flex items-center gap-2">
-                        {category} {subCategory && `• ${subCategory}`}
-                    </p>
-                </div>
+            <div className="p-6 flex-1 flex flex-col">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent mb-2">
+                    {category}{subCategory && ` · ${subCategory}`}
+                </p>
+                <h3 className="text-xl font-medium text-ink group-hover:text-accent transition-colors mb-4 line-clamp-2 leading-snug" style={{ fontFamily: 'var(--font-display)' }}>
+                    {name}
+                </h3>
 
-                <div className="space-y-4 mb-8">
+                <div className="space-y-2.5 mb-6 mt-auto">
                     {(address || district) && (
-                        <div className="flex items-start gap-3 text-slate-400 group/item">
-                            <MapPin size={16} className="text-slate-300 group-hover/item:text-rose-500 transition-colors mt-0.5" />
-                            <p className="text-[12px] font-bold leading-tight line-clamp-1">
+                        <div className="flex items-start gap-2.5 text-ink-2">
+                            <MapPin size={15} className="text-ink-3 mt-0.5 shrink-0" />
+                            <p className="text-[13px] leading-snug line-clamp-1">
                                 {[...new Set([assembly || address, district])].filter(Boolean).join(', ')}
                             </p>
                         </div>
                     )}
                     {phone && (
-                        <div className="flex items-center gap-3 text-slate-400 group/item">
-                            <Phone size={16} className="text-slate-300 group-hover/item:text-emerald-500 transition-colors" />
-                            <p className="text-[12px] font-black tracking-widest">{phone}</p>
+                        <div className="flex items-center gap-2.5 text-ink-2">
+                            <Phone size={15} className="text-ink-3 shrink-0" />
+                            <p className="text-[13px] tabular-nums">{phone}</p>
                         </div>
                     )}
                 </div>
 
-                <div className="pt-6 border-t border-slate-50 mt-auto">
-                    <Link
-                        to={`/business/${id}`}
-                        className="text-[11px] font-black text-slate-900 uppercase tracking-[0.3em] flex items-center gap-3 group-hover:gap-5 transition-all hover:text-rose-600"
-                    >
-                        View Profile <Plus size={14} className="text-rose-600" />
-                    </Link>
+                <div className="pt-4 border-t border-line flex items-center justify-between">
+                    <span className="text-[13px] font-medium text-ink group-hover:text-accent transition-colors">View profile</span>
+                    <ArrowUpRight size={18} className="text-ink-3 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
