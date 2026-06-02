@@ -192,7 +192,7 @@ const BusinessProfile = () => {
                             {/* Left: logo + name block */}
                             <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7 min-w-0">
                                 {/* Logo */}
-                                <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 bg-white rounded-3xl sm:rounded-[2rem] p-3 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
+                                <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 bg-white rounded-3xl sm:rounded-4xl p-3 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
                                     {image ? (
                                         <img src={image} alt="Logo" className="w-full h-full object-contain" />
                                     ) : (
