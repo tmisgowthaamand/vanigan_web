@@ -441,7 +441,7 @@ const AddBusiness = () => {
 
               {/* Banner Upload */}
               <div className="space-y-4">
-                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Cover / Banner Photo <span className="text-[10px] text-faint normal-case font-bold ml-2">(Optional)</span></label>
+                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Cover / Banner Photo <span className="text-[10px] text-faint normal-case font-medium ml-2">(Optional)</span></label>
                 <div onClick={() => document.getElementById('banner-upload').click()} className="border-2 border-dashed border-rule rounded-[32px] text-center hover:border-kinpaku hover:bg-graphite transition-all cursor-pointer group relative overflow-hidden min-h-[200px] flex items-center justify-center bg-lacquer-deep">
                   <input type="file" id="banner-upload" hidden accept="image/*" onChange={(e) => { const file = e.target.files[0]; if (file) setFormData(p => ({ ...p, bannerImage: file })); }} />
                   {formData.bannerImage ? (
@@ -458,7 +458,7 @@ const AddBusiness = () => {
 
               {/* Gallery Images */}
               <div className="space-y-4 pt-8">
-                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Gallery Images <span className="text-[10px] text-faint normal-case font-bold ml-2">(Optional — up to 10)</span></label>
+                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Gallery Images <span className="text-[10px] text-faint normal-case font-medium ml-2">(Optional — up to 10)</span></label>
                 <div className="bg-lacquer-deep border-2 border-rule rounded-[32px] p-10 space-y-6">
                   {formData.gallery.length > 0 && (
                     <div className="flex flex-wrap gap-4">
@@ -476,13 +476,13 @@ const AddBusiness = () => {
 
               {/* Service List */}
               <div className="space-y-8 pt-8">
-                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Services / Products <span className="text-[10px] text-faint normal-case font-bold ml-2">(Optional — up to 6)</span></label>
+                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Services / Products <span className="text-[10px] text-faint normal-case font-medium ml-2">(Optional — up to 6)</span></label>
                 <div className="space-y-6">
                   {formData.services.map((service, index) => (
                     <div key={index} className="bg-lacquer-deep rounded-[32px] p-10 border border-rule space-y-10 animate-in fade-in slide-in-from-top-4 duration-300">
                       <div className="flex justify-between items-center pb-4 border-b border-rule">
                         <span className="text-champagne text-xs font-black uppercase tracking-widest">Service {index + 1}</span>
-                        <button type="button" onClick={() => setFormData(p => ({ ...p, services: p.services.filter((_, i) => i !== index) }))} className="text-kinpaku text-[10px] font-black uppercase tracking-widest flex items-center gap-2 font-bold"><X size={14} /> Remove</button>
+                        <button type="button" onClick={() => setFormData(p => ({ ...p, services: p.services.filter((_, i) => i !== index) }))} className="text-kinpaku text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><X size={14} /> Remove</button>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                         <div className="space-y-3">
@@ -513,7 +513,7 @@ const AddBusiness = () => {
 
               {/* Profile Photo - LAST as per request */}
               <div className="space-y-4 pt-16 border-t border-rule">
-                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Profile Photo <span className="text-[10px] text-faint normal-case font-bold ml-2">(Business Logo)</span></label>
+                <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Profile Photo <span className="text-[10px] text-faint normal-case font-medium ml-2">(Business Logo)</span></label>
                 <div onClick={() => document.getElementById('profile-upload').click()} className="border-2 border-dashed border-rule rounded-[32px] p-16 text-center hover:border-kinpaku hover:bg-graphite transition-all cursor-pointer group relative overflow-hidden flex items-center justify-center bg-lacquer-deep min-h-[220px]">
                   <input type="file" id="profile-upload" hidden accept="image/*" onChange={(e) => { const file = e.target.files[0]; if (file) setFormData(p => ({ ...p, profileImage: file })); }} />
                   {formData.profileImage ? (

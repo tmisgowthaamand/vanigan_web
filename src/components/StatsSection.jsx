@@ -10,7 +10,7 @@ const stats = [
 
 const StatsSection = () => {
     return (
-        <section className="py-20 bg-lacquer-deep border-y border-rule">
+        <section className="border-y border-rule bg-lacquer-deep py-20">
             <div className="max-w-[1320px] mx-auto px-6">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
                     {stats.map((stat, idx) => (

@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 const Contact = () => {
     return (
-        <main className="bg-raised min-h-screen" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
+        <main className="min-h-screen bg-raised" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
             <PageHeader
                 title="Contact Our Team"
                 subtitle="We're here to support your business journey. Reach out to us for any queries or partnerships."

@@ -207,7 +207,7 @@ const BusinessList = () => {
     }, []);
 
     return (
-        <main className="bg-raised min-h-screen" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
+        <main className="min-h-screen bg-raised" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
 
             {/* ═══ HERO ═══ */}
             <section className="pt-36 pb-16 bg-raised overflow-hidden relative">
@@ -272,7 +272,7 @@ const BusinessList = () => {
                                 </div>
                                 <button
                                     onClick={handleSearch}
-                                    className="bg-kinpaku text-white h-[54px] px-8 rounded-xl text-[15px] font-bold hover:bg-kinpaku-rich hover:shadow-lg hover:shadow-[#E87722]/20 transition-all shrink-0 active:scale-95"
+                                    className="bg-kinpaku text-white h-[54px] px-8 rounded-xl text-[15px] font-bold hover:bg-kinpaku-rich hover:shadow-lg hover:shadow-kinpaku/20 transition-all shrink-0 active:scale-95"
                                 >
                                     Search
                                 </button>

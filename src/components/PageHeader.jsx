@@ -3,7 +3,7 @@ import { Sparkles } from 'lucide-react';
 
 const PageHeader = ({ title, subtitle }) => {
     return (
-        <section className="relative pt-36 pb-16 bg-lacquer overflow-hidden border-b border-rule" style={{ fontFamily: 'var(--ks-font-body)' }}>
+        <section className="relative overflow-hidden border-b border-rule bg-lacquer pt-36 pb-16" style={{ fontFamily: 'var(--ks-font-body)' }}>
             {/* Calibration grid — functional structure, not decoration */}
             <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(232,119,34,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(232,119,34,0.04)_1px,transparent_1px)] bg-size-[48px_48px] mask-[radial-gradient(ellipse_at_center,black_30%,transparent_75%)] pointer-events-none" />
 
