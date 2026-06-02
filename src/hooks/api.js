@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com';
+// Same-origin proxy in production (see vercel.json rewrites) to avoid CORS; direct in dev.
+const API_BASE_URL = import.meta.env.PROD
+    ? ''
+    : (import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com');
 
 const api = axios.create({
     baseURL: API_BASE_URL,

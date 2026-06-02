@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com';
+// In production (Vercel) we call the API through same-origin paths (/api, /public)
+// which Vercel rewrites proxy to the backend server-side — this avoids browser CORS
+// errors on preview URLs. In local dev we call the backend directly.
+const API_BASE_URL = import.meta.env.PROD
+    ? ''
+    : (import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com');
 
 const api = axios.create({
     baseURL: API_BASE_URL,
