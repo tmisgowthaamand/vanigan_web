@@ -172,7 +172,7 @@ const Home = () => {
                                 <div className="rounded-[6px] p-8 md:p-10 h-full border border-rule bg-raised hover:border-rule-strong hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
                                     <div
                                         className="w-14 h-14 rounded-[6px] flex items-center justify-center mb-6 border"
-                                        style={{ color: card.color, borderColor: 'varrule' }}
+                                        style={{ color: card.color, borderColor: 'var(--color-rule)' }}
                                     >
                                         {card.icon}
                                     </div>

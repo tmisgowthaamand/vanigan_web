@@ -13,14 +13,14 @@ const AnimatedCard = ({ children, delay = 0, className = '' }) => {
                 type: 'spring',
                 stiffness: 100
             }}
-            whileHover={{ y: -6, borderColor: 'varrule-strong' }}
+            whileHover={{ y: -6, borderColor: 'var(--color-rule-strong)' }}
             className={className}
             style={{
-                backgroundColor: 'varraised',
+                backgroundColor: 'var(--color-raised)',
                 borderRadius: '6px',
                 padding: '1.5rem',
                 height: '100%',
-                border: '1px solid varrule',
+                border: '1px solid var(--color-rule)',
                 transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 overflow: 'hidden'
             }}

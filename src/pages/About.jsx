@@ -43,7 +43,7 @@ const About = () => {
                         </div>
                         <div className="order-1 lg:order-2 bg-lacquer rounded-[36px] p-6 border border-rule shadow-sm">
                             <div className="bg-raised p-8 rounded-[28px] shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-                                <div className="aspect-[4/3] bg-lacquer rounded-[20px] flex gap-4 items-center justify-center italic text-faint border border-rule">
+                                <div className="aspect-4/3 bg-lacquer rounded-[20px] flex gap-4 items-center justify-center italic text-faint border border-rule">
                                     <ShieldCheck size={40} className="text-kinpaku" /> App Screenshot
                                 </div>
                             </div>
