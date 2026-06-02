@@ -22,7 +22,7 @@ const BusinessCard = ({ business }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="bg-raised border border-rule rounded-[6px] overflow-hidden hover:border-rule-strong hover:-translate-y-1 transition-all duration-500 group flex flex-col h-full"
+            className="bg-raised border border-rule rounded-[6px] overflow-hidden hover:border-rule-strong hover:-translate-y-1 transition-all duration-500 group flex h-full flex-col"
         >
             {/* Image */}
             <div className="h-56 bg-lacquer-deep flex items-center justify-center relative overflow-hidden">

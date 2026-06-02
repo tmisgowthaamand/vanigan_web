@@ -10,7 +10,7 @@ const FeatureCard = ({ icon: Icon, title, description, className, delay = 0 }) =
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay }}
             className={cn(
-                "p-8 bg-raised border border-rule rounded-[6px] group hover:border-rule-strong transition-all duration-500",
+                "p-8 bg-raised border border-rule rounded-[6px] group transition-all duration-500 hover:border-rule-strong",
                 className
             )}
         >
