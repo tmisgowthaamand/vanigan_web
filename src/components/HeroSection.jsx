@@ -50,11 +50,11 @@ const HeroSection = () => {
 
     return (
         <section
-            className="pt-[72px] bg-[#14110D] relative overflow-hidden"
+            className="pt-[72px] bg-lacquer relative overflow-hidden"
             style={{ fontFamily: 'var(--ks-font-body)' }}
         >
             {/* Calibration grid field */}
-            <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(232,119,34,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(232,119,34,0.045)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_top_left,black_20%,transparent_70%)] pointer-events-none" />
+            <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(232,119,34,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(232,119,34,0.045)_1px,transparent_1px)] bg-size-[56px_56px] mask-[radial-gradient(ellipse_at_top_left,black_20%,transparent_70%)] pointer-events-none" />
 
             <div className="max-w-[1320px] mx-auto px-6 py-16 md:py-24 lg:py-32 relative z-10">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-8">
@@ -78,7 +78,7 @@ const HeroSection = () => {
                             style={{ fontWeight: 300 }}
                         >
                             Connect with trusted{' '}
-                            <span className="text-[#E87722]">traders</span> and
+                            <span className="text-kinpaku">traders</span> and
                             associates in Tamil Nadu
                         </motion.h1>
 
@@ -86,7 +86,7 @@ const HeroSection = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.15 }}
-                            className="text-[17px] md:text-[19px] text-(--ks-text-muted) leading-[1.7] mb-12 max-w-[520px] font-normal"
+                            className="text-[17px] md:text-[19px] text-muted leading-[1.7] mb-12 max-w-[520px] font-normal"
                         >
                             The largest platform to find verified businesses and list yours for free.
                             Built for modern shops, traders, and small business associates.
@@ -100,8 +100,8 @@ const HeroSection = () => {
                         >
                             <p className="ks-eyebrow mb-4">I am looking for...</p>
                             <div className="max-w-[500px]">
-                                <div className="flex items-center border border-(--ks-rule) rounded-[6px] overflow-hidden bg-[#0C0A07] focus-within:border-(--ks-rule-strong) transition-all">
-                                    <div className="pl-5 pr-3 text-(--ks-text-faint)">
+                                <div className="flex items-center border border-rule rounded-[6px] overflow-hidden bg-lacquer-deep focus-within:border-rule-strong transition-all">
+                                    <div className="pl-5 pr-3 text-faint">
                                         <Search size={22} />
                                     </div>
                                     <div className="flex-1 relative h-[54px] flex items-center">
@@ -109,7 +109,7 @@ const HeroSection = () => {
                                             type="text"
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full h-full bg-transparent outline-none text-[16px] text-(--ks-champagne) font-medium"
+                                            className="w-full h-full bg-transparent outline-none text-[16px] text-champagne font-medium"
                                         />
                                         {!searchQuery && (
                                             <div className="absolute inset-0 flex items-center pointer-events-none">
@@ -120,7 +120,7 @@ const HeroSection = () => {
                                                         animate={{ opacity: 1, y: 0 }}
                                                         exit={{ opacity: 0, y: -8 }}
                                                         transition={{ duration: 0.25 }}
-                                                        className="text-(--ks-text-faint) text-[16px] font-medium"
+                                                        className="text-faint text-[16px] font-medium"
                                                     >
                                                         {placeholders[placeholderIndex]}
                                                     </motion.span>
@@ -130,7 +130,7 @@ const HeroSection = () => {
                                     </div>
                                     <button
                                         onClick={() => navigate(`/business-list?search=${searchQuery}`)}
-                                        className="ks-button ks-button-primary !min-h-[44px] !px-7 !text-[15px] mr-[5px] shrink-0"
+                                        className="ks-button ks-button-primary min-h-[44px]! px-7! text-[15px]! mr-[5px] shrink-0"
                                     >
                                         Search
                                     </button>
@@ -147,13 +147,13 @@ const HeroSection = () => {
                             <div className="flex items-center justify-end gap-2 mb-4">
                                 <button
                                     onClick={prevSlide}
-                                    className="w-9 h-9 rounded-full border border-(--ks-rule) flex items-center justify-center text-(--ks-text-muted) hover:border-[#E87722] hover:text-[#E87722] transition-colors"
+                                    className="w-9 h-9 rounded-full border border-rule flex items-center justify-center text-muted hover:border-kinpaku hover:text-kinpaku transition-colors"
                                 >
                                     <ChevronLeft size={18} />
                                 </button>
                                 <button
                                     onClick={nextSlide}
-                                    className="w-9 h-9 rounded-full border border-(--ks-rule) flex items-center justify-center text-(--ks-text-muted) hover:border-[#E87722] hover:text-[#E87722] transition-colors"
+                                    className="w-9 h-9 rounded-full border border-rule flex items-center justify-center text-muted hover:border-kinpaku hover:text-kinpaku transition-colors"
                                 >
                                     <ChevronRight size={18} />
                                 </button>
@@ -162,7 +162,7 @@ const HeroSection = () => {
                             {/* Image Frame Container */}
                             <div className="relative">
                                 {/* Main Image */}
-                                <div className="relative z-10 aspect-[3/4] rounded-[8px] overflow-hidden border border-(--ks-rule) shadow-[0_24px_70px_rgba(2,2,1,0.55)]">
+                                <div className="relative z-10 aspect-[3/4] rounded-[8px] overflow-hidden border border-rule shadow-[0_24px_70px_rgba(2,2,1,0.55)]">
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={currentSlide}
@@ -178,7 +178,7 @@ const HeroSection = () => {
                                                 alt="Community member"
                                                 className="w-full h-full object-cover object-top"
                                             />
-                                            <div className="absolute inset-0 bg-linear-to-t from-[#0C0A07]/60 via-transparent to-transparent" />
+                                            <div className="absolute inset-0 bg-linear-to-t from-lacquer-deep/60 via-transparent to-transparent" />
                                         </motion.div>
                                     </AnimatePresence>
 
@@ -197,13 +197,13 @@ const HeroSection = () => {
                                         exit={{ opacity: 0, y: -8 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <p className="text-[17px] md:text-[19px] font-medium text-(--ks-champagne) leading-[1.5] mb-2">
+                                        <p className="text-[17px] md:text-[19px] font-medium text-champagne leading-[1.5] mb-2">
                                             {slides[currentSlide].quote}
                                         </p>
-                                        <p className="text-[14px] text-[#E87722] font-semibold">
+                                        <p className="text-[14px] text-kinpaku font-semibold">
                                             {slides[currentSlide].name}
                                         </p>
-                                        <p className="text-[13px] text-(--ks-text-faint) font-medium">
+                                        <p className="text-[13px] text-faint font-medium">
                                             {slides[currentSlide].title}
                                         </p>
                                     </motion.div>

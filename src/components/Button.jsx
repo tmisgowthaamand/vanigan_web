@@ -14,13 +14,13 @@ const Button = ({
         secondary: 'ks-button ks-button-secondary',
         outline: 'ks-button ks-button-secondary',
         ghost: 'ks-button ks-button-ghost',
-        danger: 'ks-button bg-[#D7563B] text-white border-[#D7563B] hover:bg-[#c14a30]',
+        danger: 'ks-button bg-warning text-white border-warning hover:bg-[#c14a30]',
     };
 
     const sizes = {
-        sm: '!min-h-[40px] !px-5 !text-[13px]',
+        sm: 'min-h-10! px-5! text-[13px]!',
         md: '',
-        lg: '!min-h-[58px] !px-10 !text-[1rem]',
+        lg: 'min-h-[58px] px-10! text-[1rem]!',
     };
 
     return (

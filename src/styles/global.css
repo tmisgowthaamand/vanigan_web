@@ -11,6 +11,33 @@
 /* ── Type faces: geometric display + body + mono ── */
 @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Alumni+Sans:wght@300;400;500;600;700&family=Albert+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
 
+/* ════════════ Tailwind theme tokens (first-class utilities) ════════════
+   Defining these here gives clean utilities like text-champagne, border-rule,
+   bg-lacquer — no arbitrary-value classes, so no canonical-class lint noise. */
+@theme {
+    --color-kinpaku: #E87722;
+    --color-kinpaku-rich: #D36B1E;
+    --color-kinpaku-pale: #F39B53;
+    --color-patina: #3DB1AD;
+    --color-patina-deep: #2B7A78;
+
+    --color-lacquer: #14110D;
+    --color-lacquer-deep: #0C0A07;
+    --color-raised: #1C1813;
+    --color-graphite: #252019;
+    --color-graphite-2: #2F2920;
+
+    --color-champagne: #F4F1EC;
+    --color-ink: #E4E0D8;
+    --color-muted: #B0A99B;
+    --color-faint: #8B8475;
+    --color-disabled: #645E52;
+
+    --color-rule: rgba(244, 241, 236, 0.12);
+    --color-rule-strong: rgba(232, 119, 34, 0.55);
+    --color-warning: #D7563B;
+}
+
 /* ════════════ Design Tokens (Neo Kinpaku, Vanigan-anchored) ════════════ */
 :root {
     /* Brand anchors */
