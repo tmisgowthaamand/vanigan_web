@@ -207,13 +207,13 @@ const BusinessList = () => {
     }, []);
 
     return (
-        <main className="bg-white min-h-screen" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
+        <main className="bg-[#1C1813] min-h-screen" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
 
             {/* ═══ HERO ═══ */}
-            <section className="pt-36 pb-16 bg-white overflow-hidden relative">
+            <section className="pt-36 pb-16 bg-[#1C1813] overflow-hidden relative">
                 {/* Decorative background blurs to fill emptiness */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#E87722]/5 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 blur-[100px] rounded-full -ml-20 -mb-20 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#3DB1AD]/5 blur-[100px] rounded-full -ml-20 -mb-20 pointer-events-none"></div>
 
                 <div className="max-w-[1280px] mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
@@ -227,7 +227,7 @@ const BusinessList = () => {
                                 <Sparkles size={16} /> Business Directory
                             </motion.p>
 
-                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-[#1A1A2E] leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
+                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-[var(--ks-champagne)] leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
                                 Find verified <br />
                                 <span className="text-[#E87722] relative inline-block whitespace-nowrap">
                                     <AnimatePresence mode="wait">
@@ -249,7 +249,7 @@ const BusinessList = () => {
 
                             <motion.p
                                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                                className="text-[17px] text-[#4B5563] font-normal leading-[1.7] max-w-md pt-2"
+                                className="text-[17px] text-[var(--ks-text-muted)] font-normal leading-[1.7] max-w-md pt-2"
                             >
                                 The largest platform to find verified businesses and list yours for free. Built for modern shops and associates.
                             </motion.p>
@@ -260,14 +260,14 @@ const BusinessList = () => {
                                 className="flex items-center gap-3 pt-4"
                             >
                                 <div className="flex-1 relative group max-w-sm">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] group-focus-within:text-[#E87722] transition-colors" size={20} />
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] group-focus-within:text-[#E87722] transition-colors" size={20} />
                                     <input
                                         type="text"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                         placeholder="I am looking for..."
-                                        className="w-full border border-[#E5E7EB] rounded-xl py-4 pl-12 pr-4 text-[15px] font-medium text-[#1A1A2E] outline-none focus:border-[#E87722]/50 focus:ring-4 focus:ring-[#E87722]/10 transition-all placeholder:text-[#9CA3AF] shadow-sm"
+                                        className="w-full border border-[var(--ks-rule)] rounded-xl py-4 pl-12 pr-4 text-[15px] font-medium text-[var(--ks-champagne)] outline-none focus:border-[#E87722]/50 focus:ring-4 focus:ring-[#E87722]/10 transition-all placeholder:text-[var(--ks-text-faint)] shadow-sm"
                                     />
                                 </div>
                                 <button
@@ -286,28 +286,28 @@ const BusinessList = () => {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                                className="relative z-20 bg-white rounded-2xl p-5 w-64 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-100/50"
+                                className="relative z-20 bg-[#1C1813] rounded-2xl p-5 w-64 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]/50"
                             >
                                 <div className="flex gap-4 items-center mb-4">
-                                    <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
+                                    <div className="w-12 h-12 rounded-xl bg-[#252019] border border-[var(--ks-rule)] flex items-center justify-center">
                                         <Building2 size={24} className="text-[#E87722]" />
                                     </div>
                                     <div>
-                                        <div className="h-2.5 w-20 bg-slate-200 rounded-full mb-2"></div>
-                                        <div className="h-2 w-12 bg-slate-100 rounded-full"></div>
+                                        <div className="h-2.5 w-20 bg-[#3A332A] rounded-full mb-2"></div>
+                                        <div className="h-2 w-12 bg-[#252019] rounded-full"></div>
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <div className="h-2 w-full bg-slate-100 rounded-full"></div>
-                                    <div className="h-2 w-4/5 bg-slate-100 rounded-full"></div>
+                                    <div className="h-2 w-full bg-[#252019] rounded-full"></div>
+                                    <div className="h-2 w-4/5 bg-[#252019] rounded-full"></div>
                                 </div>
-                                <div className="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center">
+                                <div className="mt-4 pt-4 border-t border-[var(--ks-rule)] flex justify-between items-center">
                                     <div className="flex -space-x-2">
                                         {[1, 2, 3].map(i => (
-                                            <div key={i} className={`w-6 h-6 rounded-full border-2 border-white bg-slate-${i + 1}00`} />
+                                            <div key={i} className="w-6 h-6 rounded-full border-2 border-[#1C1813] bg-[#3A332A]" />
                                         ))}
                                     </div>
-                                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">VERIFIED</span>
+                                    <span className="ks-badge is-improved">Verified</span>
                                 </div>
                             </motion.div>
 
@@ -315,15 +315,15 @@ const BusinessList = () => {
                             <motion.div
                                 animate={{ y: [0, -15, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute top-10 right-0 z-30 bg-white/90 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-white"
+                                className="absolute top-10 right-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#1A1A2E] flex items-center justify-center text-white">
+                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-[var(--ks-rule-strong)] flex items-center justify-center text-[#E87722]">
                                         <TrendingUp size={18} />
                                     </div>
                                     <div>
-                                        <p className="text-[18px] font-extrabold text-[#1A1A2E] leading-none mb-1">{globalTotal > 0 ? (globalTotal / 1000).toFixed(0) + 'K+' : '50K+'}</p>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Listings</p>
+                                        <p className="text-[18px] font-extrabold text-[var(--ks-champagne)] leading-none mb-1">{globalTotal > 0 ? (globalTotal / 1000).toFixed(0) + 'K+' : '50K+'}</p>
+                                        <p className="text-[10px] font-bold text-[var(--ks-text-muted)] uppercase tracking-wider">Listings</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -332,21 +332,21 @@ const BusinessList = () => {
                             <motion.div
                                 animate={{ y: [0, 15, 0] }}
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute bottom-10 left-0 z-30 bg-white/90 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-white"
+                                className="absolute bottom-10 left-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-white">
+                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-[var(--ks-rule-strong)] flex items-center justify-center text-[#E87722]">
                                         <Star size={18} fill="currentColor" />
                                     </div>
                                     <div>
-                                        <p className="text-[18px] font-extrabold text-[#1A1A2E] leading-none mb-1">4.9/5</p>
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Top Rated</p>
+                                        <p className="text-[18px] font-extrabold text-[var(--ks-champagne)] leading-none mb-1">4.9/5</p>
+                                        <p className="text-[10px] font-bold text-[var(--ks-text-muted)] uppercase tracking-wider">Top Rated</p>
                                     </div>
                                 </div>
                             </motion.div>
 
                             {/* Decorative Grid Behind */}
-                            <div className="absolute inset-0 z-0 bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:20px_20px] opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]"></div>
+                            <div className="absolute inset-0 z-0 bg-[radial-gradient(rgba(232,119,34,0.18)_1px,transparent_1px)] [background-size:20px_20px] opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]"></div>
                         </div>
 
                     </div>
@@ -354,20 +354,20 @@ const BusinessList = () => {
             </section>
 
             {/* ═══ FILTERS + LISTINGS ═══ */}
-            <section className="py-16 bg-[#F9FAFB]">
+            <section className="py-16 bg-[#14110D]">
                 <div className="max-w-[1600px] w-full mx-auto px-6 md:px-12">
 
                     {/* Breadcrumb + Category title */}
                     <div className="mb-10">
-                        <nav className="flex items-center gap-2 text-[13px] text-[#6B7280] font-medium mb-4">
+                        <nav className="flex items-center gap-2 text-[13px] text-[var(--ks-text-muted)] font-medium mb-4">
                             <Link to="/" className="hover:text-[#E87722] transition-colors">Home</Link>
-                            <span className="text-slate-300">/</span>
-                            <span className="text-[#1A1A2E] font-semibold">{selectedCategory}</span>
+                            <span className="text-[var(--ks-text-faint)]">/</span>
+                            <span className="text-[var(--ks-champagne)] font-semibold">{selectedCategory}</span>
                         </nav>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                             <div>
-                                <h2 className="text-[32px] font-extrabold text-[#1A1A2E] tracking-[-0.01em] mb-1">{selectedCategory}</h2>
-                                <p className="text-[15px] text-[#4B5563] font-normal italic">
+                                <h2 className="text-[32px] font-extrabold text-[var(--ks-champagne)] tracking-[-0.01em] mb-1">{selectedCategory}</h2>
+                                <p className="text-[15px] text-[var(--ks-text-muted)] font-normal italic">
                                     Showing {totalCount.toLocaleString()} verified listings in Tamil Nadu
                                 </p>
                             </div>
@@ -378,16 +378,16 @@ const BusinessList = () => {
 
                         {/* ── Sidebar ── */}
                         <aside className="lg:col-span-3 lg:col-start-1 space-y-6">
-                            <div className="bg-white rounded-[20px] p-6 border border-[#F3F4F6] shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
-                                <h4 className="text-[12px] font-bold text-[#1A1A2E] uppercase tracking-wider mb-5 pl-1">Browse Categories</h4>
+                            <div className="bg-[#1C1813] rounded-[20px] p-6 border border-[var(--ks-rule)] shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
+                                <h4 className="text-[12px] font-bold text-[var(--ks-champagne)] uppercase tracking-wider mb-5 pl-1">Browse Categories</h4>
                                 <div className="max-h-[70vh] overflow-y-auto custom-scrollbar pr-1 space-y-0.5">
                                     {Object.keys(categorySubMap).map(cat => (
                                         <button
                                             key={cat}
                                             onClick={() => handleCategorySelect(cat)}
                                             className={`w-full text-left px-4 py-2.5 rounded-lg text-[14px] font-medium transition-all ${selectedCategory === cat
-                                                ? 'bg-[#FFF8F0] text-[#E87722] font-semibold'
-                                                : 'text-[#4B5563] hover:bg-[#F9FAFB] hover:text-[#1A1A2E]'
+                                                ? 'bg-[#252019] text-[#E87722] font-semibold'
+                                                : 'text-[var(--ks-text-muted)] hover:bg-[#14110D] hover:text-[var(--ks-champagne)]'
                                                 }`}
                                         >
                                             {cat}
@@ -404,25 +404,25 @@ const BusinessList = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="relative">
                                     <select value={subCategory} onChange={(e) => { setSubCategory(e.target.value); setCurrentPage(1); }}
-                                        className="w-full bg-white border border-[#E5E7EB] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[#4B5563] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
+                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
                                         {uniqueSubCategories.map(sub => <option key={sub} value={sub}>{sub}</option>)}
                                     </select>
-                                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" />
+                                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
                                 </div>
                                 <div className="relative">
                                     <select value={district} onChange={(e) => { setDistrict(e.target.value); setAssembly('All Assemblies'); setCurrentPage(1); }}
-                                        className="w-full bg-white border border-[#E5E7EB] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[#4B5563] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
+                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
                                         {uniqueDistricts.map(dst => <option key={dst} value={dst}>{dst}</option>)}
                                     </select>
-                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" />
+                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
                                 </div>
                                 <div className="relative">
                                     <select value={assembly} onChange={(e) => { setAssembly(e.target.value); setCurrentPage(1); }}
-                                        className="w-full bg-white border border-[#E5E7EB] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[#4B5563] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm"
+                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm"
                                         disabled={district === 'All Districts'}>
                                         {(districtAssemblyMap[district] || ["All Assemblies"]).map(asm => <option key={asm} value={asm}>{asm}</option>)}
                                     </select>
-                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" />
+                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
                                 </div>
                             </div>
 
@@ -430,12 +430,12 @@ const BusinessList = () => {
                             {loading ? (
                                 <div className="flex flex-col items-center justify-center py-28 gap-4">
                                     <Loader2 size={36} className="animate-spin text-[#E87722]" />
-                                    <p className="text-[14px] font-medium text-[#9CA3AF]">Finding businesses…</p>
+                                    <p className="text-[14px] font-medium text-[var(--ks-text-faint)]">Finding businesses…</p>
                                 </div>
                             ) : error ? (
-                                <div className="p-8 bg-rose-50 rounded-[20px] border border-rose-100 text-center">
-                                    <AlertCircle size={36} className="mx-auto text-rose-500 mb-3" />
-                                    <p className="text-rose-600 font-bold">{error}</p>
+                                <div className="p-8 bg-[#1C1813] rounded-[20px] border border-[#D7563B]/40 text-center">
+                                    <AlertCircle size={36} className="mx-auto text-[#D7563B] mb-3" />
+                                    <p className="text-[#D7563B] font-bold">{error}</p>
                                 </div>
                             ) : businesses.length > 0 ? (
                                 <>
@@ -448,19 +448,19 @@ const BusinessList = () => {
                                     {/* Pagination */}
                                     <div className="flex items-center justify-center gap-4 pt-8">
                                         <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}
-                                            className="w-10 h-10 rounded-lg border border-[#E5E7EB] bg-white flex items-center justify-center hover:bg-[#F9FAFB] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[#1A1A2E] shadow-sm">
+                                            className="w-10 h-10 rounded-lg border border-[var(--ks-rule)] bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[var(--ks-champagne)] shadow-sm">
                                             <ChevronLeft size={18} />
                                         </button>
-                                        <span className="text-[14px] font-semibold text-[#1A1A2E] bg-white px-4 py-2 rounded-lg border border-[#E5E7EB] shadow-sm">Page {currentPage}</span>
+                                        <span className="text-[14px] font-semibold text-[var(--ks-champagne)] bg-[#1C1813] px-4 py-2 rounded-lg border border-[var(--ks-rule)] shadow-sm">Page {currentPage}</span>
                                         <button onClick={() => setCurrentPage(p => p + 1)} disabled={businesses.length < 12}
-                                            className="w-10 h-10 rounded-lg border border-[#E5E7EB] bg-white flex items-center justify-center hover:bg-[#F9FAFB] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[#1A1A2E] shadow-sm">
+                                            className="w-10 h-10 rounded-lg border border-[var(--ks-rule)] bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[var(--ks-champagne)] shadow-sm">
                                             <ChevronRight size={18} />
                                         </button>
                                     </div>
                                 </>
                             ) : (
-                                <div className="text-center py-20 bg-white rounded-[20px] border border-[#F3F4F6] shadow-sm">
-                                    <p className="text-[#9CA3AF] font-medium text-[15px]">No businesses found matching your criteria.</p>
+                                <div className="text-center py-20 bg-[#1C1813] rounded-[20px] border border-[var(--ks-rule)] shadow-sm">
+                                    <p className="text-[var(--ks-text-faint)] font-medium text-[15px]">No businesses found matching your criteria.</p>
                                     <button onClick={() => { handleCategorySelect('All Categories'); setSearchTerm(''); setFinalizedSearch(''); }}
                                         className="mt-4 text-[#E87722] font-semibold text-[14px] underline underline-offset-4 hover:text-[#D36B1E] transition-colors">Clear filters</button>
                                 </div>

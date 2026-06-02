@@ -10,25 +10,24 @@ const Button = ({
     ...props
 }) => {
     const variants = {
-        primary: 'bg-primary text-white hover:bg-primary-hover shadow-md active:scale-[0.98]',
-        secondary: 'bg-slate-100 text-slate-900 hover:bg-slate-200 active:scale-[0.98]',
-        outline: 'bg-transparent border-2 border-slate-200 text-slate-700 hover:border-primary hover:text-primary active:scale-[0.98]',
-        ghost: 'bg-transparent text-slate-600 hover:bg-slate-100',
-        danger: 'bg-red-500 text-white hover:bg-red-600',
+        primary: 'ks-button ks-button-primary',
+        secondary: 'ks-button ks-button-secondary',
+        outline: 'ks-button ks-button-secondary',
+        ghost: 'ks-button ks-button-ghost',
+        danger: 'ks-button bg-[#D7563B] text-white border-[#D7563B] hover:bg-[#c14a30]',
     };
 
     const sizes = {
-        sm: 'px-4 py-2 text-xs font-bold',
-        md: 'px-6 py-3 text-sm font-bold',
-        lg: 'px-8 py-4 text-base font-bold',
+        sm: '!min-h-[40px] !px-5 !text-[13px]',
+        md: '',
+        lg: '!min-h-[58px] !px-10 !text-[1rem]',
     };
 
     return (
         <button
             disabled={disabled}
             className={cn(
-                'inline-flex items-center justify-center rounded-lg transition-all duration-200 selection:bg-primary/30',
-                variants[variant],
+                variants[variant] || variants.primary,
                 sizes[size],
                 disabled && 'opacity-50 cursor-not-allowed',
                 className

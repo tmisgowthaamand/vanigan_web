@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, ArrowUpRight } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa6';
 
 const Footer = () => {
@@ -49,17 +49,18 @@ const Footer = () => {
 
     return (
         <footer
-            className="bg-white border-t border-[#E5E7EB]"
-            style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}
+            className="bg-[#0C0A07] border-t border-[var(--ks-rule)]"
+            style={{ fontFamily: 'var(--ks-font-body)' }}
         >
+            {/* Gold + patina seam — the final brand signature */}
+            <div className="ks-seam" />
+
             {/* Newsletter Strip */}
-            <div className="bg-[#F9FAFB] border-b border-[#E5E7EB]">
-                <div className="max-w-[1280px] mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="border-b border-[var(--ks-rule)]">
+                <div className="max-w-[1320px] mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                        <p className="text-[11px] font-bold text-[#E87722] uppercase tracking-[0.15em] mb-1">
-                            Subscribe to the Vanigan newsletter
-                        </p>
-                        <p className="text-[14px] text-[#6B7280] font-normal">
+                        <p className="ks-eyebrow mb-2">Subscribe to the Vanigan newsletter</p>
+                        <p className="text-[14px] text-[var(--ks-text-muted)] font-normal">
                             Get the latest news, business insights and resources straight to your inbox.
                         </p>
                     </div>
@@ -67,9 +68,9 @@ const Footer = () => {
                         <input
                             type="email"
                             placeholder="Enter your email"
-                            className="h-[44px] px-4 border border-[#D1D5DB] rounded-lg text-[14px] font-medium text-[#1A1A2E] outline-none focus:border-[#E87722] transition-colors w-full md:w-[280px]"
+                            className="ks-input md:w-[280px] !h-[48px]"
                         />
-                        <button className="h-[44px] px-6 bg-[#E87722] text-white rounded-lg text-[14px] font-bold hover:bg-[#D36B1E] transition-colors shrink-0">
+                        <button className="ks-button ks-button-primary !min-h-[48px] !px-6 !text-[14px] shrink-0">
                             Subscribe
                         </button>
                     </div>
@@ -77,17 +78,20 @@ const Footer = () => {
             </div>
 
             {/* Link Grid */}
-            <div className="max-w-[1280px] mx-auto px-6 py-14">
+            <div className="max-w-[1320px] mx-auto px-6 py-14">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-0">
                     {/* Brand Column */}
                     <div className="lg:w-[28%] lg:pr-12">
                         <Link to="/" className="flex items-center gap-2 mb-5">
                             <img src="https://vanigan.org/front/images/home/tnvslogo.png" alt="Vanigan" className="h-9 w-auto" />
-                            <span className="text-[18px] font-extrabold text-[#1A1A2E] tracking-tight">
+                            <span
+                                className="text-[20px] text-[var(--ks-champagne)] uppercase"
+                                style={{ fontFamily: 'var(--ks-font-wordmark)', fontWeight: 500, letterSpacing: '0.12em' }}
+                            >
                                 Vanigan<span className="text-[#E87722]">.org</span>
                             </span>
                         </Link>
-                        <p className="text-[14px] text-[#6B7280] leading-[1.7] mb-6 max-w-[240px]">
+                        <p className="text-[14px] text-[var(--ks-text-muted)] leading-[1.7] mb-6 max-w-[240px]">
                             Tamil Nadu's largest network for traders and associates to list their business and connect with customers.
                         </p>
                         <div className="flex gap-3 mb-6">
@@ -100,7 +104,7 @@ const Footer = () => {
                                 <a
                                     key={i}
                                     href={href}
-                                    className="w-9 h-9 rounded-full border border-[#E5E7EB] flex items-center justify-center text-[#6B7280] hover:text-[#E87722] hover:border-[#E87722] transition-colors"
+                                    className="w-9 h-9 rounded-full border border-[var(--ks-rule)] flex items-center justify-center text-[var(--ks-text-muted)] hover:text-[#E87722] hover:border-[var(--ks-rule-strong)] transition-colors"
                                 >
                                     <Icon size={16} />
                                 </a>
@@ -123,7 +127,7 @@ const Footer = () => {
                     <div className="lg:w-[72%] grid grid-cols-2 sm:grid-cols-4 gap-8">
                         {footerSections.map((section) => (
                             <div key={section.title}>
-                                <h4 className="text-[13px] font-bold text-[#1A1A2E] uppercase tracking-[0.08em] mb-5">
+                                <h4 className="ks-mono text-[12px] text-[var(--ks-champagne)] mb-5">
                                     {section.title}
                                 </h4>
                                 <ul className="space-y-3">
@@ -131,7 +135,7 @@ const Footer = () => {
                                         <li key={link.name}>
                                             <Link
                                                 to={link.path}
-                                                className="text-[14px] font-normal text-[#6B7280] hover:text-[#E87722] transition-colors"
+                                                className="text-[14px] font-normal text-[var(--ks-text-muted)] hover:text-[#E87722] transition-colors"
                                             >
                                                 {link.name}
                                             </Link>
@@ -145,12 +149,12 @@ const Footer = () => {
             </div>
 
             {/* Bottom Bar */}
-            <div className="border-t border-[#E5E7EB]">
-                <div className="max-w-[1280px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <p className="text-[13px] text-[#9CA3AF] font-normal">
+            <div className="border-t border-[var(--ks-rule)]">
+                <div className="max-w-[1320px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <p className="text-[13px] text-[var(--ks-text-faint)] font-normal">
                         © 2026 Vanigan.org. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-2 text-[13px] text-[#9CA3AF] font-normal">
+                    <div className="flex items-center gap-2 text-[13px] text-[var(--ks-text-faint)] font-normal">
                         <Globe size={14} /> English (IN)
                     </div>
                 </div>
