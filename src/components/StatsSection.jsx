@@ -10,7 +10,7 @@ const stats = [
 
 const StatsSection = () => {
     return (
-        <section className="py-20 bg-[#0C0A07] border-y border-[var(--ks-rule)]">
+        <section className="py-20 bg-[#0C0A07] border-y border-(--ks-rule)">
             <div className="max-w-[1320px] mx-auto px-6">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
                     {stats.map((stat, idx) => (
@@ -24,9 +24,9 @@ const StatsSection = () => {
                                 style={{ fontWeight: 400 }}
                             >
                                 {stat.value}
-                                {stat.suffix && <span className="text-[var(--ks-text-muted)] text-xl ml-1 font-medium">{stat.suffix}</span>}
+                                {stat.suffix && <span className="text-(--ks-text-muted) text-xl ml-1 font-medium">{stat.suffix}</span>}
                             </motion.div>
-                            <p className="text-[var(--ks-text-muted)] font-medium text-sm md:text-base">{stat.label}</p>
+                            <p className="text-(--ks-text-muted) font-medium text-sm md:text-base">{stat.label}</p>
                         </div>
                     ))}
                 </div>

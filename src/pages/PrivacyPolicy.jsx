@@ -24,11 +24,11 @@ const PrivacyPolicy = () => {
                     <div className="flex flex-col lg:flex-row gap-16">
                         {/* Sidebar */}
                         <aside className="hidden lg:block w-72 shrink-0 sticky top-32 h-fit">
-                            <h4 className="text-[12px] font-bold uppercase tracking-widest text-[var(--ks-text-muted)] mb-6">On This Page</h4>
+                            <h4 className="text-[12px] font-bold uppercase tracking-widest text-(--ks-text-muted) mb-6">On This Page</h4>
                             <ul className="flex flex-col gap-4">
                                 {sections.map(s => (
                                     <li key={s.id}>
-                                        <a href={`#${s.id}`} className="text-[14px] font-bold text-[var(--ks-text-muted)] hover:text-[#E87722] transition-colors">{s.title}</a>
+                                        <a href={`#${s.id}`} className="text-[14px] font-bold text-(--ks-text-muted) hover:text-[#E87722] transition-colors">{s.title}</a>
                                     </li>
                                 ))}
                             </ul>
@@ -38,8 +38,8 @@ const PrivacyPolicy = () => {
                         <div className="flex-1 space-y-12">
                             {sections.map(s => (
                                 <section key={s.id} id={s.id} className="scroll-mt-32">
-                                    <h3 className="text-[24px] font-extrabold text-[var(--ks-champagne)] mb-4">{s.title}</h3>
-                                    <p className="text-[16px] text-[var(--ks-text-muted)] leading-[1.8]">{s.content}</p>
+                                    <h3 className="text-[24px] font-extrabold text-(--ks-champagne) mb-4">{s.title}</h3>
+                                    <p className="text-[16px] text-(--ks-text-muted) leading-[1.8]">{s.content}</p>
                                 </section>
                             ))}
                         </div>

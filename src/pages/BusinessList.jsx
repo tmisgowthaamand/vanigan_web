@@ -227,7 +227,7 @@ const BusinessList = () => {
                                 <Sparkles size={16} /> Business Directory
                             </motion.p>
 
-                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-[var(--ks-champagne)] leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
+                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-(--ks-champagne) leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
                                 Find verified <br />
                                 <span className="text-[#E87722] relative inline-block whitespace-nowrap">
                                     <AnimatePresence mode="wait">
@@ -249,7 +249,7 @@ const BusinessList = () => {
 
                             <motion.p
                                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                                className="text-[17px] text-[var(--ks-text-muted)] font-normal leading-[1.7] max-w-md pt-2"
+                                className="text-[17px] text-(--ks-text-muted) font-normal leading-[1.7] max-w-md pt-2"
                             >
                                 The largest platform to find verified businesses and list yours for free. Built for modern shops and associates.
                             </motion.p>
@@ -260,14 +260,14 @@ const BusinessList = () => {
                                 className="flex items-center gap-3 pt-4"
                             >
                                 <div className="flex-1 relative group max-w-sm">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] group-focus-within:text-[#E87722] transition-colors" size={20} />
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-(--ks-text-faint) group-focus-within:text-[#E87722] transition-colors" size={20} />
                                     <input
                                         type="text"
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                         placeholder="I am looking for..."
-                                        className="w-full border border-[var(--ks-rule)] rounded-xl py-4 pl-12 pr-4 text-[15px] font-medium text-[var(--ks-champagne)] outline-none focus:border-[#E87722]/50 focus:ring-4 focus:ring-[#E87722]/10 transition-all placeholder:text-[var(--ks-text-faint)] shadow-sm"
+                                        className="w-full border border-(--ks-rule) rounded-xl py-4 pl-12 pr-4 text-[15px] font-medium text-(--ks-champagne) outline-none focus:border-[#E87722]/50 focus:ring-4 focus:ring-[#E87722]/10 transition-all placeholder:text-(--ks-text-faint) shadow-sm"
                                     />
                                 </div>
                                 <button
@@ -286,10 +286,10 @@ const BusinessList = () => {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                                className="relative z-20 bg-[#1C1813] rounded-2xl p-5 w-64 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]/50"
+                                className="relative z-20 bg-[#1C1813] rounded-2xl p-5 w-64 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-(--ks-rule)/50"
                             >
                                 <div className="flex gap-4 items-center mb-4">
-                                    <div className="w-12 h-12 rounded-xl bg-[#252019] border border-[var(--ks-rule)] flex items-center justify-center">
+                                    <div className="w-12 h-12 rounded-xl bg-[#252019] border border-(--ks-rule) flex items-center justify-center">
                                         <Building2 size={24} className="text-[#E87722]" />
                                     </div>
                                     <div>
@@ -301,7 +301,7 @@ const BusinessList = () => {
                                     <div className="h-2 w-full bg-[#252019] rounded-full"></div>
                                     <div className="h-2 w-4/5 bg-[#252019] rounded-full"></div>
                                 </div>
-                                <div className="mt-4 pt-4 border-t border-[var(--ks-rule)] flex justify-between items-center">
+                                <div className="mt-4 pt-4 border-t border-(--ks-rule) flex justify-between items-center">
                                     <div className="flex -space-x-2">
                                         {[1, 2, 3].map(i => (
                                             <div key={i} className="w-6 h-6 rounded-full border-2 border-[#1C1813] bg-[#3A332A]" />
@@ -315,15 +315,15 @@ const BusinessList = () => {
                             <motion.div
                                 animate={{ y: [0, -15, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute top-10 right-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]"
+                                className="absolute top-10 right-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-(--ks-rule)"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-[var(--ks-rule-strong)] flex items-center justify-center text-[#E87722]">
+                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-(--ks-rule-strong) flex items-center justify-center text-[#E87722]">
                                         <TrendingUp size={18} />
                                     </div>
                                     <div>
-                                        <p className="text-[18px] font-extrabold text-[var(--ks-champagne)] leading-none mb-1">{globalTotal > 0 ? (globalTotal / 1000).toFixed(0) + 'K+' : '50K+'}</p>
-                                        <p className="text-[10px] font-bold text-[var(--ks-text-muted)] uppercase tracking-wider">Listings</p>
+                                        <p className="text-[18px] font-extrabold text-(--ks-champagne) leading-none mb-1">{globalTotal > 0 ? (globalTotal / 1000).toFixed(0) + 'K+' : '50K+'}</p>
+                                        <p className="text-[10px] font-bold text-(--ks-text-muted) uppercase tracking-wider">Listings</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -332,21 +332,21 @@ const BusinessList = () => {
                             <motion.div
                                 animate={{ y: [0, 15, 0] }}
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute bottom-10 left-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-[var(--ks-rule)]"
+                                className="absolute bottom-10 left-0 z-30 bg-[#0C0A07]/85 backdrop-blur-md rounded-xl p-4 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-(--ks-rule)"
                             >
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-[var(--ks-rule-strong)] flex items-center justify-center text-[#E87722]">
+                                    <div className="w-10 h-10 rounded-full bg-[#252019] border border-(--ks-rule-strong) flex items-center justify-center text-[#E87722]">
                                         <Star size={18} fill="currentColor" />
                                     </div>
                                     <div>
-                                        <p className="text-[18px] font-extrabold text-[var(--ks-champagne)] leading-none mb-1">4.9/5</p>
-                                        <p className="text-[10px] font-bold text-[var(--ks-text-muted)] uppercase tracking-wider">Top Rated</p>
+                                        <p className="text-[18px] font-extrabold text-(--ks-champagne) leading-none mb-1">4.9/5</p>
+                                        <p className="text-[10px] font-bold text-(--ks-text-muted) uppercase tracking-wider">Top Rated</p>
                                     </div>
                                 </div>
                             </motion.div>
 
                             {/* Decorative Grid Behind */}
-                            <div className="absolute inset-0 z-0 bg-[radial-gradient(rgba(232,119,34,0.18)_1px,transparent_1px)] [background-size:20px_20px] opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]"></div>
+                            <div className="absolute inset-0 z-0 bg-[radial-gradient(rgba(232,119,34,0.18)_1px,transparent_1px)] bg-size-[20px_20px] opacity-50 mask-[radial-gradient(ellipse_at_center,black_40%,transparent_70%)]"></div>
                         </div>
 
                     </div>
@@ -359,15 +359,15 @@ const BusinessList = () => {
 
                     {/* Breadcrumb + Category title */}
                     <div className="mb-10">
-                        <nav className="flex items-center gap-2 text-[13px] text-[var(--ks-text-muted)] font-medium mb-4">
+                        <nav className="flex items-center gap-2 text-[13px] text-(--ks-text-muted) font-medium mb-4">
                             <Link to="/" className="hover:text-[#E87722] transition-colors">Home</Link>
-                            <span className="text-[var(--ks-text-faint)]">/</span>
-                            <span className="text-[var(--ks-champagne)] font-semibold">{selectedCategory}</span>
+                            <span className="text-(--ks-text-faint)">/</span>
+                            <span className="text-(--ks-champagne) font-semibold">{selectedCategory}</span>
                         </nav>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                             <div>
-                                <h2 className="text-[32px] font-extrabold text-[var(--ks-champagne)] tracking-[-0.01em] mb-1">{selectedCategory}</h2>
-                                <p className="text-[15px] text-[var(--ks-text-muted)] font-normal italic">
+                                <h2 className="text-[32px] font-extrabold text-(--ks-champagne) tracking-[-0.01em] mb-1">{selectedCategory}</h2>
+                                <p className="text-[15px] text-(--ks-text-muted) font-normal italic">
                                     Showing {totalCount.toLocaleString()} verified listings in Tamil Nadu
                                 </p>
                             </div>
@@ -378,8 +378,8 @@ const BusinessList = () => {
 
                         {/* ── Sidebar ── */}
                         <aside className="lg:col-span-3 lg:col-start-1 space-y-6">
-                            <div className="bg-[#1C1813] rounded-[20px] p-6 border border-[var(--ks-rule)] shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
-                                <h4 className="text-[12px] font-bold text-[var(--ks-champagne)] uppercase tracking-wider mb-5 pl-1">Browse Categories</h4>
+                            <div className="bg-[#1C1813] rounded-[20px] p-6 border border-(--ks-rule) shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
+                                <h4 className="text-[12px] font-bold text-(--ks-champagne) uppercase tracking-wider mb-5 pl-1">Browse Categories</h4>
                                 <div className="max-h-[70vh] overflow-y-auto custom-scrollbar pr-1 space-y-0.5">
                                     {Object.keys(categorySubMap).map(cat => (
                                         <button
@@ -387,7 +387,7 @@ const BusinessList = () => {
                                             onClick={() => handleCategorySelect(cat)}
                                             className={`w-full text-left px-4 py-2.5 rounded-lg text-[14px] font-medium transition-all ${selectedCategory === cat
                                                 ? 'bg-[#252019] text-[#E87722] font-semibold'
-                                                : 'text-[var(--ks-text-muted)] hover:bg-[#14110D] hover:text-[var(--ks-champagne)]'
+                                                : 'text-(--ks-text-muted) hover:bg-[#14110D] hover:text-(--ks-champagne)'
                                                 }`}
                                         >
                                             {cat}
@@ -404,25 +404,25 @@ const BusinessList = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div className="relative">
                                     <select value={subCategory} onChange={(e) => { setSubCategory(e.target.value); setCurrentPage(1); }}
-                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
+                                        className="w-full bg-[#1C1813] border border-(--ks-rule) rounded-xl py-3.5 px-5 text-[14px] font-medium text-(--ks-text-muted) appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
                                         {uniqueSubCategories.map(sub => <option key={sub} value={sub}>{sub}</option>)}
                                     </select>
-                                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
+                                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-(--ks-text-faint) pointer-events-none" />
                                 </div>
                                 <div className="relative">
                                     <select value={district} onChange={(e) => { setDistrict(e.target.value); setAssembly('All Assemblies'); setCurrentPage(1); }}
-                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
+                                        className="w-full bg-[#1C1813] border border-(--ks-rule) rounded-xl py-3.5 px-5 text-[14px] font-medium text-(--ks-text-muted) appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm">
                                         {uniqueDistricts.map(dst => <option key={dst} value={dst}>{dst}</option>)}
                                     </select>
-                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
+                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-(--ks-text-faint) pointer-events-none" />
                                 </div>
                                 <div className="relative">
                                     <select value={assembly} onChange={(e) => { setAssembly(e.target.value); setCurrentPage(1); }}
-                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl py-3.5 px-5 text-[14px] font-medium text-[var(--ks-text-muted)] appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm"
+                                        className="w-full bg-[#1C1813] border border-(--ks-rule) rounded-xl py-3.5 px-5 text-[14px] font-medium text-(--ks-text-muted) appearance-none outline-none focus:border-[#E87722]/50 transition-all cursor-pointer shadow-sm"
                                         disabled={district === 'All Districts'}>
                                         {(districtAssemblyMap[district] || ["All Assemblies"]).map(asm => <option key={asm} value={asm}>{asm}</option>)}
                                     </select>
-                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ks-text-faint)] pointer-events-none" />
+                                    <MapPin size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-(--ks-text-faint) pointer-events-none" />
                                 </div>
                             </div>
 
@@ -430,7 +430,7 @@ const BusinessList = () => {
                             {loading ? (
                                 <div className="flex flex-col items-center justify-center py-28 gap-4">
                                     <Loader2 size={36} className="animate-spin text-[#E87722]" />
-                                    <p className="text-[14px] font-medium text-[var(--ks-text-faint)]">Finding businesses…</p>
+                                    <p className="text-[14px] font-medium text-(--ks-text-faint)">Finding businesses…</p>
                                 </div>
                             ) : error ? (
                                 <div className="p-8 bg-[#1C1813] rounded-[20px] border border-[#D7563B]/40 text-center">
@@ -448,19 +448,19 @@ const BusinessList = () => {
                                     {/* Pagination */}
                                     <div className="flex items-center justify-center gap-4 pt-8">
                                         <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}
-                                            className="w-10 h-10 rounded-lg border border-[var(--ks-rule)] bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[var(--ks-champagne)] shadow-sm">
+                                            className="w-10 h-10 rounded-lg border border-(--ks-rule) bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-(--ks-champagne) shadow-sm">
                                             <ChevronLeft size={18} />
                                         </button>
-                                        <span className="text-[14px] font-semibold text-[var(--ks-champagne)] bg-[#1C1813] px-4 py-2 rounded-lg border border-[var(--ks-rule)] shadow-sm">Page {currentPage}</span>
+                                        <span className="text-[14px] font-semibold text-(--ks-champagne) bg-[#1C1813] px-4 py-2 rounded-lg border border-(--ks-rule) shadow-sm">Page {currentPage}</span>
                                         <button onClick={() => setCurrentPage(p => p + 1)} disabled={businesses.length < 12}
-                                            className="w-10 h-10 rounded-lg border border-[var(--ks-rule)] bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[var(--ks-champagne)] shadow-sm">
+                                            className="w-10 h-10 rounded-lg border border-(--ks-rule) bg-[#1C1813] flex items-center justify-center hover:bg-[#14110D] transition-all disabled:opacity-30 disabled:cursor-not-allowed text-(--ks-champagne) shadow-sm">
                                             <ChevronRight size={18} />
                                         </button>
                                     </div>
                                 </>
                             ) : (
-                                <div className="text-center py-20 bg-[#1C1813] rounded-[20px] border border-[var(--ks-rule)] shadow-sm">
-                                    <p className="text-[var(--ks-text-faint)] font-medium text-[15px]">No businesses found matching your criteria.</p>
+                                <div className="text-center py-20 bg-[#1C1813] rounded-[20px] border border-(--ks-rule) shadow-sm">
+                                    <p className="text-(--ks-text-faint) font-medium text-[15px]">No businesses found matching your criteria.</p>
                                     <button onClick={() => { handleCategorySelect('All Categories'); setSearchTerm(''); setFinalizedSearch(''); }}
                                         className="mt-4 text-[#E87722] font-semibold text-[14px] underline underline-offset-4 hover:text-[#D36B1E] transition-colors">Clear filters</button>
                                 </div>

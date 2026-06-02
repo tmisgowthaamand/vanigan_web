@@ -111,7 +111,7 @@ const BusinessProfile = () => {
             <div className="min-h-screen flex items-center justify-center bg-[#0C0A07]">
                 <div className="flex flex-col items-center gap-4">
                     <Loader2 size={48} className="text-[#E87722] animate-spin" />
-                    <p className="text-sm font-black text-[var(--ks-text-faint)] uppercase tracking-widest">Loading Premium Profile...</p>
+                    <p className="text-sm font-black text-(--ks-text-faint) uppercase tracking-widest">Loading Premium Profile...</p>
                 </div>
             </div>
         );
@@ -120,10 +120,10 @@ const BusinessProfile = () => {
     if (error || !business) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-[#0C0A07]">
-                <div className="text-center p-8 sm:p-12 bg-[#1C1813] rounded-4xl sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-[var(--ks-rule)]">
+                <div className="text-center p-8 sm:p-12 bg-[#1C1813] rounded-4xl sm:rounded-[3rem] shadow-xl max-w-md mx-4 border border-(--ks-rule)">
                     <AlertCircle size={64} className="text-[#E87722] mx-auto mb-6" />
-                    <h2 className="text-2xl font-black text-[var(--ks-champagne)] mb-2">Business Not Found</h2>
-                    <p className="text-[var(--ks-text-muted)] font-bold mb-8">{error || 'The business record could not be retrieved.'}</p>
+                    <h2 className="text-2xl font-black text-(--ks-champagne) mb-2">Business Not Found</h2>
+                    <p className="text-(--ks-text-muted) font-bold mb-8">{error || 'The business record could not be retrieved.'}</p>
                     <button
                         onClick={() => navigate('/business-list')}
                         className="bg-[#E87722] text-[#0C0A07] px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#D36B1E] transition-all w-full"
@@ -154,22 +154,22 @@ const BusinessProfile = () => {
                 <div className="flex items-center justify-between mb-6 sm:mb-8">
                     <button
                         onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-[#1C1813] border border-[var(--ks-rule)] text-[var(--ks-text-muted)] rounded-xl sm:rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:text-[#E87722] font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
+                        className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-[#1C1813] border border-(--ks-rule) text-(--ks-text-muted) rounded-xl sm:rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 hover:text-[#E87722] font-black text-[9px] sm:text-[10px] uppercase tracking-widest group"
                     >
                         <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                         Back
                     </button>
                     <button
                         onClick={handleShare}
-                        className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1C1813] rounded-xl sm:rounded-2xl flex items-center justify-center text-[var(--ks-text-faint)] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-[var(--ks-rule)] group"
+                        className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1C1813] rounded-xl sm:rounded-2xl flex items-center justify-center text-(--ks-text-faint) hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-(--ks-rule) group"
                     >
                         <Share2 size={18} className="group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
 
-                <div className="bg-[#1C1813] rounded-4xl sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden">
+                <div className="bg-[#1C1813] rounded-4xl sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden">
                     {/* Hero Banner with Auto-Alignment */}
-                    <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-[#252019] border-b border-[var(--ks-rule)]">
+                    <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-[#252019] border-b border-(--ks-rule)">
                         {coverImage ? (
                             <img
                                 src={coverImage}
@@ -178,7 +178,7 @@ const BusinessProfile = () => {
                                 style={{ imageRendering: 'auto' }}
                             />
                         ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-[var(--ks-text-disabled)]">
+                            <div className="w-full h-full flex flex-col items-center justify-center text-(--ks-text-disabled)">
                                 <LayoutGrid size={48} strokeWidth={1} />
                                 <p className="mt-4 text-[9px] font-black uppercase tracking-[0.2em]">No Banner Available</p>
                             </div>
@@ -190,7 +190,7 @@ const BusinessProfile = () => {
                     <div className="px-6 sm:px-10 lg:px-16 pt-5 sm:pt-6 lg:pt-8 relative z-10">
                         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 lg:gap-10">
                             <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-                                <div className="-mt-16 sm:-mt-20 lg:-mt-24 w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-[#1C1813] rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-[var(--ks-rule)] flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
+                                <div className="-mt-16 sm:-mt-20 lg:-mt-24 w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-[#1C1813] rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-(--ks-rule) flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
                                     {image ? (
                                         <img src={image} alt="Logo" className="w-full h-full object-contain" />
                                     ) : (
@@ -199,7 +199,7 @@ const BusinessProfile = () => {
                                 </div>
                                 <div className="text-center sm:text-left min-w-0">
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-                                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--ks-champagne)] tracking-tighter uppercase leading-tight">
+                                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-(--ks-champagne) tracking-tighter uppercase leading-tight">
                                             {name}
                                         </h1>
                                         <span className="mx-auto sm:mx-0 px-4 py-1.5 bg-[#252019] text-[#3DB1AD] rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border border-[rgba(61,177,173,0.4)] flex items-center gap-2 w-fit">
@@ -212,13 +212,13 @@ const BusinessProfile = () => {
                                             {[...Array(5)].map((_, i) => (
                                                 <Star key={i} size={16} fill={i < (avgRating || 0) ? "currentColor" : "none"} strokeWidth={i < (avgRating || 0) ? 0 : 2} />
                                             ))}
-                                            <span className="ml-1 font-black text-[var(--ks-champagne)]">{avgRating || 0}</span>
-                                            <span className="text-[var(--ks-text-faint)] font-bold ml-1">({reviewCount || 0})</span>
+                                            <span className="ml-1 font-black text-(--ks-champagne)">{avgRating || 0}</span>
+                                            <span className="text-(--ks-text-faint) font-bold ml-1">({reviewCount || 0})</span>
                                         </div>
-                                        <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-[var(--ks-text-faint)] bg-[#0C0A07] px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-[var(--ks-rule)]">
+                                        <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-(--ks-text-faint) bg-[#0C0A07] px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-(--ks-rule)">
                                             <span className="text-[#E87722]">{category}</span>
-                                            <div className="w-1 h-1 rounded-full bg-[var(--ks-text-faint)]" />
-                                            <span className="text-[var(--ks-champagne)] tracking-tighter">#{listingCode || 'LISTING'}</span>
+                                            <div className="w-1 h-1 rounded-full bg-(--ks-text-faint)" />
+                                            <span className="text-(--ks-champagne) tracking-tighter">#{listingCode || 'LISTING'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -229,10 +229,10 @@ const BusinessProfile = () => {
                                 <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#E87722] text-[#0C0A07] rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#D36B1E] transition-all shadow-lg hover:-translate-y-1">
                                     <MessageCircle size={18} /> WhatsApp
                                 </a>
-                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-transparent border border-[var(--ks-rule-strong)] text-[#E87722] rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-transparent border border-(--ks-rule-strong) text-[#E87722] rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                     <Phone size={18} /> Call
                                 </a>
-                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-transparent border border-[var(--ks-rule-strong)] text-[#E87722] rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-transparent border border-(--ks-rule-strong) text-[#E87722] rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-[#E87722] hover:text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                     <Navigation size={18} /> Directions
                                 </button>
                             </div>
@@ -247,25 +247,25 @@ const BusinessProfile = () => {
                 {/* Main Content Area */}
                 <div className="lg:col-span-8 space-y-8 sm:space-y-12">
                     {/* About Section */}
-                    <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
-                        <h2 className="text-xl sm:text-2xl font-black text-[var(--ks-champagne)] mb-8 uppercase tracking-tighter flex items-center gap-4">
+                    <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                        <h2 className="text-xl sm:text-2xl font-black text-(--ks-champagne) mb-8 uppercase tracking-tighter flex items-center gap-4">
                             About <div className="h-px bg-[#252019] flex-1"></div>
                         </h2>
-                        <p className="text-[var(--ks-text-muted)] font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] wrap-break-word">
+                        <p className="text-(--ks-text-muted) font-medium sm:font-bold leading-[1.8] whitespace-pre-wrap text-[15px] sm:text-lg text-justify [text-align-last:left] wrap-break-word">
                             {description || `${name} is an established destination for ${category} in ${district}. We offer professional services tailored to community needs with a focus on quality and consistency.`}
                         </p>
                     </section>
 
                     {/* Services Grid - Dynamic auto-alignment */}
                     {(services && services.length > 0) && (
-                        <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
-                            <h2 className="text-xl sm:text-2xl font-black text-[var(--ks-champagne)] mb-8 uppercase tracking-tighter flex items-center gap-4">
+                        <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                            <h2 className="text-xl sm:text-2xl font-black text-(--ks-champagne) mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Services & Pricing <div className="h-px bg-[#252019] flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                 {services.map((item, idx) => (
-                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-4xl bg-[#0C0A07] border border-[var(--ks-rule)] group transition-all hover:bg-[#1C1813] hover:shadow-xl">
-                                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-[#1C1813] rounded-2xl overflow-hidden border border-[var(--ks-rule)] shrink-0 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                    <div key={idx} className="flex items-center gap-5 p-4 sm:p-6 rounded-4xl bg-[#0C0A07] border border-(--ks-rule) group transition-all hover:bg-[#1C1813] hover:shadow-xl">
+                                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-[#1C1813] rounded-2xl overflow-hidden border border-(--ks-rule) shrink-0 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                             {item.image ? (
                                                 <img
                                                     src={item.image}
@@ -273,15 +273,15 @@ const BusinessProfile = () => {
                                                     alt={item.name}
                                                 />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-[var(--ks-text-disabled)]">
+                                                <div className="w-full h-full flex items-center justify-center text-(--ks-text-disabled)">
                                                     <LayoutGrid size={24} />
                                                 </div>
                                             )}
                                         </div>
                                         <div className="flex-1 justify-center flex flex-col">
-                                            <h4 className="font-black text-[var(--ks-champagne)] uppercase tracking-tight text-xs sm:text-sm mb-1">{item.name}</h4>
+                                            <h4 className="font-black text-(--ks-champagne) uppercase tracking-tight text-xs sm:text-sm mb-1">{item.name}</h4>
                                             <p className="text-[#E87722] font-black text-base sm:text-xl">₹ {item.price}</p>
-                                            <p className="text-[9px] text-[var(--ks-text-faint)] font-bold mt-1 uppercase tracking-widest line-clamp-1">{item.detail}</p>
+                                            <p className="text-[9px] text-(--ks-text-faint) font-bold mt-1 uppercase tracking-widest line-clamp-1">{item.detail}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -291,13 +291,13 @@ const BusinessProfile = () => {
 
                     {/* Gallery Hub */}
                     {(galleryImages && galleryImages.length > 0) && (
-                        <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
-                            <h2 className="text-xl sm:text-2xl font-black text-[var(--ks-champagne)] mb-8 uppercase tracking-tighter flex items-center gap-4">
+                        <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                            <h2 className="text-xl sm:text-2xl font-black text-(--ks-champagne) mb-8 uppercase tracking-tighter flex items-center gap-4">
                                 Gallery ({galleryImages.length}) <div className="h-px bg-[#252019] flex-1"></div>
                             </h2>
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                                 {galleryImages.map((img, idx) => (
-                                    <div key={idx} className="aspect-square rounded-3xl sm:rounded-4xl overflow-hidden bg-[#252019] border border-[var(--ks-rule)] group cursor-pointer relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                    <div key={idx} className="aspect-square rounded-3xl sm:rounded-4xl overflow-hidden bg-[#252019] border border-(--ks-rule) group cursor-pointer relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                         <img
                                             src={img.url || img}
                                             alt={`Gallery ${idx}`}
@@ -311,13 +311,13 @@ const BusinessProfile = () => {
                     )}
 
                     {/* Review Form - Responsive layout */}
-                    <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
-                        <h2 className="text-xl sm:text-2xl font-black text-[var(--ks-champagne)] mb-8 uppercase tracking-tighter flex items-center gap-4">
+                    <section className="bg-[#1C1813] px-6 py-10 sm:p-12 lg:p-16 rounded-4xl sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                        <h2 className="text-xl sm:text-2xl font-black text-(--ks-champagne) mb-8 uppercase tracking-tighter flex items-center gap-4">
                             Reviews <div className="h-px bg-[#252019] flex-1"></div>
                         </h2>
-                        <div className="bg-[#0C0A07] rounded-4xl p-6 sm:p-10 border border-[var(--ks-rule)] mb-10">
-                            <h3 className="text-lg font-black text-[var(--ks-champagne)] mb-2">Leave a Review</h3>
-                            <p className="text-[10px] sm:text-xs font-bold text-[var(--ks-text-faint)] mb-8 uppercase tracking-widest">Share your feedback to help others.</p>
+                        <div className="bg-[#0C0A07] rounded-4xl p-6 sm:p-10 border border-(--ks-rule) mb-10">
+                            <h3 className="text-lg font-black text-(--ks-champagne) mb-2">Leave a Review</h3>
+                            <p className="text-[10px] sm:text-xs font-bold text-(--ks-text-faint) mb-8 uppercase tracking-widest">Share your feedback to help others.</p>
                             <form onSubmit={handleReviewSubmit} className="space-y-6 sm:space-y-8">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <input
@@ -325,16 +325,16 @@ const BusinessProfile = () => {
                                         value={reviewName}
                                         onChange={(e) => setReviewName(e.target.value)}
                                         placeholder="Your Name"
-                                        className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl p-4 sm:p-5 text-sm font-bold shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 outline-none focus:border-[#E87722]"
+                                        className="w-full bg-[#1C1813] border border-(--ks-rule) rounded-xl p-4 sm:p-5 text-sm font-bold shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 outline-none focus:border-[#E87722]"
                                         required
                                     />
-                                    <div className="flex items-center gap-3 bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl p-4 sm:p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                    <div className="flex items-center gap-3 bg-[#1C1813] border border-(--ks-rule) rounded-xl p-4 sm:p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                         {[1, 2, 3, 4, 5].map(star => (
                                             <button
                                                 key={star}
                                                 type="button"
                                                 onClick={() => setRating(star)}
-                                                className={`transition-all ${rating >= star ? 'text-amber-400' : 'text-[var(--ks-text-disabled)]'}`}
+                                                className={`transition-all ${rating >= star ? 'text-amber-400' : 'text-(--ks-text-disabled)'}`}
                                             >
                                                 <Star
                                                     size={18}
@@ -343,7 +343,7 @@ const BusinessProfile = () => {
                                                 />
                                             </button>
                                         ))}
-                                        <span className="text-[10px] font-black text-[var(--ks-text-faint)] uppercase ml-auto">
+                                        <span className="text-[10px] font-black text-(--ks-text-faint) uppercase ml-auto">
                                             {rating > 0 ? `${rating} / 5` : 'Rate'}
                                         </span>
                                     </div>
@@ -353,7 +353,7 @@ const BusinessProfile = () => {
                                     value={reviewComment}
                                     onChange={(e) => setReviewComment(e.target.value)}
                                     placeholder="Your review..."
-                                    className="w-full bg-[#1C1813] border border-[var(--ks-rule)] rounded-xl p-6 sm:p-8 text-sm font-bold shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 outline-none focus:border-[#E87722] resize-none"
+                                    className="w-full bg-[#1C1813] border border-(--ks-rule) rounded-xl p-6 sm:p-8 text-sm font-bold shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 outline-none focus:border-[#E87722] resize-none"
                                 />
                                 <button
                                     type="submit"
@@ -367,44 +367,44 @@ const BusinessProfile = () => {
 
                         {/* Recent Reviews List */}
                         <div className="space-y-8">
-                            <div className="flex items-center justify-between pb-4 border-b border-[var(--ks-rule)]">
+                            <div className="flex items-center justify-between pb-4 border-b border-(--ks-rule)">
                                 <h3 className="text-[10px] font-black text-[#E87722] uppercase tracking-[0.3em]">Recent Feedbacks</h3>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-black text-[var(--ks-text-faint)] uppercase tracking-widest">{reviews.length} Total</span>
+                                    <span className="text-[10px] font-black text-(--ks-text-faint) uppercase tracking-widest">{reviews.length} Total</span>
                                 </div>
                             </div>
 
                             {reviews.length > 0 ? (
                                 <div className="space-y-6">
                                     {reviews.map((r, idx) => (
-                                        <div key={idx} className="p-8 bg-[#0C0A07] rounded-4xl border border-[var(--ks-rule)] hover:bg-[#1C1813] hover:shadow-xl transition-all group">
+                                        <div key={idx} className="p-8 bg-[#0C0A07] rounded-4xl border border-(--ks-rule) hover:bg-[#1C1813] hover:shadow-xl transition-all group">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-12 h-12 rounded-2xl bg-[#1C1813] border border-[var(--ks-rule)] flex items-center justify-center text-[#E87722] font-black shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 group-hover:scale-110">
+                                                    <div className="w-12 h-12 rounded-2xl bg-[#1C1813] border border-(--ks-rule) flex items-center justify-center text-[#E87722] font-black shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 group-hover:scale-110">
                                                         {(r.reviewerName || r.name || 'A').charAt(0).toUpperCase()}
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-black text-[var(--ks-champagne)] tracking-tight">{r.reviewerName || r.name}</p>
-                                                        <p className="text-[10px] font-bold text-[var(--ks-text-faint)] uppercase tracking-widest">
+                                                        <p className="text-sm font-black text-(--ks-champagne) tracking-tight">{r.reviewerName || r.name}</p>
+                                                        <p className="text-[10px] font-bold text-(--ks-text-faint) uppercase tracking-widest">
                                                             {r.createdAt ? new Date(r.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recently'}
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div className="flex items-center gap-1 bg-[#1C1813] px-3 py-1.5 rounded-lg border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+                                                <div className="flex items-center gap-1 bg-[#1C1813] px-3 py-1.5 rounded-lg border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
                                                     <Star size={12} className="text-amber-400 fill-amber-400" />
-                                                    <span className="text-[11px] font-black text-[var(--ks-champagne)]">{r.rating}</span>
+                                                    <span className="text-[11px] font-black text-(--ks-champagne)">{r.rating}</span>
                                                 </div>
                                             </div>
-                                            <p className="text-[var(--ks-text-muted)] font-medium leading-relaxed text-[15px] italic pl-2 border-l-2 border-[#E87722]">
+                                            <p className="text-(--ks-text-muted) font-medium leading-relaxed text-[15px] italic pl-2 border-l-2 border-[#E87722]">
                                                 "{r.text || r.comment || 'Excellent service and great experience!'}"
                                             </p>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <div className="bg-[#14110D] rounded-4xl border border-dashed border-[var(--ks-rule)] py-16 text-center">
-                                    <MessageCircle size={32} className="text-[var(--ks-text-faint)] mx-auto mb-4 opacity-50" />
-                                    <p className="text-[var(--ks-text-faint)] font-bold italic text-sm">No reviews yet. Be the first to share your thoughts!</p>
+                                <div className="bg-[#14110D] rounded-4xl border border-dashed border-(--ks-rule) py-16 text-center">
+                                    <MessageCircle size={32} className="text-(--ks-text-faint) mx-auto mb-4 opacity-50" />
+                                    <p className="text-(--ks-text-faint) font-bold italic text-sm">No reviews yet. Be the first to share your thoughts!</p>
                                 </div>
                             )}
                         </div>
@@ -413,31 +413,31 @@ const BusinessProfile = () => {
 
                 {/* Sidebar - Stacks on mobile, sticks on desktop */}
                 <aside className="lg:col-span-4 space-y-6 sm:space-y-8">
-                    <div className="bg-[#1C1813] p-8 sm:p-10 lg:p-12 rounded-[2.5rem] sm:rounded-[3.5rem] border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 space-y-10 sm:space-y-12">
+                    <div className="bg-[#1C1813] p-8 sm:p-10 lg:p-12 rounded-[2.5rem] sm:rounded-[3.5rem] border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 space-y-10 sm:space-y-12">
                         {/* Contact Hub */}
                         <section>
-                            <h4 className="text-[9px] sm:text-[10px] font-black text-[var(--ks-text-faint)] mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
+                            <h4 className="text-[9px] sm:text-[10px] font-black text-(--ks-text-faint) mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
                                 Contact <div className="h-px bg-[#252019] flex-1"></div>
                             </h4>
                             <div className="space-y-6 sm:space-y-8">
                                 <div className="flex items-center gap-4 sm:gap-5">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#0C0A07] rounded-xl flex items-center justify-center text-[var(--ks-text-faint)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-[var(--ks-rule)]">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#0C0A07] rounded-xl flex items-center justify-center text-(--ks-text-faint) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-(--ks-rule)">
                                         <Phone size={16} />
                                     </div>
                                     <div>
-                                        <p className="text-[9px] font-black uppercase tracking-widest text-[var(--ks-text-faint)] mb-1">Phone</p>
-                                        <p className="text-sm font-black text-[var(--ks-champagne)] tracking-widest">{phone || 'N/A'}</p>
-                                        {phone2 && <p className="text-sm font-black text-[var(--ks-champagne)] tracking-widest mt-1">{phone2}</p>}
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-(--ks-text-faint) mb-1">Phone</p>
+                                        <p className="text-sm font-black text-(--ks-champagne) tracking-widest">{phone || 'N/A'}</p>
+                                        {phone2 && <p className="text-sm font-black text-(--ks-champagne) tracking-widest mt-1">{phone2}</p>}
                                     </div>
                                 </div>
                                 {email && (
                                     <div className="flex items-center gap-4 sm:gap-5 overflow-hidden">
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#0C0A07] rounded-xl flex items-center justify-center text-[var(--ks-text-faint)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-[var(--ks-rule)]">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#0C0A07] rounded-xl flex items-center justify-center text-(--ks-text-faint) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-(--ks-rule)">
                                             <Mail size={16} />
                                         </div>
                                         <div className="min-w-0">
-                                            <p className="text-[9px] font-black uppercase tracking-widest text-[var(--ks-text-faint)] mb-1">Email</p>
-                                            <p className="text-sm font-black text-[var(--ks-champagne)] truncate">{email}</p>
+                                            <p className="text-[9px] font-black uppercase tracking-widest text-(--ks-text-faint) mb-1">Email</p>
+                                            <p className="text-sm font-black text-(--ks-champagne) truncate">{email}</p>
                                         </div>
                                     </div>
                                 )}
@@ -446,7 +446,7 @@ const BusinessProfile = () => {
 
                         {/* Location Details */}
                         <section>
-                            <h4 className="text-[9px] sm:text-[10px] font-black text-[var(--ks-text-faint)] mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
+                            <h4 className="text-[9px] sm:text-[10px] font-black text-(--ks-text-faint) mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
                                 Location <div className="h-px bg-[#252019] flex-1"></div>
                             </h4>
                             <div className="space-y-6 sm:space-y-8">
@@ -454,21 +454,21 @@ const BusinessProfile = () => {
                                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#252019] rounded-xl flex items-center justify-center text-[#E87722] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 border border-[#E87722] shrink-0">
                                         <MapPin size={20} />
                                     </div>
-                                    <p className="text-[12px] sm:text-[13px] font-bold text-[var(--ks-text-muted)] leading-relaxed pt-1">{address}</p>
+                                    <p className="text-[12px] sm:text-[13px] font-bold text-(--ks-text-muted) leading-relaxed pt-1">{address}</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-6 pl-1 animate-in fade-in slide-in-from-bottom-2">
                                     <div>
-                                        <p className="text-[9px] font-black uppercase tracking-widest text-[var(--ks-text-faint)] mb-1">Assembly</p>
-                                        <p className="text-[12px] sm:text-sm font-black text-[var(--ks-champagne)]">{assembly}</p>
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-(--ks-text-faint) mb-1">Assembly</p>
+                                        <p className="text-[12px] sm:text-sm font-black text-(--ks-champagne)">{assembly}</p>
                                     </div>
                                     <div>
-                                        <p className="text-[9px] font-black uppercase tracking-widest text-[var(--ks-text-faint)] mb-1">District</p>
-                                        <p className="text-[12px] sm:text-sm font-black text-[var(--ks-champagne)]">{district}</p>
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-(--ks-text-faint) mb-1">District</p>
+                                        <p className="text-[12px] sm:text-sm font-black text-(--ks-champagne)">{district}</p>
                                     </div>
                                 </div>
 
                                 {/* Interactive Map Embed */}
-                                <div className="mt-8 aspect-video rounded-2xl overflow-hidden border border-[var(--ks-rule)] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 bg-[#0C0A07] relative group">
+                                <div className="mt-8 aspect-video rounded-2xl overflow-hidden border border-(--ks-rule) shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500 bg-[#0C0A07] relative group">
                                     <iframe
                                         width="100%"
                                         height="100%"
@@ -493,7 +493,7 @@ const BusinessProfile = () => {
 
                         {/* Timing Grid */}
                         <section>
-                            <h4 className="text-[9px] sm:text-[10px] font-black text-[var(--ks-text-faint)] mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
+                            <h4 className="text-[9px] sm:text-[10px] font-black text-(--ks-text-faint) mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
                                 Hours <div className="h-px bg-[#252019] flex-1"></div>
                             </h4>
                             <div className="space-y-6 sm:space-y-8">
@@ -501,22 +501,22 @@ const BusinessProfile = () => {
                                     {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => {
                                         const isChecked = activeDays.some(ad => ad.toLowerCase() === day.toLowerCase());
                                         return (
-                                            <div key={day} className={`px-2.5 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest transition-colors border ${isChecked ? 'bg-[#252019] border-[rgba(61,177,173,0.4)] text-[#3DB1AD]' : 'bg-[#0C0A07] border-[var(--ks-rule)] text-[var(--ks-text-faint)]'}`}>
+                                            <div key={day} className={`px-2.5 py-1.5 rounded-lg text-[8px] font-black uppercase tracking-widest transition-colors border ${isChecked ? 'bg-[#252019] border-[rgba(61,177,173,0.4)] text-[#3DB1AD]' : 'bg-[#0C0A07] border-(--ks-rule) text-(--ks-text-faint)'}`}>
                                                 {day}
                                             </div>
                                         )
                                     })}
                                 </div>
-                                <div className="flex items-center gap-4 p-4 bg-[#0C0A07] rounded-2xl border border-[var(--ks-rule)]">
-                                    <Clock size={16} className="text-[var(--ks-text-faint)]" />
-                                    <p className="text-[12px] font-black text-[var(--ks-champagne)] tracking-widest uppercase">{openTime || '09:00'} — {closeTime || '18:00'}</p>
+                                <div className="flex items-center gap-4 p-4 bg-[#0C0A07] rounded-2xl border border-(--ks-rule)">
+                                    <Clock size={16} className="text-(--ks-text-faint)" />
+                                    <p className="text-[12px] font-black text-(--ks-champagne) tracking-widest uppercase">{openTime || '09:00'} — {closeTime || '18:00'}</p>
                                 </div>
                             </div>
                         </section>
 
                         {/* Social Connects */}
                         <section>
-                            <h4 className="text-[9px] sm:text-[10px] font-black text-[var(--ks-text-faint)] mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
+                            <h4 className="text-[9px] sm:text-[10px] font-black text-(--ks-text-faint) mb-6 sm:mb-8 uppercase tracking-[0.3em] flex items-center gap-3">
                                 Links <div className="h-px bg-[#252019] flex-1"></div>
                             </h4>
                             <div className="grid grid-cols-2 gap-3">
@@ -536,7 +536,7 @@ const BusinessProfile = () => {
 const SocialButton = ({ icon: Icon, label, url }) => {
     if (!url) return null;
     return (
-        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1C1813] border border-[var(--ks-rule)] text-[var(--ks-text-muted)] rounded-xl hover:bg-[#E87722] hover:text-[#0C0A07] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
+        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1C1813] border border-(--ks-rule) text-(--ks-text-muted) rounded-xl hover:bg-[#E87722] hover:text-[#0C0A07] shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.08)] hover:-translate-y-1 transition-all duration-500">
             <Icon size={14} />
             <span className="text-[9px] font-black uppercase tracking-widest">{label}</span>
         </a>

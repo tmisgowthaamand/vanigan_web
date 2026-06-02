@@ -81,17 +81,17 @@ const Home = () => {
             {/* ════════════════════════════════════════════
                 SECTION 1: "Tell us your story" — Funding CTA
                ════════════════════════════════════════════ */}
-            <section className="bg-[#0C0A07] py-20 md:py-28 border-y border-[var(--ks-rule)]">
+            <section className="bg-[#0C0A07] py-20 md:py-28 border-y border-(--ks-rule)">
                 <div className="max-w-[1320px] mx-auto px-6">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                         <FadeIn className="w-full lg:w-1/2">
-                            <div className="bg-[#1C1813] rounded-[8px] p-10 md:p-14 border border-[var(--ks-rule)]">
+                            <div className="bg-[#1C1813] rounded-[8px] p-10 md:p-14 border border-(--ks-rule)">
                                 <p className="ks-eyebrow mb-6">AI-Powered</p>
                                 <h2 className="ks-display text-[34px] md:text-[44px] leading-[1.06] mb-5" style={{ fontWeight: 600 }}>
                                     Promote your listing,<br />
                                     <span className="text-[#E87722]">free for all businesses</span>
                                 </h2>
-                                <p className="text-[16px] text-[var(--ks-text-muted)] leading-[1.7] mb-8 max-w-md">
+                                <p className="text-[16px] text-(--ks-text-muted) leading-[1.7] mb-8 max-w-md">
                                     Register your business on Tamil Nadu's fastest growing network.
                                     Reach thousands of potential customers and traders today.
                                 </p>
@@ -109,7 +109,7 @@ const Home = () => {
                         {/* Impact Metrics */}
                         <FadeIn delay={0.2} className="w-full lg:w-1/2">
                             <p className="ks-eyebrow mb-3">Impact that matters</p>
-                            <h3 className="ks-display text-[26px] md:text-[30px] text-[var(--ks-champagne)] mb-10 leading-tight" style={{ fontWeight: 600 }}>
+                            <h3 className="ks-display text-[26px] md:text-[30px] text-(--ks-champagne) mb-10 leading-tight" style={{ fontWeight: 600 }}>
                                 Every year, Vanigan simplifies your journey <br className="hidden md:block" />to trusted business support.
                             </h3>
                             <div className="grid grid-cols-3 gap-6">
@@ -122,7 +122,7 @@ const Home = () => {
                                         <div className="ks-display text-[38px] md:text-[48px] text-[#E87722] leading-none mb-2" style={{ fontWeight: 400 }}>
                                             <AnimatedCounter end={m.value} suffix={m.suffix} />
                                         </div>
-                                        <p className="text-[13px] text-[var(--ks-text-muted)] font-medium">{m.label}</p>
+                                        <p className="text-[13px] text-(--ks-text-muted) font-medium">{m.label}</p>
                                     </div>
                                 ))}
                             </div>
@@ -141,7 +141,7 @@ const Home = () => {
                             <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
                                 Business listing for all
                             </h2>
-                            <p className="text-[17px] text-[var(--ks-text-muted)] font-normal max-w-xl mx-auto leading-[1.7]">
+                            <p className="text-[17px] text-(--ks-text-muted) font-normal max-w-xl mx-auto leading-[1.7]">
                                 No matter your industry, from retail to manufacturing, list your business and connect with the community.
                             </p>
                         </div>
@@ -169,15 +169,15 @@ const Home = () => {
                             }
                         ].map((card, i) => (
                             <FadeIn key={i} delay={i * 0.1}>
-                                <div className="rounded-[6px] p-8 md:p-10 h-full border border-[var(--ks-rule)] bg-[#1C1813] hover:border-[var(--ks-rule-strong)] hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
+                                <div className="rounded-[6px] p-8 md:p-10 h-full border border-(--ks-rule) bg-[#1C1813] hover:border-(--ks-rule-strong) hover:-translate-y-1 transition-all duration-500 group cursor-pointer">
                                     <div
                                         className="w-14 h-14 rounded-[6px] flex items-center justify-center mb-6 border"
                                         style={{ color: card.color, borderColor: 'var(--ks-rule)' }}
                                     >
                                         {card.icon}
                                     </div>
-                                    <h3 className="text-[20px] font-semibold text-[var(--ks-champagne)] mb-3">{card.title}</h3>
-                                    <p className="text-[15px] text-[var(--ks-text-muted)] leading-[1.7] font-normal">{card.desc}</p>
+                                    <h3 className="text-[20px] font-semibold text-(--ks-champagne) mb-3">{card.title}</h3>
+                                    <p className="text-[15px] text-(--ks-text-muted) leading-[1.7] font-normal">{card.desc}</p>
                                 </div>
                             </FadeIn>
                         ))}
@@ -188,14 +188,14 @@ const Home = () => {
             {/* ════════════════════════════════════════════
                 SECTION 3: "Why join?" Tabs
                ════════════════════════════════════════════ */}
-            <section className="bg-[#0C0A07] py-20 md:py-28 border-y border-[var(--ks-rule)]">
+            <section className="bg-[#0C0A07] py-20 md:py-28 border-y border-(--ks-rule)">
                 <div className="max-w-[1320px] mx-auto px-6">
                     <FadeIn>
                         <div className="text-center mb-16">
                             <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
                                 Why list on Vanigan?
                             </h2>
-                            <p className="text-[17px] text-[var(--ks-text-muted)] font-normal max-w-lg mx-auto leading-[1.7]">
+                            <p className="text-[17px] text-(--ks-text-muted) font-normal max-w-lg mx-auto leading-[1.7]">
                                 Tamil Nadu's premier business listing platform for traders and associates.
                             </p>
                         </div>
@@ -226,17 +226,17 @@ const Home = () => {
                             }
                         ].map((col, i) => (
                             <FadeIn key={i} delay={i * 0.12}>
-                                <div className="bg-[#1C1813] rounded-[6px] p-8 md:p-10 h-full border border-[var(--ks-rule)] hover:border-[var(--ks-rule-strong)] transition-all duration-500">
-                                    <div className="w-12 h-12 rounded-[6px] flex items-center justify-center mb-6 border border-[var(--ks-rule)]" style={{ color: col.color }}>
+                                <div className="bg-[#1C1813] rounded-[6px] p-8 md:p-10 h-full border border-(--ks-rule) hover:border-(--ks-rule-strong) transition-all duration-500">
+                                    <div className="w-12 h-12 rounded-[6px] flex items-center justify-center mb-6 border border-(--ks-rule)" style={{ color: col.color }}>
                                         {col.icon}
                                     </div>
-                                    <h3 className="text-[22px] font-semibold text-[var(--ks-champagne)] mb-3">{col.title}</h3>
-                                    <p className="text-[15px] text-[var(--ks-text-muted)] leading-[1.7] mb-6">{col.desc}</p>
+                                    <h3 className="text-[22px] font-semibold text-(--ks-champagne) mb-3">{col.title}</h3>
+                                    <p className="text-[15px] text-(--ks-text-muted) leading-[1.7] mb-6">{col.desc}</p>
                                     <ul className="space-y-3">
                                         {col.items.map((item, j) => (
                                             <li key={j} className="flex items-start gap-3">
                                                 <CheckCircle size={16} className="mt-0.5 shrink-0" style={{ color: col.color }} />
-                                                <span className="text-[14px] font-medium text-[var(--ks-text)]">{item}</span>
+                                                <span className="text-[14px] font-medium text-(--ks-text)">{item}</span>
                                             </li>
                                         ))}
                                     </ul>
@@ -247,7 +247,7 @@ const Home = () => {
 
                     <FadeIn delay={0.3}>
                         <div className="text-center mt-14">
-                            <p className="text-[15px] text-[var(--ks-text-muted)] mb-4 font-medium">Ready to get started?</p>
+                            <p className="text-[15px] text-(--ks-text-muted) mb-4 font-medium">Ready to get started?</p>
                             <Link to="/add-business" className="ks-button ks-button-primary !min-h-[48px]">
                                 Join for free
                             </Link>
@@ -267,7 +267,7 @@ const Home = () => {
                                 <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-4" style={{ fontWeight: 600 }}>
                                     Latest member stories
                                 </h2>
-                                <p className="text-[17px] text-[var(--ks-text-muted)] font-normal max-w-xl leading-[1.7]">
+                                <p className="text-[17px] text-(--ks-text-muted) font-normal max-w-xl leading-[1.7]">
                                     Meet the community and discover what they have achieved with membership.
                                 </p>
                             </div>
@@ -283,12 +283,12 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {loading ? (
                             [1, 2, 3].map(i => (
-                                <div key={i} className="h-[380px] bg-[#1C1813] border border-[var(--ks-rule)] rounded-[6px] animate-pulse" />
+                                <div key={i} className="h-[380px] bg-[#1C1813] border border-(--ks-rule) rounded-[6px] animate-pulse" />
                             ))
                         ) : businesses.length > 0 ? (
                             businesses.map(biz => <BusinessCard key={biz._id || biz.id} business={biz} />)
                         ) : (
-                            <div className="col-span-3 text-center py-16 text-[var(--ks-text-faint)] text-[16px] font-medium">
+                            <div className="col-span-3 text-center py-16 text-(--ks-text-faint) text-[16px] font-medium">
                                 No featured businesses available yet.
                             </div>
                         )}
@@ -299,7 +299,7 @@ const Home = () => {
             {/* ════════════════════════════════════════════
                 SECTION 5: Final CTA
                ════════════════════════════════════════════ */}
-            <section className="py-20 md:py-28 bg-[#0C0A07] border-t border-[var(--ks-rule)] relative overflow-hidden">
+            <section className="py-20 md:py-28 bg-[#0C0A07] border-t border-(--ks-rule) relative overflow-hidden">
                 <div className="ks-seam absolute top-0 left-0 right-0" />
                 <div className="max-w-[800px] mx-auto px-6 text-center relative z-10">
                     <FadeIn>
@@ -307,7 +307,7 @@ const Home = () => {
                             Ready to join the<br />
                             <span className="text-[#E87722]">Vanigan Community?</span>
                         </h2>
-                        <p className="text-[17px] text-[var(--ks-text-muted)] font-normal leading-[1.7] mb-10 max-w-lg mx-auto">
+                        <p className="text-[17px] text-(--ks-text-muted) font-normal leading-[1.7] mb-10 max-w-lg mx-auto">
                             The first step to growing your business in Tamil Nadu is getting verified.
                             It only takes 2 minutes.
                         </p>
