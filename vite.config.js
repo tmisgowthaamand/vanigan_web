@@ -9,6 +9,16 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    port: 3001
-  }
+    port: 3001,
+    // Mirror the Vercel /proxy-api rewrite during local dev so the same
+    // same-origin API path works in development without CORS issues.
+    proxy: {
+      '/proxy-api': {
+        target: 'https://vanigan-app-automation-5il0.onrender.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/proxy-api/, ''),
+      },
+    },
+  },
 })

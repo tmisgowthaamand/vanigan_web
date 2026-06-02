@@ -21,6 +21,10 @@
     ],
     "rewrites": [
         {
+            "source": "/proxy-api/:path*",
+            "destination": "https://vanigan-app-automation-5il0.onrender.com/:path*"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }

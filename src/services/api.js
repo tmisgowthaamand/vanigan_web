@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com';
+// Always route through the same-origin proxy path to avoid CORS on any
+// Vercel domain. vercel.json rewrites /proxy-api/* to the Render backend,
+// and vite.config.js proxies it during local dev. We intentionally ignore
+// VITE_API_BASE_URL here because the proxy path must stay same-origin.
+const API_BASE_URL = '/proxy-api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,

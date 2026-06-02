@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://vanigan-app-automation-5il0.onrender.com';
+// Same-origin proxy path (see src/services/api.js for rationale).
+const API_BASE_URL = '/proxy-api';
 
 const api = axios.create({
     baseURL: API_BASE_URL,
