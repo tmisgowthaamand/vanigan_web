@@ -186,45 +186,47 @@ const BusinessProfile = () => {
                         <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                     </div>
 
-                    {/* Meta Hub - Centered stacked layout */}
+                    {/* Meta Hub - logo + info side by side, info vertically centered & left-aligned */}
                     <div className="px-6 sm:px-10 lg:px-16 -mt-16 sm:-mt-20 lg:-mt-24 relative z-10">
-                        <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
-                            {/* Logo - centered in its box */}
-                            <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0">
-                                {image ? (
-                                    <img src={image} alt="Logo" className="w-full h-full object-contain" />
-                                ) : (
-                                    <div className="text-4xl sm:text-5xl">🏢</div>
-                                )}
-                            </div>
+                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-10">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8">
+                                {/* Logo */}
+                                <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
+                                    {image ? (
+                                        <img src={image} alt="Logo" className="w-full h-full object-contain" />
+                                    ) : (
+                                        <div className="text-4xl sm:text-5xl">🏢</div>
+                                    )}
+                                </div>
 
-                            {/* Title + meta stacked and centered */}
-                            <div className="flex flex-col items-center gap-4">
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
-                                    {name}
-                                </h1>
-                                <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border border-emerald-100 flex items-center gap-2 w-fit">
-                                    <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    Active
-                                </span>
-                                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm">
-                                    <div className="flex items-center gap-1.5 text-amber-500">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={16} fill={i < (avgRating || 0) ? "currentColor" : "none"} strokeWidth={i < (avgRating || 0) ? 0 : 2} />
-                                        ))}
-                                        <span className="ml-1 font-black text-slate-900">{avgRating || 0}</span>
-                                        <span className="text-slate-400 font-bold ml-1">({reviewCount || 0})</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-slate-400 bg-slate-50 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-slate-100">
-                                        <span className="text-rose-600">{category}</span>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                        <span className="text-slate-900 tracking-tighter">#{listingCode || 'LISTING'}</span>
+                                {/* Title + meta — left aligned, vertically centered against the logo */}
+                                <div className="flex flex-col items-center sm:items-start gap-4 text-center sm:text-left">
+                                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
+                                        {name}
+                                    </h1>
+                                    <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border border-emerald-100 flex items-center gap-2 w-fit">
+                                        <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                        Active
+                                    </span>
+                                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-sm">
+                                        <div className="flex items-center gap-1.5 text-amber-500">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} size={16} fill={i < (avgRating || 0) ? "currentColor" : "none"} strokeWidth={i < (avgRating || 0) ? 0 : 2} />
+                                            ))}
+                                            <span className="ml-1 font-black text-slate-900">{avgRating || 0}</span>
+                                            <span className="text-slate-400 font-bold ml-1">({reviewCount || 0})</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-slate-400 bg-slate-50 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-slate-100">
+                                            <span className="text-rose-600">{category}</span>
+                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                            <span className="text-slate-900 tracking-tighter">#{listingCode || 'LISTING'}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* CTA Action Buttons - centered */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 w-full sm:w-auto">
+                            {/* CTA Action Buttons */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-wrap gap-3 sm:gap-4 w-full lg:w-auto">
                                 <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#0f172a] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg hover:-translate-y-1">
                                     <MessageCircle size={18} /> WhatsApp
                                 </a>
