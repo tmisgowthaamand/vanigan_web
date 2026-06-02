@@ -117,7 +117,7 @@ const AddBusiness = () => {
       <div className="min-h-screen bg-lacquer flex flex-col pt-20">
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-raised rounded-[3rem] p-12 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule text-center animate-in fade-in zoom-in duration-500">
+          <div className="max-w-md w-full bg-raised rounded-[24px] sm:rounded-[3rem] p-8 sm:p-12 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule text-center animate-in fade-in zoom-in duration-500">
             <div className="w-24 h-24 bg-graphite rounded-4xl flex items-center justify-center text-kinpaku mx-auto mb-10 border border-kinpaku shadow-sm">
               <CheckCircle size={48} />
             </div>
@@ -135,7 +135,7 @@ const AddBusiness = () => {
       <Navbar />
       <div className="max-w-4xl mx-auto px-4">
         {/* Progress Header */}
-        <div className="bg-raised rounded-[32px] p-8 mb-10 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-rule">
+        <div className="bg-raised rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 mb-8 sm:mb-10 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-rule">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <h1 className="text-3xl font-black text-champagne tracking-tighter mb-2">Register Your Business</h1>
@@ -157,7 +157,7 @@ const AddBusiness = () => {
 
         {step === 1 ? (
           /* Step 1: Verification Refined - White & Red Theme */
-          <div className="bg-raised rounded-[40px] p-10 md:p-16 shadow-[0_30px_60px_-12px_rgba(225,29,72,0.12)] border border-kinpaku/50 animate-in fade-in zoom-in-95 duration-700">
+          <div className="bg-raised rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-[0_30px_60px_-12px_rgba(225,29,72,0.12)] border border-kinpaku/50 animate-in fade-in zoom-in-95 duration-700">
             <div className="max-w-md mx-auto space-y-10">
               <div className="space-y-4">
                 <h2 className="text-4xl font-black text-champagne tracking-tight">Start Your Business <span className="text-kinpaku">Journey</span></h2>
@@ -179,14 +179,14 @@ const AddBusiness = () => {
                     placeholder="Enter 10-digit mobile number"
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
-                    className="w-full bg-lacquer-deep border-2 border-rule rounded-2xl px-8 py-6 outline-none focus:border-kinpaku/30 focus:bg-raised transition-all text-champagne text-xl font-bold placeholder:text-faint"
+                    className="w-full bg-lacquer-deep border-2 border-rule rounded-2xl px-5 sm:px-8 py-4 sm:py-6 outline-none focus:border-kinpaku/30 focus:bg-raised transition-all text-champagne text-xl font-bold placeholder:text-faint"
                   />
                 </div>
 
                 <div className="space-y-8">
                   <button
                     onClick={() => whatsappNumber.length >= 10 && setStep(2)}
-                    className="w-full bg-kinpaku text-lacquer-deep py-7 rounded-2xl text-[15px] font-black uppercase tracking-[0.35em] flex items-center justify-center gap-6 hover:bg-kinpaku-rich shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:-translate-y-1 transition-all group"
+                    className="w-full bg-kinpaku text-lacquer-deep py-5 sm:py-7 rounded-2xl text-[13px] sm:text-[15px] font-black uppercase tracking-[0.2em] sm:tracking-[0.35em] flex items-center justify-center gap-6 hover:bg-kinpaku-rich shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:-translate-y-1 transition-all group"
                   >
                     GET STARTED NOW <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform duration-500" />
                   </button>
@@ -203,7 +203,7 @@ const AddBusiness = () => {
           </div>
         ) : (
           /* Step 2: Form */
-          <form onSubmit={handleSubmit} className="bg-raised rounded-[40px] p-10 md:p-16 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule space-y-16 animate-in slide-in-from-bottom-10 duration-700">
+          <form onSubmit={handleSubmit} className="bg-raised rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule space-y-16 animate-in slide-in-from-bottom-10 duration-700">
 
             {/* Status Messages */}
             {status !== 'idle' && (
@@ -219,7 +219,7 @@ const AddBusiness = () => {
             <div className="space-y-10 group">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">1</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Essential Business Identity</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Essential Business Identity</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
@@ -259,7 +259,7 @@ const AddBusiness = () => {
             <div className="pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">2</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Where is your Business Located?</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Where is your Business Located?</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
@@ -312,7 +312,7 @@ const AddBusiness = () => {
             <div className="pt-20 space-y-10 border-t border-rule text-left">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">3</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Direct Contact Channels</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Direct Contact Channels</h3>
               </div>
 
               <div className="space-y-10">
@@ -322,7 +322,7 @@ const AddBusiness = () => {
                     name="whatsappPrimary"
                     value={formData.whatsappPrimary}
                     onChange={handleChange}
-                    className="w-full bg-lacquer-deep border-2 border-rule rounded-2xl px-8 py-6 text-lg font-bold text-champagne shadow-sm focus:border-kinpaku focus:bg-raised transition-all placeholder:text-faint"
+                    className="w-full bg-lacquer-deep border-2 border-rule rounded-2xl px-5 sm:px-8 py-4 sm:py-6 text-lg font-bold text-champagne shadow-sm focus:border-kinpaku focus:bg-raised transition-all placeholder:text-faint"
                     placeholder="9876543210"
                   />
                 </div>
@@ -357,7 +357,7 @@ const AddBusiness = () => {
             <div className="pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">4</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Social Media & Operating Hours</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Social Media & Operating Hours</h3>
               </div>
 
               <div className="space-y-12">
@@ -374,7 +374,7 @@ const AddBusiness = () => {
                   ))}
 
                   {showPlatformSelector ? (
-                    <div className="flex flex-wrap gap-4 p-8 bg-graphite rounded-[32px] border border-kinpaku/50 animate-in fade-in zoom-in-95 duration-400">
+                    <div className="flex flex-wrap gap-3 sm:gap-4 p-5 sm:p-8 bg-graphite rounded-[20px] sm:rounded-[32px] border border-kinpaku/50 animate-in fade-in zoom-in-95 duration-400">
                       {['Facebook', 'Twitter', 'Instagram', 'Google Maps', 'YouTube'].map(p => {
                         const id = p.toLowerCase().split(' ')[0];
                         if (formData.socialLinks[id] !== undefined) return null;
@@ -386,7 +386,7 @@ const AddBusiness = () => {
                   )}
                 </div>
 
-                <div className="space-y-8 bg-lacquer-deep rounded-[40px] p-10 border border-rule">
+                <div className="space-y-8 bg-lacquer-deep rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 border border-rule">
                   <label className="text-[11px] font-black text-champagne uppercase tracking-widest pl-1">Working Days</label>
                   <div className="flex flex-wrap gap-3">
                     {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
@@ -418,9 +418,9 @@ const AddBusiness = () => {
             <div className="pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">5</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Clear the Doubts (FAQ)</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Clear the Doubts (FAQ)</h3>
               </div>
-              <div className="space-y-10 bg-graphite rounded-[40px] p-12 border border-kinpaku/30">
+              <div className="space-y-10 bg-graphite rounded-[24px] sm:rounded-[40px] p-6 sm:p-12 border border-kinpaku/30">
                 <div className="space-y-4">
                   <label className="text-[11px] font-black text-champagne uppercase tracking-widest pl-1">Your Customer's Main Question</label>
                   <input name="faqQuestion" value={formData.faqQuestion} onChange={handleChange} className="form-input-light bg-raised border-rule px-8" placeholder="e.g. Do you provide doorstep service?" />
@@ -436,7 +436,7 @@ const AddBusiness = () => {
             <div className="pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">6</div>
-                <h3 className="text-kinpaku text-[11px] font-black uppercase tracking-[0.4em]">Business Gallery & Branding</h3>
+                <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Business Gallery & Branding</h3>
               </div>
 
               {/* Banner Upload */}
@@ -459,7 +459,7 @@ const AddBusiness = () => {
               {/* Gallery Images */}
               <div className="space-y-4 pt-8">
                 <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Gallery Images <span className="text-[10px] text-faint normal-case font-medium ml-2">(Optional — up to 10)</span></label>
-                <div className="bg-lacquer-deep border-2 border-rule rounded-[32px] p-10 space-y-6">
+                <div className="bg-lacquer-deep border-2 border-rule rounded-[20px] sm:rounded-[32px] p-5 sm:p-10 space-y-6">
                   {formData.gallery.length > 0 && (
                     <div className="flex flex-wrap gap-4">
                       {formData.gallery.map((file, i) => (
@@ -479,7 +479,7 @@ const AddBusiness = () => {
                 <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Services / Products <span className="text-[10px] text-faint normal-case font-medium ml-2">(Optional — up to 6)</span></label>
                 <div className="space-y-6">
                   {formData.services.map((service, index) => (
-                    <div key={index} className="bg-lacquer-deep rounded-[32px] p-10 border border-rule space-y-10 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <div key={index} className="bg-lacquer-deep rounded-[20px] sm:rounded-[32px] p-5 sm:p-10 border border-rule space-y-8 sm:space-y-10 animate-in fade-in slide-in-from-top-4 duration-300">
                       <div className="flex justify-between items-center pb-4 border-b border-rule">
                         <span className="text-champagne text-xs font-black uppercase tracking-widest">Service {index + 1}</span>
                         <button type="button" onClick={() => setFormData(p => ({ ...p, services: p.services.filter((_, i) => i !== index) }))} className="text-kinpaku text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><X size={14} /> Remove</button>
@@ -514,7 +514,7 @@ const AddBusiness = () => {
               {/* Profile Photo - LAST as per request */}
               <div className="space-y-4 pt-16 border-t border-rule">
                 <label className="text-[11px] font-black text-champagne uppercase tracking-widest">Profile Photo <span className="text-[10px] text-faint normal-case font-medium ml-2">(Business Logo)</span></label>
-                <div onClick={() => document.getElementById('profile-upload').click()} className="border-2 border-dashed border-rule rounded-[32px] p-16 text-center hover:border-kinpaku hover:bg-graphite transition-all cursor-pointer group relative overflow-hidden flex items-center justify-center bg-lacquer-deep min-h-[220px]">
+                <div onClick={() => document.getElementById('profile-upload').click()} className="border-2 border-dashed border-rule rounded-[20px] sm:rounded-[32px] p-8 sm:p-16 text-center hover:border-kinpaku hover:bg-graphite transition-all cursor-pointer group relative overflow-hidden flex items-center justify-center bg-lacquer-deep min-h-[220px]">
                   <input type="file" id="profile-upload" hidden accept="image/*" onChange={(e) => { const file = e.target.files[0]; if (file) setFormData(p => ({ ...p, profileImage: file })); }} />
                   {formData.profileImage ? (
                     <div className="w-full h-full absolute inset-0"><img src={URL.createObjectURL(formData.profileImage)} className="w-full h-full object-cover" alt="Profile" /><div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 flex items-center justify-center"><p className="text-white font-black uppercase text-[11px] tracking-widest bg-kinpaku px-6 py-3 rounded-full">Change Logo</p></div></div>
@@ -530,7 +530,7 @@ const AddBusiness = () => {
 
               {/* Submit Section */}
               <div className="pt-16 border-t border-rule text-center">
-                <button type="submit" disabled={status === 'loading'} className="w-full md:w-auto min-w-[320px] bg-kinpaku text-lacquer-deep px-12 py-7 rounded-2xl text-[14px] font-black uppercase tracking-[0.4em] shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:bg-kinpaku-rich hover:-translate-y-1 transition-all disabled:opacity-50 active:scale-95 active:translate-y-0">
+                <button type="submit" disabled={status === 'loading'} className="w-full md:w-auto md:min-w-[320px] bg-kinpaku text-lacquer-deep px-8 sm:px-12 py-5 sm:py-7 rounded-2xl text-[12px] sm:text-[14px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:bg-kinpaku-rich hover:-translate-y-1 transition-all disabled:opacity-50 active:scale-95 active:translate-y-0">
                   {status === 'loading' ? 'Processing...' : 'Submit Registration'}
                 </button>
                 <p className="mt-8 text-[11px] text-faint font-bold uppercase tracking-widest leading-relaxed">By submitting, you agree to our platform guidelines & terms</p>

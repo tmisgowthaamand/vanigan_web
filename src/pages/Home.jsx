@@ -119,10 +119,10 @@ const Home = () => {
                                     { value: stats.leads, suffix: '+', label: 'Direct leads generated' }
                                 ].map((m, i) => (
                                     <div key={i} className="text-center">
-                                        <div className="ks-display text-[38px] md:text-[48px] text-kinpaku leading-none mb-2" style={{ fontWeight: 400 }}>
+                                        <div className="ks-display text-[26px] sm:text-[38px] md:text-[48px] text-kinpaku leading-none mb-2" style={{ fontWeight: 400 }}>
                                             <AnimatedCounter end={m.value} suffix={m.suffix} />
                                         </div>
-                                        <p className="text-[13px] text-muted font-medium">{m.label}</p>
+                                        <p className="text-[12px] sm:text-[13px] text-muted font-medium leading-tight">{m.label}</p>
                                     </div>
                                 ))}
                             </div>

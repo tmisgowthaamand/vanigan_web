@@ -10,14 +10,14 @@ const Contact = () => {
                 subtitle="We're here to support your business journey. Reach out to us for any queries or partnerships."
             />
 
-            <section className="py-24">
+            <section className="py-16 sm:py-24">
                 <div className="max-w-[1280px] mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-20">
+                    <div className="grid lg:grid-cols-2 gap-10 lg:gap-20">
                         {/* Form Area */}
                         <div>
-                            <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-12">Send us a message</h2>
+                            <h2 className="text-[28px] sm:text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-8 sm:mb-12">Send us a message</h2>
                             <form className="space-y-6">
-                                <div className="grid grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label className="text-[12px] font-bold uppercase tracking-widest text-muted">Full Name</label>
                                         <input type="text" placeholder="John Doe" className="w-full bg-lacquer border border-rule rounded-xl p-4 text-[15px] font-medium text-champagne focus:bg-raised focus:border-kinpaku/50 outline-none transition-all placeholder:text-faint" />
@@ -43,7 +43,7 @@ const Contact = () => {
 
                         {/* Contact Info Area */}
                         <div className="space-y-6">
-                            <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-12">Contact Information</h2>
+                            <h2 className="text-[28px] sm:text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-8 sm:mb-12">Contact Information</h2>
 
                             {[
                                 { title: 'Our Office', icon: MapPin, text: '50, Surya Avenue Main Road, Kuruniji Nagar Ext, Chrompet, Chennai - 600044' },
@@ -67,7 +67,7 @@ const Contact = () => {
             </section>
 
             {/* Map Section */}
-            <section className="max-w-[1280px] mx-auto px-6 pb-24">
+            <section className="max-w-[1280px] mx-auto px-6 pb-16 sm:pb-24">
                 <div className="aspect-21/9 bg-lacquer rounded-[36px] overflow-hidden border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative group">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.756247493208!2d80.1260481!3d12.9234191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f0535e5d36b%3A0xe7f9b88a853e30f!2sChromepet%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1717056000000!5m2!1sen!2sin"

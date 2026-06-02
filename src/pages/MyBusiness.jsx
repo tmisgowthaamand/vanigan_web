@@ -172,15 +172,15 @@ const MyBusiness = () => {
 
                         {/* Right — Stats cards */}
                         <div className="w-full lg:w-1/2">
-                            <div className="grid grid-cols-3 gap-6 bg-raised/80 backdrop-blur-xl p-8 rounded-3xl border border-rule shadow-[0_8px_30px_rgba(232,119,34,0.06)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-500">
+                            <div className="grid grid-cols-3 gap-3 sm:gap-6 bg-raised/80 backdrop-blur-xl p-5 sm:p-8 rounded-3xl border border-rule shadow-[0_8px_30px_rgba(232,119,34,0.06)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-500">
                                 {[
                                     { value: stats.searches, label: 'Business searches' },
                                     { value: stats.total > 0 ? stats.total.toLocaleString() + '+' : '50K+', label: 'Verified listings' },
                                     { value: stats.leads, label: 'Direct leads' }
                                 ].map((m, i) => (
                                     <div key={i} className="text-center group">
-                                        <div className="text-[36px] md:text-[44px] font-extrabold text-champagne leading-none mb-2 group-hover:text-kinpaku transition-colors">{m.value}</div>
-                                        <p className="text-[14px] text-muted font-medium">{m.label}</p>
+                                        <div className="text-[24px] sm:text-[36px] md:text-[44px] font-extrabold text-champagne leading-none mb-2 group-hover:text-kinpaku transition-colors">{m.value}</div>
+                                        <p className="text-[11px] sm:text-[14px] text-muted font-medium leading-tight">{m.label}</p>
                                     </div>
                                 ))}
                             </div>

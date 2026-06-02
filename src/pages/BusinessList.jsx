@@ -280,7 +280,7 @@ const BusinessList = () => {
                         </div>
 
                         {/* Right — Animated Components instead of empty space */}
-                        <div className="w-full lg:w-1/2 relative h-[400px] flex items-center justify-center">
+                        <div className="hidden lg:flex w-full lg:w-1/2 relative h-[400px] items-center justify-center">
                             {/* Main center mockup card */}
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}

@@ -20,9 +20,9 @@ const TermsAndConditions = () => {
                 subtitle="The rules, guidelines, and terms that govern your use of our platform."
             />
 
-            <section className="py-24">
+            <section className="py-16 sm:py-24">
                 <div className="max-w-[1280px] mx-auto px-6">
-                    <div className="flex flex-col lg:flex-row gap-16">
+                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
                         {/* Sidebar */}
                         <aside className="hidden lg:block w-72 shrink-0 sticky top-32 h-fit">
                             <h4 className="text-[12px] font-bold uppercase tracking-widest text-muted mb-6">On This Page</h4>

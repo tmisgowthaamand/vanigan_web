@@ -11,9 +11,9 @@ const About = () => {
             />
 
             {/* AI Platform Section */}
-            <section className="py-24">
+            <section className="py-16 sm:py-24">
                 <div className="max-w-[1280px] mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                         <div className="order-2 lg:order-1">
                             <h4 className="text-kinpaku text-[13px] font-bold uppercase tracking-[0.12em] mb-4">India's Leading</h4>
                             <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne mb-8 leading-[1.1] tracking-[-0.01em]">
@@ -53,7 +53,7 @@ const About = () => {
             </section>
 
             {/* Our Core Values */}
-            <section className="py-24 bg-lacquer">
+            <section className="py-16 sm:py-24 bg-lacquer">
                 <div className="max-w-[1280px] mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-4">Our Core Values</h2>
@@ -77,7 +77,7 @@ const About = () => {
             </section>
 
             {/* The People Behind Vanigan */}
-            <section className="py-24 bg-raised">
+            <section className="py-16 sm:py-24 bg-raised">
                 <div className="max-w-[1280px] mx-auto px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-4">The People Behind Vanigan</h2>
