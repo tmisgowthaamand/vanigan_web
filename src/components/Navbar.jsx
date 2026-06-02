@@ -43,11 +43,11 @@ const Navbar = () => {
     const linkActive = "text-accent";
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-[2000] border-b border-line bg-paper/85 backdrop-blur-md">
+        <nav className="fixed top-0 left-0 right-0 z-2000 border-b border-line bg-paper/85 backdrop-blur-md">
             <div className="max-w-[1240px] mx-auto px-5 sm:px-8 lg:px-12">
                 <div className="flex justify-between h-[72px] items-center gap-6">
                     {/* Logo */}
-                    <Link to="/" className="flex-shrink-0 flex items-center gap-3 group min-w-0">
+                    <Link to="/" className="shrink-0 flex items-center gap-3 group min-w-0">
                         <img
                             src="https://vanigan.org/front/images/home/tnvslogo.png"
                             alt="Vanigan Logo"
