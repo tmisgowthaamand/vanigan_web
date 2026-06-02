@@ -169,7 +169,7 @@ const BusinessProfile = () => {
 
                 <div className="bg-white rounded-4xl sm:rounded-[3.5rem] border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.03)] overflow-hidden">
                     {/* Hero Banner with Auto-Alignment */}
-                    <div className="h-56 sm:h-80 lg:h-96 relative overflow-hidden bg-slate-100 border-b border-slate-100">
+                    <div className="h-40 sm:h-52 lg:h-60 relative overflow-hidden bg-slate-100 border-b border-slate-100">
                         {coverImage ? (
                             <img
                                 src={coverImage}
@@ -186,56 +186,58 @@ const BusinessProfile = () => {
                         <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
                     </div>
 
-                    {/* Meta Hub - logo overlaps banner; name left, action buttons right */}
-                    <div className="px-6 sm:px-10 lg:px-16 relative z-10">
-                        {/* Logo pulled up over the banner */}
-                        <div className="-mt-16 sm:-mt-20 lg:-mt-24 mb-6 flex justify-center sm:justify-start">
-                            <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 bg-white rounded-3xl sm:rounded-[2.5rem] p-3 sm:p-4 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0">
-                                {image ? (
-                                    <img src={image} alt="Logo" className="w-full h-full object-contain" />
-                                ) : (
-                                    <div className="text-4xl sm:text-5xl">🏢</div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Row: name + meta on the left, action buttons on the right */}
+                    {/* Meta Hub - single centered row: logo + name (left) · buttons (right) */}
+                    <div className="px-6 sm:px-10 lg:px-16 -mt-12 sm:-mt-14 lg:-mt-16 relative z-10">
                         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10">
-                            {/* Title + meta — left aligned */}
-                            <div className="flex flex-col items-center lg:items-start gap-4 text-center lg:text-left">
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-tight">
-                                    {name}
-                                </h1>
-                                <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest border border-emerald-100 flex items-center gap-2 w-fit">
-                                    <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    Active
-                                </span>
-                                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-sm">
-                                    <div className="flex items-center gap-1.5 text-amber-500">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={16} fill={i < (avgRating || 0) ? "currentColor" : "none"} strokeWidth={i < (avgRating || 0) ? 0 : 2} />
-                                        ))}
-                                        <span className="ml-1 font-black text-slate-900">{avgRating || 0}</span>
-                                        <span className="text-slate-400 font-bold ml-1">({reviewCount || 0})</span>
+                            {/* Left: logo + name block */}
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7 min-w-0">
+                                {/* Logo */}
+                                <div className="w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 bg-white rounded-3xl sm:rounded-[2rem] p-3 shadow-2xl border border-slate-50 flex items-center justify-center overflow-hidden shrink-0 mx-auto sm:mx-0">
+                                    {image ? (
+                                        <img src={image} alt="Logo" className="w-full h-full object-contain" />
+                                    ) : (
+                                        <div className="text-4xl sm:text-5xl">🏢</div>
+                                    )}
+                                </div>
+
+                                {/* Name + meta */}
+                                <div className="flex flex-col items-center sm:items-start gap-3 text-center sm:text-left min-w-0">
+                                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+                                            {name}
+                                        </h1>
+                                        <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest border border-emerald-100 flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                            Active
+                                        </span>
                                     </div>
-                                    <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-slate-400 bg-slate-50 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-slate-100">
-                                        <span className="text-rose-600">{category}</span>
-                                        <div className="w-1 h-1 rounded-full bg-slate-300" />
-                                        <span className="text-slate-900 tracking-tighter">#{listingCode || 'LISTING'}</span>
+                                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-sm">
+                                        <div className="flex items-center gap-1.5 text-amber-500">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Star key={i} size={16} fill={i < (avgRating || 0) ? "currentColor" : "none"} strokeWidth={i < (avgRating || 0) ? 0 : 2} />
+                                            ))}
+                                            <span className="ml-1 font-black text-slate-900">{avgRating || 0}</span>
+                                            <span className="text-slate-400 font-bold ml-1">({reviewCount || 0})</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 sm:gap-3 font-black text-[9px] sm:text-[11px] uppercase tracking-widest text-slate-400 bg-slate-50 px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl border border-slate-100">
+                                            <span className="text-rose-600">{category}</span>
+                                            <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                            <span className="text-slate-900 tracking-tighter">#{listingCode || 'LISTING'}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* CTA Action Buttons - right side */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-wrap gap-3 sm:gap-4 w-full lg:w-auto shrink-0">
-                                <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 px-6 py-4 bg-[#0f172a] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-lg hover:-translate-y-1">
-                                    <MessageCircle size={18} /> WhatsApp
+                            {/* Right: CTA Action Buttons in a single row */}
+                            <div className="flex flex-nowrap items-center justify-center lg:justify-end gap-2.5 sm:gap-3 shrink-0">
+                                <a href={getWhatsAppLink(phone || phone2)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 bg-[#0f172a] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] hover:bg-emerald-600 transition-all shadow-lg hover:-translate-y-1 whitespace-nowrap">
+                                    <MessageCircle size={16} /> WhatsApp
                                 </a>
-                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-rose-400 hover:text-rose-600 transition-all shadow-sm hover:-translate-y-1">
-                                    <Phone size={18} /> Call
+                                <a href={getTelLink(phone || phone2)} className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] hover:border-rose-400 hover:text-rose-600 transition-all shadow-sm hover:-translate-y-1 whitespace-nowrap">
+                                    <Phone size={16} /> Call
                                 </a>
-                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:border-blue-400 hover:text-blue-600 transition-all shadow-sm hover:-translate-y-1">
-                                    <Navigation size={18} /> Directions
+                                <button onClick={() => window.open(googleMap || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${address}`)}`, '_blank')} className="flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 bg-white border-2 border-slate-100 text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-[0.15em] hover:border-blue-400 hover:text-blue-600 transition-all shadow-sm hover:-translate-y-1 whitespace-nowrap">
+                                    <Navigation size={16} /> Directions
                                 </button>
                             </div>
                         </div>
