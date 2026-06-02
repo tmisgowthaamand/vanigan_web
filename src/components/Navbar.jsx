@@ -46,7 +46,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-lacquer-deep/95 backdrop-blur-xl border-b border-rule' : 'bg-lacquer border-b border-transparent'}`}
+            className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-lacquer-deep/95 backdrop-blur-xl border-b border-rule' : 'bg-lacquer border-b border-transparent'}`}
             style={{ fontFamily: 'var(--ks-font-body)' }}
         >
             <div className="max-w-[1320px] mx-auto px-6 h-[72px] flex items-center justify-between">

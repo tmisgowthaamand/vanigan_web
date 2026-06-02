@@ -130,7 +130,7 @@ const HeroSection = () => {
                                     </div>
                                     <button
                                         onClick={() => navigate(`/business-list?search=${searchQuery}`)}
-                                        className="ks-button ks-button-primary min-h-[44px]! px-7! text-[15px]! mr-[5px] shrink-0"
+                                        className="ks-button ks-button-primary shrink-0 min-h-[44px]! px-7! text-[15px]! mr-[5px]"
                                     >
                                         Search
                                     </button>
@@ -162,7 +162,7 @@ const HeroSection = () => {
                             {/* Image Frame Container */}
                             <div className="relative">
                                 {/* Main Image */}
-                                <div className="relative z-10 aspect-[3/4] rounded-[8px] overflow-hidden border border-rule shadow-[0_24px_70px_rgba(2,2,1,0.55)]">
+                                <div className="relative z-10 aspect-3/4 rounded-[8px] overflow-hidden border border-rule shadow-[0_24px_70px_rgba(2,2,1,0.55)]">
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={currentSlide}
@@ -197,7 +197,7 @@ const HeroSection = () => {
                                         exit={{ opacity: 0, y: -8 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <p className="text-[17px] md:text-[19px] font-medium text-champagne leading-[1.5] mb-2">
+                                        <p className="text-[17px] md:text-[19px] font-medium text-champagne leading-normal mb-2">
                                             {slides[currentSlide].quote}
                                         </p>
                                         <p className="text-[14px] text-kinpaku font-semibold">
