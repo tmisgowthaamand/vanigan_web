@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import HeroSection from '../components/HeroSection';
 import BusinessCard from '../components/BusinessCard';
+import CategoryBrowse from '../components/CategoryBrowse';
 import { businessService } from '../services/api';
 
 /* ─── Animated Counter ─── */
@@ -44,21 +45,54 @@ const FadeIn = ({ children, delay = 0, className = '' }) => (
 );
 
 const Home = () => {
-    const [businesses, setBusinesses] = useState([]);
+    const [businesses, setBusinesses] = useState([]); // ordered by category rank
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({ total: 0, searches: 125000, leads: 85000 });
 
+    const PER_CATEGORY = 3; // how many businesses to feature from each ranked category
+
+    // Featured ordering: the highest-volume trader categories first (live DB ranking).
+    const TOP_CATEGORIES = [
+        'B2B Services', 'Electricals & Electronics', 'Daily Needs', 'Textiles & Garments',
+        'Real Estate', 'Hotels & Restaurants', 'Doctors', 'Transport',
+        'Agriculture', 'Construction Materials'
+    ];
+
     useEffect(() => {
-        const fetchFeatured = async () => {
+        const init = async () => {
             try {
-                const data = await businessService.getAll();
-                // API return format is { businesses: [], total: X }
-                const list = Array.isArray(data) ? data : (data.businesses || []);
-                setBusinesses(list.slice(0, 3));
+                // Pull the first page of each ranked category in parallel, then take
+                // the top few from each so the marquee shows a mix across all ranks
+                // (some B2B, some Electricals, some Daily Needs, …) instead of only
+                // the largest category.
+                const pages = await Promise.all(
+                    TOP_CATEGORIES.map(category =>
+                        businessService.getAll({ category, page: 1 })
+                            .then(data => (Array.isArray(data) ? data : (data.businesses || [])))
+                            .catch(() => [])
+                    )
+                );
+
+                const seen = new Set();
+                const ordered = [];
+                pages.forEach(list => {
+                    let taken = 0;
+                    for (const biz of list) {
+                        if (taken >= PER_CATEGORY) break;
+                        const id = biz._id || biz.id;
+                        if (seen.has(id)) continue;
+                        seen.add(id);
+                        ordered.push(biz);
+                        taken++;
+                    }
+                });
+
+                setBusinesses(ordered);
             } catch (err) {
-                console.error('Home: Failed to fetch featured businesses', err);
+                console.error('Home: Failed to initialise featured businesses', err);
+            } finally {
+                setLoading(false);
             }
-            finally { setLoading(false); }
         };
         const fetchStats = async () => {
             try {
@@ -70,24 +104,32 @@ const Home = () => {
                 console.error('Home: Failed to fetch stats', err);
             }
         };
-        fetchFeatured();
+        init();
         fetchStats();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const visibleBusinesses = businesses;
 
     return (
         <main className="bg-lacquer min-h-screen" style={{ fontFamily: 'var(--ks-font-body)' }}>
             <HeroSection />
 
             {/* ════════════════════════════════════════════
+                Browse by Category
+               ════════════════════════════════════════════ */}
+            <CategoryBrowse initial={10} />
+
+            {/* ════════════════════════════════════════════
                 SECTION 1: "Tell us your story" — Funding CTA
                ════════════════════════════════════════════ */}
-            <section className="bg-lacquer-deep py-20 md:py-28 border-y border-rule">
-                <div className="max-w-[1320px] mx-auto px-6">
+            <section className="bg-lacquer-deep py-14 sm:py-20 md:py-28 border-y border-rule">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                         <FadeIn className="w-full lg:w-1/2">
-                            <div className="bg-raised rounded-[8px] p-10 md:p-14 border border-rule">
+                            <div className="bg-raised rounded-[8px] p-6 sm:p-10 md:p-14 border border-rule">
                                 <p className="ks-eyebrow mb-6">AI-Powered</p>
-                                <h2 className="ks-display text-[34px] md:text-[44px] leading-[1.06] mb-5" style={{ fontWeight: 600 }}>
+                                <h2 className="ks-display text-[28px] sm:text-[34px] md:text-[44px] leading-[1.06] mb-5" style={{ fontWeight: 600 }}>
                                     Promote your listing,<br />
                                     <span className="text-kinpaku">free for all businesses</span>
                                 </h2>
@@ -109,17 +151,17 @@ const Home = () => {
                         {/* Impact Metrics */}
                         <FadeIn delay={0.2} className="w-full lg:w-1/2">
                             <p className="ks-eyebrow mb-3">Impact that matters</p>
-                            <h3 className="ks-display text-[26px] md:text-[30px] text-champagne mb-10 leading-tight" style={{ fontWeight: 600 }}>
+                            <h3 className="ks-display text-[22px] sm:text-[26px] md:text-[30px] text-champagne mb-8 sm:mb-10 leading-tight" style={{ fontWeight: 600 }}>
                                 Every year, Vanigan simplifies your journey <br className="hidden md:block" />to trusted business support.
                             </h3>
-                            <div className="grid grid-cols-3 gap-6">
+                            <div className="grid grid-cols-3 gap-3 sm:gap-6">
                                 {[
                                     { value: stats.searches, suffix: '+', label: 'Business searches' },
                                     { value: stats.total > 0 ? stats.total : 50000, suffix: '+', label: 'Verified listings' },
                                     { value: stats.leads, suffix: '+', label: 'Direct leads generated' }
                                 ].map((m, i) => (
                                     <div key={i} className="text-center">
-                                        <div className="ks-display text-[26px] sm:text-[38px] md:text-[48px] text-kinpaku leading-none mb-2" style={{ fontWeight: 400 }}>
+                                        <div className="ks-display text-[20px] sm:text-[38px] md:text-[48px] text-kinpaku leading-none mb-2" style={{ fontWeight: 400 }}>
                                             <AnimatedCounter end={m.value} suffix={m.suffix} />
                                         </div>
                                         <p className="text-[12px] sm:text-[13px] text-muted font-medium leading-tight">{m.label}</p>
@@ -132,13 +174,82 @@ const Home = () => {
             </section>
 
             {/* ════════════════════════════════════════════
-                SECTION 2: "Support for all"
+                SECTION 2: Latest member stories (Featured Businesses)
                ════════════════════════════════════════════ */}
-            <section className="py-20 md:py-28 bg-lacquer">
-                <div className="max-w-[1320px] mx-auto px-6">
+            <section className="py-14 sm:py-20 md:py-28 bg-lacquer border-t border-rule">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6">
                     <FadeIn>
-                        <div className="text-center mb-16">
-                            <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
+                            <div>
+                                <h2 className="ks-display text-[30px] sm:text-[38px] md:text-[52px] leading-[1.04] mb-4" style={{ fontWeight: 600 }}>
+                                    Latest member stories
+                                </h2>
+                                <p className="text-[17px] text-muted font-normal max-w-xl leading-[1.7]">
+                                    Meet the community and discover what they have achieved with membership.
+                                </p>
+                            </div>
+                            <Link
+                                to="/business-list"
+                                className="flex items-center gap-2 text-[14px] font-semibold text-kinpaku hover:text-kinpaku-pale transition-colors group whitespace-nowrap"
+                            >
+                                More member stories <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            </Link>
+                        </div>
+                    </FadeIn>
+
+                    {loading ? (
+                        <div className="flex gap-6 overflow-hidden pb-2">
+                            {[1, 2, 3, 4].map(i => (
+                                <div key={i} className="w-[300px] sm:w-[340px] shrink-0 h-[380px] bg-raised border border-rule rounded-[6px] animate-pulse" />
+                            ))}
+                        </div>
+                    ) : businesses.length > 0 ? (
+                        <div className="ks-marquee group -mx-6 px-6">
+                            <div
+                                className="ks-marquee-track"
+                                style={{ animationDuration: `${Math.max(visibleBusinesses.length * 5, 20)}s` }}
+                            >
+                                {/* Track is duplicated so the loop is seamless; aria-hidden on the copy. */}
+                                {[...visibleBusinesses, ...visibleBusinesses].map((biz, idx) => (
+                                    <div
+                                        key={`${biz._id || biz.id}-${idx}`}
+                                        className="ks-marquee-item w-[300px] sm:w-[340px] shrink-0"
+                                        aria-hidden={idx >= visibleBusinesses.length}
+                                    >
+                                        <BusinessCard business={biz} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="w-full text-center py-16 text-faint text-[16px] font-medium">
+                            No featured businesses available yet.
+                        </div>
+                    )}
+
+                    {!loading && businesses.length > 0 && (
+                        <FadeIn delay={0.1}>
+                            <div className="text-center mt-10">
+                                <Link
+                                    to="/business-list"
+                                    className="ks-button ks-button-secondary min-h-12! px-10!"
+                                >
+                                    Show next listings <ArrowRight size={16} />
+                                </Link>
+                            </div>
+                        </FadeIn>
+                    )}
+                </div>
+            </section>
+
+            {/* ════════════════════════════════════════════
+                SECTION 3: "Support for all"
+               ════════════════════════════════════════════ */}
+            <section className="py-14 sm:py-20 md:py-28 bg-lacquer">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6">
+                    <FadeIn>
+                        <div className="text-center mb-10 sm:mb-16">
+                            <h2 className="ks-display text-[30px] sm:text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
                                 Business listing for all
                             </h2>
                             <p className="text-[17px] text-muted font-normal max-w-xl mx-auto leading-[1.7]">
@@ -188,11 +299,11 @@ const Home = () => {
             {/* ════════════════════════════════════════════
                 SECTION 3: "Why join?" Tabs
                ════════════════════════════════════════════ */}
-            <section className="bg-lacquer-deep py-20 md:py-28 border-y border-rule">
-                <div className="max-w-[1320px] mx-auto px-6">
+            <section className="bg-lacquer-deep py-14 sm:py-20 md:py-28 border-y border-rule">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6">
                     <FadeIn>
-                        <div className="text-center mb-16">
-                            <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
+                        <div className="text-center mb-10 sm:mb-16">
+                            <h2 className="ks-display text-[30px] sm:text-[38px] md:text-[52px] leading-[1.04] mb-5" style={{ fontWeight: 600 }}>
                                 Why list on Vanigan?
                             </h2>
                             <p className="text-[17px] text-muted font-normal max-w-lg mx-auto leading-[1.7]">
@@ -257,53 +368,13 @@ const Home = () => {
             </section>
 
             {/* ════════════════════════════════════════════
-                SECTION 4: Featured Businesses
-               ════════════════════════════════════════════ */}
-            <section className="py-20 md:py-28 bg-lacquer">
-                <div className="max-w-[1320px] mx-auto px-6">
-                    <FadeIn>
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-                            <div>
-                                <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-4" style={{ fontWeight: 600 }}>
-                                    Latest member stories
-                                </h2>
-                                <p className="text-[17px] text-muted font-normal max-w-xl leading-[1.7]">
-                                    Meet the community and discover what they have achieved with membership.
-                                </p>
-                            </div>
-                            <Link
-                                to="/business-list"
-                                className="flex items-center gap-2 text-[14px] font-semibold text-kinpaku hover:text-kinpaku-pale transition-colors group whitespace-nowrap"
-                            >
-                                More member stories <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </Link>
-                        </div>
-                    </FadeIn>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {loading ? (
-                            [1, 2, 3].map(i => (
-                                <div key={i} className="h-[380px] bg-raised border border-rule rounded-[6px] animate-pulse" />
-                            ))
-                        ) : businesses.length > 0 ? (
-                            businesses.map(biz => <BusinessCard key={biz._id || biz.id} business={biz} />)
-                        ) : (
-                            <div className="col-span-3 text-center py-16 text-faint text-[16px] font-medium">
-                                No featured businesses available yet.
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
-
-            {/* ════════════════════════════════════════════
                 SECTION 5: Final CTA
                ════════════════════════════════════════════ */}
-            <section className="py-20 md:py-28 bg-lacquer-deep border-t border-rule relative overflow-hidden">
+            <section className="py-14 sm:py-20 md:py-28 bg-lacquer-deep border-t border-rule relative overflow-hidden">
                 <div className="ks-seam absolute top-0 left-0 right-0" />
-                <div className="max-w-[800px] mx-auto px-6 text-center relative z-10">
+                <div className="max-w-[800px] mx-auto px-5 sm:px-6 text-center relative z-10">
                     <FadeIn>
-                        <h2 className="ks-display text-[38px] md:text-[52px] leading-[1.04] mb-6" style={{ fontWeight: 600 }}>
+                        <h2 className="ks-display text-[30px] sm:text-[38px] md:text-[52px] leading-[1.04] mb-6" style={{ fontWeight: 600 }}>
                             Ready to join the<br />
                             <span className="text-kinpaku">Vanigan Community?</span>
                         </h2>

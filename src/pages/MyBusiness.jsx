@@ -128,12 +128,12 @@ const MyBusiness = () => {
             <Navbar />
 
             {/* ═══ HERO — Clean white style matching homepage ═══ */}
-            <section className="pt-36 pb-16 bg-raised overflow-hidden relative">
+            <section className="pt-28 sm:pt-36 pb-12 sm:pb-16 bg-raised overflow-hidden relative">
                 {/* Decorative background blurs */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-kinpaku/5 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-patina/5 blur-[100px] rounded-full -ml-20 -mb-20 pointer-events-none"></div>
 
-                <div className="max-w-[1280px] mx-auto px-6 relative z-10">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                         {/* Left — heading */}
                         <div className="w-full lg:w-1/2 space-y-6">
@@ -143,7 +143,7 @@ const MyBusiness = () => {
                             >
                                 <Sparkles size={16} /> My Business Dashboard
                             </motion.p>
-                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-champagne leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
+                            <h1 className="text-[34px] sm:text-[40px] md:text-[56px] font-extrabold text-champagne leading-[1.1] tracking-[-0.02em] min-h-[120px] sm:min-h-[140px] md:min-h-[130px]">
                                 Manage your <br />
                                 <span className="text-kinpaku relative inline-block whitespace-nowrap">
                                     <AnimatePresence mode="wait">
@@ -190,13 +190,13 @@ const MyBusiness = () => {
             </section>
 
             {/* ═══ DASHBOARD SECTION ═══ */}
-            <section className="py-16 bg-lacquer">
-                <div className="max-w-[1280px] mx-auto px-6">
-                    <div className="grid lg:grid-cols-12 gap-10">
+            <section className="py-12 sm:py-16 bg-lacquer">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6">
+                    <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
 
                         {/* ── Main: Phone lookup form ── */}
                         <div className="lg:col-span-7 space-y-8 absolute-z-10">
-                            <div className="bg-raised rounded-[20px] p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+                            <div className="bg-raised rounded-[20px] p-6 sm:p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-linear-to-tr from-kinpaku/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                                 <h2 className="text-[24px] font-extrabold text-champagne mb-2">Access your dashboard</h2>
@@ -339,7 +339,7 @@ const MyBusiness = () => {
                         {/* ── Sidebar ── */}
                         <div className="lg:col-span-5 space-y-6">
                             {/* Why Vanigan card */}
-                            <div className="bg-raised rounded-[20px] p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.1)] hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
+                            <div className="bg-raised rounded-[20px] p-6 sm:p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.1)] hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
                                 <div className="absolute inset-0 bg-linear-to-tr from-kinpaku/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-white bg-kinpaku shadow-[0_8px_16px_rgba(232,119,34,0.2)] group-hover:scale-110 transition-transform duration-500">
                                     <Star size={28} />

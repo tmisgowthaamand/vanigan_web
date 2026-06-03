@@ -178,6 +178,21 @@ const BusinessList = () => {
     const ROTATING_WORDS = ["traders", "shops", "agencies", "partners"];
     const [wordIndex, setWordIndex] = useState(0);
 
+    // Top trader categories by live DB volume (rank 1–10). Counts/percentages
+    // are a snapshot; clicking a chip filters the list by that category.
+    const TOP_CATEGORIES = [
+        { rank: 1, name: 'B2B Services', count: 3120, pct: '17.1%' },
+        { rank: 2, name: 'Electricals & Electronics', count: 1541, pct: '8.4%' },
+        { rank: 3, name: 'Daily Needs', count: 1071, pct: '5.9%' },
+        { rank: 4, name: 'Textiles & Garments', count: 909, pct: '5.0%' },
+        { rank: 5, name: 'Real Estate', count: 810, pct: '4.4%' },
+        { rank: 6, name: 'Hotels & Restaurants', count: 742, pct: '4.1%' },
+        { rank: 7, name: 'Doctors', count: 708, pct: '3.9%' },
+        { rank: 8, name: 'Transport', count: 672, pct: '3.7%' },
+        { rank: 9, name: 'Agriculture', count: 636, pct: '3.5%' },
+        { rank: 10, name: 'Construction Materials', count: 588, pct: '3.2%' },
+    ];
+
     useEffect(() => {
         const interval = setInterval(() => {
             setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
@@ -189,13 +204,13 @@ const BusinessList = () => {
         <main className="min-h-screen bg-raised" style={{ fontFamily: "'Saans', 'Inter', system-ui, sans-serif" }}>
 
             {/* ═══ HERO ═══ */}
-            <section className="pt-36 pb-16 bg-raised overflow-hidden relative">
+            <section className="pt-28 sm:pt-36 pb-12 sm:pb-16 bg-raised overflow-hidden relative">
                 {/* Decorative background blurs to fill emptiness */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-kinpaku/5 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-patina/5 blur-[100px] rounded-full -ml-20 -mb-20 pointer-events-none"></div>
 
-                <div className="max-w-[1280px] mx-auto px-6 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6 relative z-10">
+                    <div className="flex flex-col lg:flex-row items-center gap-12 sm:gap-16 lg:gap-20">
 
                         {/* Left — heading with rotating text */}
                         <div className="w-full lg:w-1/2 space-y-6">
@@ -206,7 +221,7 @@ const BusinessList = () => {
                                 <Sparkles size={16} /> Business Directory
                             </motion.p>
 
-                            <h1 className="text-[40px] md:text-[56px] font-extrabold text-champagne leading-[1.1] tracking-[-0.02em] min-h-[140px] md:min-h-[130px]">
+                            <h1 className="text-[34px] sm:text-[40px] md:text-[56px] font-extrabold text-champagne leading-[1.1] tracking-[-0.02em] min-h-[120px] sm:min-h-[140px] md:min-h-[130px]">
                                 Find verified <br />
                                 <span className="text-kinpaku relative inline-block whitespace-nowrap">
                                     <AnimatePresence mode="wait">
@@ -333,11 +348,11 @@ const BusinessList = () => {
             </section>
 
             {/* ═══ FILTERS + LISTINGS ═══ */}
-            <section className="py-16 bg-lacquer">
-                <div className="max-w-[1600px] w-full mx-auto px-6 md:px-12">
+            <section className="py-12 sm:py-16 bg-lacquer">
+                <div className="max-w-[1600px] w-full mx-auto px-5 sm:px-6 md:px-12">
 
                     {/* Breadcrumb + Category title */}
-                    <div className="mb-10">
+                    <div className="mb-8 sm:mb-10">
                         <nav className="flex items-center gap-2 text-[13px] text-muted font-medium mb-4">
                             <Link to="/" className="hover:text-kinpaku transition-colors">Home</Link>
                             <span className="text-faint">/</span>
@@ -345,7 +360,7 @@ const BusinessList = () => {
                         </nav>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                             <div>
-                                <h2 className="text-[32px] font-extrabold text-champagne tracking-[-0.01em] mb-1">{selectedCategory}</h2>
+                                <h2 className="text-[26px] sm:text-[32px] font-extrabold text-champagne tracking-[-0.01em] mb-1">{selectedCategory}</h2>
                                 <p className="text-[15px] text-muted font-normal italic">
                                     Showing {totalCount.toLocaleString()} verified listings in Tamil Nadu
                                 </p>
@@ -353,11 +368,65 @@ const BusinessList = () => {
                         </div>
                     </div>
 
+                    {/* ── Top categories (rank 1–10 by trader volume) ── */}
+                    <div className="mb-12">
+                        <div className="flex items-center gap-2 mb-5">
+                            <TrendingUp size={16} className="text-kinpaku" />
+                            <h3 className="text-[12px] font-bold text-champagne uppercase tracking-[0.12em]">Top Categories</h3>
+                            <span className="text-[12px] text-faint font-medium">— most listed by traders</span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                            {TOP_CATEGORIES.map(cat => {
+                                const active = selectedCategory === cat.name;
+                                return (
+                                    <button
+                                        key={cat.name}
+                                        onClick={() => handleCategorySelect(cat.name)}
+                                        className={`group text-left rounded-2xl border p-4 transition-all shadow-sm hover:-translate-y-0.5 ${active
+                                            ? 'bg-graphite border-kinpaku/60'
+                                            : 'bg-raised border-rule hover:border-kinpaku/40'
+                                            }`}
+                                    >
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className={`text-[11px] font-black tabular-nums w-6 h-6 rounded-lg flex items-center justify-center ${active ? 'bg-kinpaku text-lacquer-deep' : 'bg-graphite text-kinpaku group-hover:bg-kinpaku group-hover:text-lacquer-deep'} transition-colors`}>
+                                                {cat.rank}
+                                            </span>
+                                            <span className="text-[11px] font-bold text-kinpaku tabular-nums">{cat.pct}</span>
+                                        </div>
+                                        <p className={`text-[13.5px] font-bold leading-tight line-clamp-2 mb-1 ${active ? 'text-kinpaku' : 'text-champagne group-hover:text-kinpaku'} transition-colors`}>
+                                            {cat.name}
+                                        </p>
+                                        <p className="text-[12px] text-muted font-medium tabular-nums">{cat.count.toLocaleString()} listings</p>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
                     <div className="grid lg:grid-cols-12 gap-10">
 
                         {/* ── Sidebar ── */}
                         <aside className="lg:col-span-3 lg:col-start-1 space-y-6">
-                            <div className="bg-raised rounded-[20px] p-6 border border-rule shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
+                            {/* Mobile: categories as a dropdown */}
+                            <div className="lg:hidden">
+                                <label className="text-[12px] font-bold text-champagne uppercase tracking-wider mb-2 block pl-1">Browse Categories</label>
+                                <div className="relative">
+                                    <select
+                                        value={Object.keys(categorySubMap).includes(selectedCategory) ? selectedCategory : ''}
+                                        onChange={(e) => handleCategorySelect(e.target.value)}
+                                        className="w-full bg-raised border border-rule rounded-xl py-3.5 px-5 text-[14px] font-medium text-champagne appearance-none outline-none focus:border-kinpaku/50 transition-all cursor-pointer shadow-sm"
+                                    >
+                                        <option value="" disabled>Select a category</option>
+                                        {Object.keys(categorySubMap).map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-faint pointer-events-none" />
+                                </div>
+                            </div>
+
+                            {/* Desktop: full category list */}
+                            <div className="hidden lg:block bg-raised rounded-[20px] p-6 border border-rule shadow-[0_2px_12px_rgba(0,0,0,0.03)] sticky top-24">
                                 <h4 className="text-[12px] font-bold text-champagne uppercase tracking-wider mb-5 pl-1">Browse Categories</h4>
                                 <div className="max-h-[70vh] overflow-y-auto custom-scrollbar pr-1 space-y-0.5">
                                     {Object.keys(categorySubMap).map(cat => (

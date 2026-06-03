@@ -16,6 +16,15 @@ const Navbar = () => {
 
     const navLinks = [
         {
+            title: 'Categories',
+            path: '/categories',
+            submenu: [
+                { name: 'All Categories', path: '/categories' },
+                { name: 'Browse Directory', path: '/business-list' },
+                { name: 'Verified Traders', path: '/business-list' }
+            ]
+        },
+        {
             title: 'Business List',
             path: '/business-list',
             submenu: [

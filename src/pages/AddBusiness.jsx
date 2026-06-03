@@ -146,7 +146,7 @@ const AddBusiness = () => {
         <div className="bg-raised rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 mb-8 sm:mb-10 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-rule">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <h1 className="text-3xl font-black text-champagne tracking-tighter mb-2">Register Your Business</h1>
+              <h1 className="text-2xl sm:text-3xl font-black text-champagne tracking-tighter mb-2">Register Your Business</h1>
               <p className="text-muted text-sm font-bold uppercase tracking-widest flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-patina animate-pulse"></span>
                 Step {step} of 2 — {step === 1 ? 'Verification' : 'Business Details'}
@@ -168,7 +168,7 @@ const AddBusiness = () => {
           <div className="bg-raised rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-[0_30px_60px_-12px_rgba(225,29,72,0.12)] border border-kinpaku/50 animate-in fade-in zoom-in-95 duration-700">
             <div className="max-w-md mx-auto space-y-10">
               <div className="space-y-4">
-                <h2 className="text-4xl font-black text-champagne tracking-tight">Start Your Business <span className="text-kinpaku">Journey</span></h2>
+                <h2 className="text-3xl sm:text-4xl font-black text-champagne tracking-tight">Start Your Business <span className="text-kinpaku">Journey</span></h2>
                 <p className="text-muted text-[16px] font-medium leading-relaxed">
                   Connect your WhatsApp to verify your identity and unlock your premium business dashboard.
                 </p>
@@ -211,7 +211,7 @@ const AddBusiness = () => {
           </div>
         ) : (
           /* Step 2: Form */
-          <form onSubmit={handleSubmit} className="bg-raised rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule space-y-16 animate-in slide-in-from-bottom-10 duration-700">
+          <form onSubmit={handleSubmit} className="bg-raised rounded-[24px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule space-y-12 sm:space-y-16 animate-in slide-in-from-bottom-10 duration-700">
 
             {/* Status Messages */}
             {status !== 'idle' && (
@@ -264,7 +264,7 @@ const AddBusiness = () => {
             </div>
 
             {/* 2. LOCATION DETAILS */}
-            <div className="pt-20 space-y-10 border-t border-rule">
+            <div className="pt-12 sm:pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">2</div>
                 <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Where is your Business Located?</h3>
@@ -320,7 +320,7 @@ const AddBusiness = () => {
             </div>
 
             {/* 3. CONTACT INFORMATION */}
-            <div className="pt-20 space-y-10 border-t border-rule text-left">
+            <div className="pt-12 sm:pt-20 space-y-10 border-t border-rule text-left">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">3</div>
                 <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Direct Contact Channels</h3>
@@ -365,7 +365,7 @@ const AddBusiness = () => {
             </div>
 
             {/* 4. SOCIAL MEDIA & OPERATING HOURS */}
-            <div className="pt-20 space-y-10 border-t border-rule">
+            <div className="pt-12 sm:pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">4</div>
                 <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Social Media & Operating Hours</h3>
@@ -426,7 +426,7 @@ const AddBusiness = () => {
             </div>
 
             {/* 5. FAQ SECTION */}
-            <div className="pt-20 space-y-10 border-t border-rule">
+            <div className="pt-12 sm:pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">5</div>
                 <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Clear the Doubts (FAQ)</h3>
@@ -444,7 +444,7 @@ const AddBusiness = () => {
             </div>
 
             {/* 6. MEDIA & PHOTOS */}
-            <div className="pt-20 space-y-10 border-t border-rule">
+            <div className="pt-12 sm:pt-20 space-y-10 border-t border-rule">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-kinpaku rounded-xl flex items-center justify-center text-white font-black text-sm shadow-lg shadow-[rgba(232,119,34,0.2)]">6</div>
                 <h3 className="text-kinpaku text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] sm:tracking-[0.4em]">Business Gallery & Branding</h3>

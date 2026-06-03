@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import BusinessList from './pages/BusinessList';
 import BusinessProfile from './pages/BusinessProfile';
+import Categories from './pages/Categories';
 import AddBusiness from './pages/AddBusiness';
 import MyBusiness from './pages/MyBusiness';
 import Contact from './pages/Contact';
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/business-list" element={<BusinessList />} />
+            <Route path="/categories" element={<Categories />} />
             <Route path="/business/:id" element={<BusinessProfile />} />
             <Route path="/my-business" element={<MyBusiness />} />
             <Route path="/add-business" element={<AddBusiness />} />
