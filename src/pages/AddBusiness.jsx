@@ -25,6 +25,57 @@ const AddBusiness = () => {
   const [showPlatformSelector, setShowPlatformSelector] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('');
 
+  // District list + assembly map — matches the live DB values exactly
+  const tnDistricts = [
+    "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
+    "Dindigul", "Erode", "Kallakuruchi", "Kancheepuram", "Kanniyakumari", "Karur", "Krishnagiri",
+    "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukottai",
+    "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thiruvallur",
+    "Thiruvarur", "Thoothukudi", "Tiruchirapalli", "Tirunelveli", "Tirupathur", "Tiruppur",
+    "Tiruvannamalai", "Vellore", "Vilupuram", "Virudhunagar"
+  ];
+
+  const districtAssemblyMap = {
+    "Ariyalur": ["Ariyalur", "Jayankondam"],
+    "Chengalpattu": ["Chengalpattu", "Cheyyur", "Madurantakam", "Pallavaram", "Shozhinganallur", "Tambaram", "Thiruporur"],
+    "Chennai": ["Anna Nagar", "Chepauk-Thiruvallikeni", "Dr.Radhakrishnan Nagar", "Egmore", "Harbour", "Kolathur", "Mylapore", "Perambur", "Royapuram", "Saidapet", "Thiru-Vi-Ka-Nagar", "Thiyagarayanagar", "Thousand Lights", "Velachery", "Villivakkam", "Virugampakkam"],
+    "Coimbatore": ["Coimbatore (North)", "Coimbatore (South)", "Kavundampalayam", "Kinathukadavu", "Mettuppalayam", "Pollachi", "Singanallur", "Sulur", "Thondamuthur", "Valparai"],
+    "Cuddalore": ["Bhuvanagiri", "Chidambaram", "Cuddalore", "Kattumannarkoil", "Kurinjipadi", "Neyveli", "Panruti", "Tittakudi", "Vriddhachalam"],
+    "Dharmapuri": ["Dharmapuri", "Harur", "Palacodu", "Pappireddipatti", "Pennagaram"],
+    "Dindigul": ["Athoor", "Dindigul", "Natham", "Nilakkottai", "Oddanchatram", "Palani", "Vedasandur"],
+    "Erode": ["Anthiyur", "Bhavani", "Bhavanisagar", "Erode (East)", "Erode (West)", "Gobichettipalayam", "Modakkurichi", "Perundurai"],
+    "Kallakuruchi": ["Kallakurichi", "Rishivandiyam", "Sankarapuram", "Ulundurpettai"],
+    "Kancheepuram": ["Alandur", "Kancheepuram", "Sriperumbudur", "Uthiramerur"],
+    "Kanniyakumari": ["Colachal", "Kanniyakumari", "Killiyoor", "Nagercoil", "Padmanabhapuram", "Vilavancode"],
+    "Karur": ["Aravakurichi", "Karur", "Krishnarayapuram", "Kulithalai"],
+    "Krishnagiri": ["Bargur", "Hosur", "Krishnagiri", "Thalli", "Uthangarai", "Veppanahalli"],
+    "Madurai": ["Madurai Central", "Madurai East", "Madurai North", "Madurai South", "Madurai West", "Melur", "Sholavandan", "Thirumangalam", "Thiruparankundram", "Usilampatti"],
+    "Mayiladuthurai": ["Mayiladuthurai", "Poompuhar", "Sirkazhi"],
+    "Nagapattinam": ["Kilvelur", "Nagapattinam", "Vedaranyam"],
+    "Namakkal": ["Kumarapalayam", "Namakkal", "Paramathi-Velur", "Rasipuram", "Senthamangalam", "Tiruchengodu"],
+    "Nilgiris": ["Coonoor", "Gudalur", "Udhagamandalam"],
+    "Perambalur": ["Kunnam", "Perambalur"],
+    "Pudukottai": ["Alangudi", "Aranthangi", "Gandarvakkottai", "Pudukkottai", "Thirumayam", "Viralimalai"],
+    "Ramanathapuram": ["Mudhukulathur", "Paramakudi", "Ramanathapuram", "Tiruvadanai"],
+    "Ranipet": ["Arakkonam", "Arcot", "Ranipet", "Sholinghur"],
+    "Salem": ["Attur", "Edappadi", "Gangavalli", "Mettur", "Omalur", "Salem (North)", "Salem (South)", "Salem (West)", "Sankari", "Veerapandi", "Yercaud"],
+    "Sivaganga": ["Karaikudi", "Manamadurai", "Sivaganga", "Tiruppattur"],
+    "Tenkasi": ["Alangulam", "Kadayanallur", "Sankarankovil", "Tenkasi", "Vasudevanallur"],
+    "Thanjavur": ["Kumbakonam", "Orathanadu", "Papanasam", "Pattukkottai", "Peravurani", "Thanjavur", "Thiruvaiyaru", "Thiruvidaimarudur"],
+    "Theni": ["Andipatti", "Bodinayakanur", "Cumbum", "Periyakulam"],
+    "Thiruvallur": ["Ambattur", "Avadi", "Gummidipoondi", "Madavaram", "Maduravoyal", "Ponneri", "Poonamallee", "Thiruvallur", "Thiruvottiyur", "Tiruttani"],
+    "Thiruvarur": ["Mannargudi", "Nannilam", "Thiruthuraipoondi", "Thiruvarur"],
+    "Thoothukudi": ["Kovilpatti", "Ottapidaram", "Srivaikuntam", "Thoothukkudi", "Tiruchendur", "Vilathikulam"],
+    "Tiruchirapalli": ["Lalgudi", "Manachanallur", "Manapparai", "Musiri", "Srirangam", "Thiruverumbur", "Thuraiyur", "Tiruchirappalli (East)"],
+    "Tirunelveli": ["Ambasamudram", "Nanguneri", "Palayamkottai", "Radhapuram", "Tirunelveli"],
+    "Tirupathur": ["Ambur", "Jolarpet", "Tirupattur", "Vaniyambadi"],
+    "Tiruppur": ["Avanashi", "Dharapuram", "Kangayam", "Madathukulam", "Palladam", "Tiruppur (North)", "Tiruppur (South)", "Udumalaipettai"],
+    "Tiruvannamalai": ["Arani", "Chengam", "Cheyyar", "Kalasapakkam", "Kilpennathur", "Polur", "Tiruvannamalai", "Vandavasi"],
+    "Vellore": ["Anaikattu", "Gudiyattam", "Katpadi", "Kilvaithinankuppam", "Vellore"],
+    "Vilupuram": ["Mailam", "Tindivanam", "Tirukkoyilur", "Vanur", "Vikravandi", "Viluppuram"],
+    "Virudhunagar": ["Aruppukkottai", "Rajapalayam", "Sattur", "Sivakasi", "Srivilliputhur", "Tiruchuli", "Virudhunagar"]
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -62,7 +113,13 @@ const AddBusiness = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+      if (name === 'district') {
+        // reset assembly when district changes
+        return { ...prev, district: value, assembly: '' };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const handleUseLocation = () => {
@@ -118,7 +175,7 @@ const AddBusiness = () => {
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-[3rem] p-12 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-slate-100 text-center animate-in fade-in zoom-in duration-500">
-            <div className="w-24 h-24 bg-rose-50 rounded-[2rem] flex items-center justify-center text-rose-600 mx-auto mb-10 border border-rose-100 shadow-sm">
+            <div className="w-24 h-24 bg-rose-50 rounded-4xl flex items-center justify-center text-rose-600 mx-auto mb-10 border border-rose-100 shadow-sm">
               <CheckCircle size={48} />
             </div>
             <h2 className="text-3xl font-black text-slate-900 mb-4 tracking-tight">Success!</h2>
@@ -265,15 +322,16 @@ const AddBusiness = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                 <div className="space-y-3">
                   <label className="text-[11px] font-black text-slate-900 uppercase tracking-widest pl-1">District <span className="text-rose-500">*</span></label>
-                  <select name="district" value={formData.district} onChange={handleChange} className="form-input-light">
+                  <select name="district" value={formData.district} onChange={handleChange} className="form-input-light" required>
                     <option value="">— Select Region —</option>
-                    {["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"].map(d => <option key={d} value={d}>{d}</option>)}
+                    {tnDistricts.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
                 <div className="space-y-3">
                   <label className="text-[11px] font-black text-slate-900 uppercase tracking-widest pl-1">Assembly Constituency <span className="text-rose-500">*</span></label>
-                  <select name="assembly" value={formData.assembly} onChange={handleChange} className="form-input-light">
-                    <option value="">Choose District First</option>
+                  <select name="assembly" value={formData.assembly} onChange={handleChange} className="form-input-light" disabled={!formData.district} required>
+                    <option value="">{formData.district ? 'Select Assembly' : 'Choose District First'}</option>
+                    {(districtAssemblyMap[formData.district] || []).map(a => <option key={a} value={a}>{a}</option>)}
                   </select>
                 </div>
 
@@ -500,7 +558,7 @@ const AddBusiness = () => {
                         <div className="md:col-span-2 space-y-3">
                           <label className="text-[11px] font-black text-slate-900 uppercase tracking-widest">Service Photo <span className="text-rose-500">*</span></label>
                           <div className="flex items-center gap-6">
-                            {service.photo && <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-white shadow-lg flex-shrink-0"><img src={URL.createObjectURL(service.photo)} className="w-full h-full object-cover" alt="Service" /></div>}
+                            {service.photo && <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-white shadow-lg shrink-0"><img src={URL.createObjectURL(service.photo)} className="w-full h-full object-cover" alt="Service" /></div>}
                             <input type="file" accept="image/*" onChange={(e) => { const ns = [...formData.services]; ns[index].photo = e.target.files[0]; setFormData(p => ({ ...p, services: ns })); }} className="text-[10px] font-black uppercase text-slate-400 file:bg-rose-600 file:text-white file:border-0 file:rounded-xl file:px-6 file:py-3 file:mr-6 file:cursor-pointer" />
                           </div>
                         </div>
