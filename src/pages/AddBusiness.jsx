@@ -540,7 +540,7 @@ const AddBusiness = () => {
                     <div key={index} className="bg-slate-50 rounded-[32px] p-10 border border-slate-100 space-y-10 animate-in fade-in slide-in-from-top-4 duration-300">
                       <div className="flex justify-between items-center pb-4 border-b border-slate-100">
                         <span className="text-slate-900 text-xs font-black uppercase tracking-widest">Service {index + 1}</span>
-                        <button type="button" onClick={() => setFormData(p => ({ ...p, services: p.services.filter((_, i) => i !== index) }))} className="text-rose-600 text-[10px] font-black uppercase tracking-widest flex items-center gap-2 font-bold"><X size={14} /> Remove</button>
+                        <button type="button" onClick={() => setFormData(p => ({ ...p, services: p.services.filter((_, i) => i !== index) }))} className="text-rose-600 text-[10px] font-black uppercase tracking-widest flex items-center gap-2"><X size={14} /> Remove</button>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                         <div className="space-y-3">
