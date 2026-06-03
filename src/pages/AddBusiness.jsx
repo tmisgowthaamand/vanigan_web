@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { businessService } from '../services/api';
+import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
 import {
   CheckCircle,
   Plus,
@@ -59,6 +60,13 @@ const AddBusiness = () => {
       setFormData(prev => ({ ...prev, whatsappNo: whatsappNumber }));
     }
   }, [step, whatsappNumber]);
+
+  useEffect(() => {
+    // Reset assembly when district changes
+    if (formData.district) {
+      setFormData(prev => ({ ...prev, assembly: '' }));
+    }
+  }, [formData.district]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -267,13 +275,16 @@ const AddBusiness = () => {
                   <label className="text-[11px] font-black text-champagne uppercase tracking-widest pl-1">District <span className="text-kinpaku">*</span></label>
                   <select name="district" value={formData.district} onChange={handleChange} className="form-input-light">
                     <option value="">— Select Region —</option>
-                    {["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"].map(d => <option key={d} value={d}>{d}</option>)}
+                    {tnDistricts.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
                 <div className="space-y-3">
                   <label className="text-[11px] font-black text-champagne uppercase tracking-widest pl-1">Assembly Constituency <span className="text-kinpaku">*</span></label>
-                  <select name="assembly" value={formData.assembly} onChange={handleChange} className="form-input-light">
-                    <option value="">Choose District First</option>
+                  <select name="assembly" value={formData.assembly} onChange={handleChange} className="form-input-light" disabled={!formData.district}>
+                    <option value="">{formData.district ? '— Select Constituency —' : 'Choose District First'}</option>
+                    {formData.district && districtAssemblies[formData.district]?.map(constituency => (
+                      <option key={constituency} value={constituency}>{constituency}</option>
+                    ))}
                   </select>
                 </div>
 

@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import BusinessCard from '../components/BusinessCard';
 import { businessService } from '../services/api';
+import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Loader2, AlertCircle, Plus, X, LayoutGrid, ChevronDown, MapPin, ChevronLeft, ChevronRight, Star, ArrowRight, Sparkles, TrendingUp, CheckCircle, Building2 } from 'lucide-react';
 
@@ -51,36 +52,14 @@ const BusinessList = () => {
         "Wedding Services": ["All Sub-Categories", "Wedding Services"]
     };
 
-    const tamilNaduDistricts = [
-        "All Districts", "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
-        "Dindigul", "Erode", "Kallakuruchi", "Kancheepuram", "Kanniyakumari", "Karur", "Krishnagiri",
-        "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukottai",
-        "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thiruvallur",
-        "Thiruvarur", "Thoothukudi", "Tiruchirapalli", "Tirunelveli", "Tirupathur", "Tiruppur",
-        "Tiruvannamalai", "Vellore", "Vilupuram", "Virudhunagar"
-    ];
+    // District / assembly names are sourced from src/data/constituencies.js,
+    // which is generated from the live backend DB so filter values match the
+    // raw strings the public businesses API expects.
+    const tamilNaduDistricts = ["All Districts", ...tnDistricts];
 
-    const districtAssemblyMap = {
-        "Chennai": [
-            "All Assemblies", "Anna Nagar", "Chepauk-Thiruvallikeni", "Dr.Radhakrishnan Nagar", "Egmore",
-            "Harbour", "Kolathur", "Mylapore", "Perambur", "Royapuram", "Saidapet",
-            "Thiru-Vi-Ka-Nagar", "Thiyagarayanagar", "Thousand Lights", "Velachery", "Villivakkam", "Virugampakkam"
-        ],
-        "Coimbatore": [
-            "All Assemblies", "Coimbatore North", "Coimbatore South", "Kavundampalayam", "Singanallur",
-            "Sulur", "Thondamuthur", "Kinathukadavu", "Pollachi", "Valparai", "Mettupalayam"
-        ],
-        "Madurai": [
-            "All Assemblies", "Madurai North", "Madurai South", "Madurai Central", "Madurai West",
-            "Madurai East", "Melur", "Samayanallur", "Thirumangalam", "Thirupparankundram", "Usilampatti"
-        ],
-        "Kancheepuram": [
-            "All Assemblies", "Kancheepuram", "Sriperumbudur", "Uthiramerur", "Alandur", "Pallavaram", "Tambaram"
-        ],
-        "Thiruvallur": [
-            "All Assemblies", "Thiruvallur", "Avadi", "Poonamallee", "Ambattur", "Maduravoyal", "Gummidipoondi"
-        ]
-    };
+    const districtAssemblyMap = Object.fromEntries(
+        Object.entries(districtAssemblies).map(([d, assemblies]) => [d, ["All Assemblies", ...assemblies]])
+    );
 
     const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All Categories');
     const [subCategory, setSubCategory] = useState('All Sub-Categories');
