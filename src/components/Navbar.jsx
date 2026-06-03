@@ -12,7 +12,7 @@ const Navbar = () => {
         "Advertising", "Advocate & Legal", "Agriculture", "Automobile", "B2B Services",
         "Banking & Finance", "Banquets & Event Halls", "Bills & Recharge", "Caterers",
         "Civil Contractors", "Construction Materials", "Courier Services", "Daily Needs",
-        "Digital & IT Products", "Doctors", "Education", "Electricals & Electronics",
+        "Demand Services", "Digital & IT Products", "Doctors", "Education", "Electricals & Electronics",
         "Hire Services", "Home Appliances", "Hospitals & Clinics", "Hotels & Restaurants",
         "IT & Software", "Insurance", "Jewellery", "Jobs", "Labs & Diagnostics",
         "Organic Products", "Packers & Movers", "Pest Control", "Printing Services",
