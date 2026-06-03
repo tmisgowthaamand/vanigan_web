@@ -60,25 +60,48 @@ const BusinessList = () => {
     ];
 
     const districtAssemblyMap = {
+        "Ariyalur": ["All Assemblies", "Ariyalur", "Jayankondam"],
+        "Chengalpattu": ["All Assemblies", "Chengalpattu", "Cheyyur", "Madurantakam", "Pallavaram", "Shozhinganallur", "Tambaram", "Thiruporur"],
         "Chennai": [
             "All Assemblies", "Anna Nagar", "Chepauk-Thiruvallikeni", "Dr.Radhakrishnan Nagar", "Egmore",
             "Harbour", "Kolathur", "Mylapore", "Perambur", "Royapuram", "Saidapet",
             "Thiru-Vi-Ka-Nagar", "Thiyagarayanagar", "Thousand Lights", "Velachery", "Villivakkam", "Virugampakkam"
         ],
-        "Coimbatore": [
-            "All Assemblies", "Coimbatore North", "Coimbatore South", "Kavundampalayam", "Singanallur",
-            "Sulur", "Thondamuthur", "Kinathukadavu", "Pollachi", "Valparai", "Mettupalayam"
-        ],
-        "Madurai": [
-            "All Assemblies", "Madurai North", "Madurai South", "Madurai Central", "Madurai West",
-            "Madurai East", "Melur", "Samayanallur", "Thirumangalam", "Thirupparankundram", "Usilampatti"
-        ],
-        "Kancheepuram": [
-            "All Assemblies", "Kancheepuram", "Sriperumbudur", "Uthiramerur", "Alandur", "Pallavaram", "Tambaram"
-        ],
-        "Thiruvallur": [
-            "All Assemblies", "Thiruvallur", "Avadi", "Poonamallee", "Ambattur", "Maduravoyal", "Gummidipoondi"
-        ]
+        "Coimbatore": ["All Assemblies", "Coimbatore (North)", "Coimbatore (South)", "Kavundampalayam", "Kinathukadavu", "Mettuppalayam", "Pollachi", "Singanallur", "Sulur", "Thondamuthur", "Valparai"],
+        "Cuddalore": ["All Assemblies", "Bhuvanagiri", "Chidambaram", "Cuddalore", "Kattumannarkoil", "Kurinjipadi", "Neyveli", "Panruti", "Tittakudi", "Vriddhachalam"],
+        "Dharmapuri": ["All Assemblies", "Dharmapuri", "Harur", "Palacodu", "Pappireddipatti", "Pennagaram"],
+        "Dindigul": ["All Assemblies", "Athoor", "Dindigul", "Natham", "Nilakkottai", "Oddanchatram", "Palani", "Vedasandur"],
+        "Erode": ["All Assemblies", "Anthiyur", "Bhavani", "Bhavanisagar", "Erode (East)", "Erode (West)", "Gobichettipalayam", "Modakkurichi", "Perundurai"],
+        "Kallakuruchi": ["All Assemblies", "Kallakurichi", "Rishivandiyam", "Sankarapuram", "Ulundurpettai"],
+        "Kancheepuram": ["All Assemblies", "Alandur", "Kancheepuram", "Sriperumbudur", "Uthiramerur"],
+        "Kanniyakumari": ["All Assemblies", "Colachal", "Kanniyakumari", "Killiyoor", "Nagercoil", "Padmanabhapuram", "Vilavancode"],
+        "Karur": ["All Assemblies", "Aravakurichi", "Karur", "Krishnarayapuram", "Kulithalai"],
+        "Krishnagiri": ["All Assemblies", "Bargur", "Hosur", "Krishnagiri", "Thalli", "Uthangarai", "Veppanahalli"],
+        "Madurai": ["All Assemblies", "Madurai Central", "Madurai East", "Madurai North", "Madurai South", "Madurai West", "Melur", "Sholavandan", "Thirumangalam", "Thiruparankundram", "Usilampatti"],
+        "Mayiladuthurai": ["All Assemblies", "Mayiladuthurai", "Poompuhar", "Sirkazhi"],
+        "Nagapattinam": ["All Assemblies", "Kilvelur", "Nagapattinam", "Vedaranyam"],
+        "Namakkal": ["All Assemblies", "Kumarapalayam", "Namakkal", "Paramathi-Velur", "Rasipuram", "Senthamangalam", "Tiruchengodu"],
+        "Nilgiris": ["All Assemblies", "Coonoor", "Gudalur", "Udhagamandalam"],
+        "Perambalur": ["All Assemblies", "Kunnam", "Perambalur"],
+        "Pudukottai": ["All Assemblies", "Alangudi", "Aranthangi", "Gandarvakkottai", "Pudukkottai", "Thirumayam", "Viralimalai"],
+        "Ramanathapuram": ["All Assemblies", "Mudhukulathur", "Paramakudi", "Ramanathapuram", "Tiruvadanai"],
+        "Ranipet": ["All Assemblies", "Arakkonam", "Arcot", "Ranipet", "Sholinghur"],
+        "Salem": ["All Assemblies", "Attur", "Edappadi", "Gangavalli", "Mettur", "Omalur", "Salem (North)", "Salem (South)", "Salem (West)", "Sankari", "Veerapandi", "Yercaud"],
+        "Sivaganga": ["All Assemblies", "Karaikudi", "Manamadurai", "Sivaganga", "Tiruppattur"],
+        "Tenkasi": ["All Assemblies", "Alangulam", "Kadayanallur", "Sankarankovil", "Tenkasi", "Vasudevanallur"],
+        "Thanjavur": ["All Assemblies", "Kumbakonam", "Orathanadu", "Papanasam", "Pattukkottai", "Peravurani", "Thanjavur", "Thiruvaiyaru", "Thiruvidaimarudur"],
+        "Theni": ["All Assemblies", "Andipatti", "Bodinayakanur", "Cumbum", "Periyakulam"],
+        "Thiruvallur": ["All Assemblies", "Ambattur", "Avadi", "Gummidipoondi", "Madavaram", "Maduravoyal", "Ponneri", "Poonamallee", "Thiruvallur", "Thiruvottiyur", "Tiruttani"],
+        "Thiruvarur": ["All Assemblies", "Mannargudi", "Nannilam", "Thiruthuraipoondi", "Thiruvarur"],
+        "Thoothukudi": ["All Assemblies", "Kovilpatti", "Ottapidaram", "Srivaikuntam", "Thoothukkudi", "Tiruchendur", "Vilathikulam"],
+        "Tiruchirapalli": ["All Assemblies", "Lalgudi", "Manachanallur", "Manapparai", "Musiri", "Srirangam", "Thiruverumbur", "Thuraiyur", "Tiruchirappalli (East)"],
+        "Tirunelveli": ["All Assemblies", "Ambasamudram", "Nanguneri", "Palayamkottai", "Radhapuram", "Tirunelveli"],
+        "Tirupathur": ["All Assemblies", "Ambur", "Jolarpet", "Tirupattur", "Vaniyambadi"],
+        "Tiruppur": ["All Assemblies", "Avanashi", "Dharapuram", "Kangayam", "Madathukulam", "Palladam", "Tiruppur (North)", "Tiruppur (South)", "Udumalaipettai"],
+        "Tiruvannamalai": ["All Assemblies", "Arani", "Chengam", "Cheyyar", "Kalasapakkam", "Kilpennathur", "Polur", "Tiruvannamalai", "Vandavasi"],
+        "Vellore": ["All Assemblies", "Anaikattu", "Gudiyattam", "Katpadi", "Kilvaithinankuppam", "Vellore"],
+        "Vilupuram": ["All Assemblies", "Mailam", "Tindivanam", "Tirukkoyilur", "Vanur", "Vikravandi", "Viluppuram"],
+        "Virudhunagar": ["All Assemblies", "Aruppukkottai", "Rajapalayam", "Sattur", "Sivakasi", "Srivilliputhur", "Tiruchuli", "Virudhunagar"]
     };
 
     const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'Hospitals & Clinics');
@@ -212,7 +235,7 @@ const BusinessList = () => {
 
                         {/* Desktop Sidebar Filters - Hidden on mobile */}
                         <aside className="hidden lg:block lg:col-span-1">
-                            <div className="bg-[#0f172a] rounded-[2rem] p-6 shadow-2xl sticky top-28 border border-slate-800 overflow-hidden">
+                            <div className="bg-[#0f172a] rounded-4xl p-6 shadow-2xl sticky top-28 border border-slate-800 overflow-hidden">
                                 <h4 className="text-sm font-black text-slate-400 mb-8 uppercase tracking-[0.2em] px-4">Categories</h4>
                                 <div className="max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
                                     <ul className="space-y-1">
