@@ -6,11 +6,13 @@ import axios from 'axios';
 // VITE_API_BASE_URL here because the proxy path must stay same-origin.
 const API_BASE_URL = '/proxy-api';
 
+// NOTE: do not force a global 'Content-Type' header. Axios sets it per request
+// automatically — 'application/json' for plain objects (reviews, etc.) and
+// 'multipart/form-data; boundary=…' for FormData (business registration with
+// file uploads). Forcing JSON here previously broke the multipart /public/register
+// submission with an HTTP 500.
 const api = axios.create({
     baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
 });
 
 export const businessService = {
