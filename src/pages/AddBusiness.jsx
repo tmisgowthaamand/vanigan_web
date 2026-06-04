@@ -43,6 +43,7 @@ const AddBusiness = () => {
   const [confirmPin, setConfirmPin] = useState('');
   const [pinStatus, setPinStatus] = useState('idle'); // idle | loading | done | error
   const [pinError, setPinError] = useState('');
+  const [pinProgress, setPinProgress] = useState(''); // live retry feedback
 
   const [formData, setFormData] = useState({
     name: '',
@@ -171,9 +172,10 @@ const AddBusiness = () => {
   //     stored on the business. Depending on what the owner filled in, that
   //     could be the primary WhatsApp number or the verification number, so we
   //     try each distinct candidate.
-  //  2) Indexing delay — right after registration the new listing may not be
-  //     queryable yet, so set-pin returns 404 {error:'Business not found.'}.
-  //     We retry a few times with a short backoff before giving up.
+  //  2) Indexing delay — right after registration the new listing isn't
+  //     query-matchable for a while on the live DB, so set-pin returns
+  //     404 {error:'Business not found.'}. We retry with a progressive backoff
+  //     (up to ~60s total) and show live feedback instead of failing fast.
   const handleSetPin = async () => {
     setPinError('');
     if (pin.length < 4) { setPinError('Enter a 4-digit PIN.'); return; }
@@ -191,9 +193,13 @@ const AddBusiness = () => {
     }
 
     setPinStatus('loading');
+    setPinProgress('Securing your account…');
 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    const MAX_ATTEMPTS = 4;
+    // Progressive backoff between attempts (ms). Sums to ~60s so we comfortably
+    // outlast the post-registration indexing lag on the live backend.
+    const BACKOFFS = [2000, 3000, 4000, 5000, 6000, 8000, 10000, 10000, 12000];
+    const MAX_ATTEMPTS = BACKOFFS.length + 1;
     let notFound = false;
     let alreadySet = false;
     let otherError = false;
@@ -223,6 +229,7 @@ const AddBusiness = () => {
       for (const ownerPhone of candidates) {
         try {
           await authService.setPin(ownerPhone, pin);
+          setPinProgress('Signing you in…');
           await establishSession(ownerPhone);
           setPinStatus('done');
           // Hand the user straight to their dashboard (full load so the navbar
@@ -232,16 +239,20 @@ const AddBusiness = () => {
         } catch (err) {
           const apiErr = err?.response?.data?.error;
           const status = err?.response?.status;
-          if (apiErr === 'pin_already_set') { alreadySet = true; break; }
+          if (apiErr === 'pin_already_set' || status === 409) { alreadySet = true; break; }
           if (apiErr === 'Business not found.' || status === 404) { notFound = true; continue; }
           otherError = true;
         }
       }
       if (alreadySet || otherError) break;
       if (!notFound) break; // succeeded or hit a terminal state above
-      if (attempt < MAX_ATTEMPTS - 1) await sleep(1500); // wait for indexing, then retry
+      if (attempt < MAX_ATTEMPTS - 1) {
+        setPinProgress(`Finalizing your new listing… (attempt ${attempt + 2} of ${MAX_ATTEMPTS})`);
+        await sleep(BACKOFFS[attempt]); // wait for indexing, then retry
+      }
     }
 
+    setPinProgress('');
     if (alreadySet) {
       // The PIN already exists — just verify it and log the owner in.
       for (const ownerPhone of candidates) {
@@ -257,7 +268,7 @@ const AddBusiness = () => {
       }
       setPinError('A PIN is already set for this business. Please use it on the Login page.');
     } else if (notFound) {
-      setPinError('Your listing is still being created. Please wait a moment and tap "Set PIN & Confirm" again.');
+      setPinError('Your listing is still being finalized on our servers. This can take up to a minute for new registrations — please tap "Set PIN & Confirm" again.');
     } else {
       setPinError('Could not set PIN. Please try again.');
     }
@@ -290,6 +301,7 @@ const AddBusiness = () => {
                   <input type="password" inputMode="numeric" maxLength={4} value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }} placeholder="Confirm" className="bg-raised border border-rule rounded-xl py-3 px-4 text-center text-[16px] font-bold tracking-[0.3em] text-champagne outline-none focus:border-kinpaku/50 placeholder:tracking-normal placeholder:text-faint" />
                 </div>
                 {pinError && <p className="text-warning text-[12px] font-medium mb-3">{pinError}</p>}
+                {pinStatus === 'loading' && pinProgress && <p className="text-patina text-[12px] font-medium mb-3">{pinProgress}</p>}
                 <button onClick={handleSetPin} disabled={pinStatus === 'loading'} className="w-full py-3.5 bg-graphite border border-kinpaku/50 text-kinpaku rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-kinpaku hover:text-lacquer-deep transition-all disabled:opacity-60 flex items-center justify-center gap-2">
                   {pinStatus === 'loading' ? <><Loader2 size={15} className="animate-spin" /> Setting PIN…</> : 'Set PIN & Confirm'}
                 </button>
