@@ -95,20 +95,40 @@ const AddBusiness = () => {
     setMessage('Submitting your registration...');
 
     try {
-      // Prepare FormData for multipart submission
+      // Prepare FormData for multipart submission.
+      // The backend (Multer) expects these exact file field names:
+      //   coverImage     ← banner photo
+      //   image          ← profile / logo photo
+      //   galleryImages  ← gallery (multiple allowed)
+      // Any other file field name is rejected with HTTP 500 "Unexpected field".
+      const FILE_FIELD_MAP = {
+        bannerImage: 'coverImage',
+        profileImage: 'image',
+      };
+      const SKIP = new Set(['bannerImage', 'profileImage', 'gallery']);
+
       const data = new FormData();
       Object.keys(formData).forEach(key => {
-        if (key === 'services') {
+        if (SKIP.has(key)) return; // handled explicitly below
+        if (key === 'services' || key === 'socialLinks') {
           data.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'socialLinks') {
-          data.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'gallery') {
-          formData.gallery.forEach(file => data.append('gallery', file));
         } else if (formData[key] instanceof File) {
           data.append(key, formData[key]);
-        } else {
+        } else if (formData[key] != null) {
           data.append(key, formData[key]);
         }
+      });
+
+      // Map single image uploads to the backend's expected field names.
+      Object.entries(FILE_FIELD_MAP).forEach(([localKey, apiKey]) => {
+        if (formData[localKey] instanceof File) {
+          data.append(apiKey, formData[localKey]);
+        }
+      });
+
+      // Gallery: backend expects the "galleryImages" field, supports multiple.
+      (formData.gallery || []).forEach(file => {
+        if (file instanceof File) data.append('galleryImages', file);
       });
 
       await businessService.add(data);
@@ -116,7 +136,7 @@ const AddBusiness = () => {
       setMessage('Registration Successful!');
     } catch (error) {
       setStatus('error');
-      setMessage(error.response?.data?.message || 'Error submitting registration. Please try again.');
+      setMessage(error.response?.data?.message || error.response?.data?.error || 'Error submitting registration. Please try again.');
     }
   };
 
