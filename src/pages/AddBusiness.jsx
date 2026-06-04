@@ -28,6 +28,16 @@ const AddBusiness = () => {
   const [showPlatformSelector, setShowPlatformSelector] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('');
 
+  // If the owner arrived here from Login as a "new member" (no listing for
+  // their number yet), prefill the verification phone so they can continue
+  // straight into registration.
+  useEffect(() => {
+    const sessionPhone = sessionStorage.getItem('vanigan_owner_phone');
+    if (sessionPhone && sessionPhone.length >= 10) {
+      setWhatsappNumber(sessionPhone);
+    }
+  }, []);
+
   // Post-registration PIN setup (secures the owner account for My Business login)
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
@@ -154,25 +164,104 @@ const AddBusiness = () => {
     }
   };
 
-  // Set the owner PIN after a successful registration. Uses the WhatsApp /
-  // primary phone the owner registered with.
+  // Set the owner PIN after a successful registration.
+  //
+  // Two real-world issues are handled here:
+  //  1) Phone field mismatch — the backend matches the PIN against the phone
+  //     stored on the business. Depending on what the owner filled in, that
+  //     could be the primary WhatsApp number or the verification number, so we
+  //     try each distinct candidate.
+  //  2) Indexing delay — right after registration the new listing may not be
+  //     queryable yet, so set-pin returns 404 {error:'Business not found.'}.
+  //     We retry a few times with a short backoff before giving up.
   const handleSetPin = async () => {
     setPinError('');
     if (pin.length < 4) { setPinError('Enter a 4-digit PIN.'); return; }
     if (pin !== confirmPin) { setPinError('PINs do not match.'); return; }
-    const ownerPhone = (formData.whatsappPrimary || formData.whatsappNo || whatsappNumber || '').replace(/\D/g, '').slice(-10);
-    if (ownerPhone.length < 10) { setPinError('Could not determine your registered phone number.'); return; }
-    setPinStatus('loading');
-    try {
-      await authService.setPin(ownerPhone, pin);
-      setPinStatus('done');
-    } catch (err) {
-      const apiErr = err?.response?.data?.error;
-      if (apiErr === 'pin_already_set') setPinError('A PIN is already set for this business.');
-      else if (apiErr === 'Business not found.' || err?.response?.status === 404) setPinError('Your listing is still being created. Try setting your PIN from the Login page shortly.');
-      else setPinError('Could not set PIN. Please try again.');
-      setPinStatus('error');
+
+    const norm = (v) => (v || '').replace(/\D/g, '').slice(-10);
+    const candidates = [...new Set(
+      [formData.whatsappPrimary, formData.whatsappNo, whatsappNumber]
+        .map(norm)
+        .filter((p) => p.length === 10)
+    )];
+    if (candidates.length === 0) {
+      setPinError('Could not determine your registered phone number.');
+      return;
     }
+
+    setPinStatus('loading');
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const MAX_ATTEMPTS = 4;
+    let notFound = false;
+    let alreadySet = false;
+    let otherError = false;
+
+    // On a successful PIN set we log the owner in: fetch their business via
+    // verify-pin, cache it, and store the session so the navbar switches to
+    // "My Business" and the dashboard renders their profile immediately.
+    const establishSession = async (ownerPhone) => {
+      sessionStorage.setItem('vanigan_owner_phone', ownerPhone);
+      try {
+        const res = await authService.verifyPin(ownerPhone, pin);
+        const biz =
+          res?.business ||
+          res?.data?.business ||
+          (Array.isArray(res?.businesses) ? res.businesses[0] : null) ||
+          (res && res._id ? res : null);
+        if (biz) sessionStorage.setItem('vanigan_owner_business', JSON.stringify(biz));
+      } catch {
+        // Session phone is enough; My Business will look the business up.
+      }
+    };
+
+    // For each attempt, try every phone candidate. A "Business not found"
+    // result is retryable (indexing delay); anything else is terminal.
+    for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+      notFound = false;
+      for (const ownerPhone of candidates) {
+        try {
+          await authService.setPin(ownerPhone, pin);
+          await establishSession(ownerPhone);
+          setPinStatus('done');
+          // Hand the user straight to their dashboard (full load so the navbar
+          // picks up the new session and shows "My Business").
+          window.location.href = '/my-business';
+          return;
+        } catch (err) {
+          const apiErr = err?.response?.data?.error;
+          const status = err?.response?.status;
+          if (apiErr === 'pin_already_set') { alreadySet = true; break; }
+          if (apiErr === 'Business not found.' || status === 404) { notFound = true; continue; }
+          otherError = true;
+        }
+      }
+      if (alreadySet || otherError) break;
+      if (!notFound) break; // succeeded or hit a terminal state above
+      if (attempt < MAX_ATTEMPTS - 1) await sleep(1500); // wait for indexing, then retry
+    }
+
+    if (alreadySet) {
+      // The PIN already exists — just verify it and log the owner in.
+      for (const ownerPhone of candidates) {
+        try {
+          await authService.verifyPin(ownerPhone, pin);
+          await establishSession(ownerPhone);
+          setPinStatus('done');
+          window.location.href = '/my-business';
+          return;
+        } catch {
+          // try the next candidate
+        }
+      }
+      setPinError('A PIN is already set for this business. Please use it on the Login page.');
+    } else if (notFound) {
+      setPinError('Your listing is still being created. Please wait a moment and tap "Set PIN & Confirm" again.');
+    } else {
+      setPinError('Could not set PIN. Please try again.');
+    }
+    setPinStatus('error');
   };
 
   if (status === 'success') {
@@ -190,12 +279,12 @@ const AddBusiness = () => {
             {pinStatus === 'done' ? (
               <div className="mb-8 p-5 bg-graphite rounded-2xl border border-[rgba(61,177,173,0.4)] text-left">
                 <p className="text-patina text-[13px] font-bold flex items-center gap-2 mb-1"><ShieldCheck size={16} /> PIN set successfully</p>
-                <p className="text-muted text-[12px] font-medium leading-relaxed">You can now log in to "My Business" using your phone number and this PIN.</p>
+                <p className="text-muted text-[12px] font-medium leading-relaxed">You're being signed in to "My Business"…</p>
               </div>
             ) : (
               <div className="mb-8 p-5 sm:p-6 bg-lacquer-deep rounded-2xl border border-rule text-left">
                 <p className="text-champagne text-[13px] font-black uppercase tracking-wider mb-1 flex items-center gap-2"><ShieldCheck size={16} className="text-kinpaku" /> Set Your Security PIN</p>
-                <p className="text-muted text-[12px] font-medium leading-relaxed mb-4">Create a 4-digit PIN to manage your listing later via the Login page.</p>
+                <p className="text-muted text-[12px] font-medium leading-relaxed mb-4">Create a 4-digit PIN. We'll log you straight into your My Business dashboard.</p>
                 <div className="grid grid-cols-2 gap-3 mb-3">
                   <input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }} placeholder="PIN" className="bg-raised border border-rule rounded-xl py-3 px-4 text-center text-[16px] font-bold tracking-[0.3em] text-champagne outline-none focus:border-kinpaku/50 placeholder:tracking-normal placeholder:text-faint" />
                   <input type="password" inputMode="numeric" maxLength={4} value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }} placeholder="Confirm" className="bg-raised border border-rule rounded-xl py-3 px-4 text-center text-[16px] font-bold tracking-[0.3em] text-champagne outline-none focus:border-kinpaku/50 placeholder:tracking-normal placeholder:text-faint" />

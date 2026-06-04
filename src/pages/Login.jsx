@@ -27,15 +27,29 @@ const Login = () => {
         }
         setLoading(true);
         try {
-            await authService.verifyPin(cleanPhone, pin);
+            const res = await authService.verifyPin(cleanPhone, pin);
             // Persist a lightweight session for the dashboard to read.
             sessionStorage.setItem('vanigan_owner_phone', cleanPhone);
+            // verify-pin returns the owner's business; cache it so the dashboard
+            // can render the profile instantly without a second phone lookup.
+            const biz =
+                res?.business ||
+                res?.data?.business ||
+                (Array.isArray(res?.businesses) ? res.businesses[0] : null) ||
+                (res && res._id ? res : null);
+            if (biz) sessionStorage.setItem('vanigan_owner_business', JSON.stringify(biz));
+            else sessionStorage.removeItem('vanigan_owner_business');
             navigate('/my-business');
         } catch (err) {
             const code = err?.response?.status;
             const apiErr = err?.response?.data?.error;
             if (code === 404 || apiErr === 'no_business') {
-                setError('No business found for this number. Please register first.');
+                // New member — this number has no listing yet. Send them straight
+                // to registration with the phone prefilled.
+                sessionStorage.setItem('vanigan_owner_phone', cleanPhone);
+                sessionStorage.removeItem('vanigan_owner_business');
+                navigate('/add-business');
+                return;
             } else if (code === 401 || code === 400 || apiErr === 'invalid_pin') {
                 setError('Incorrect PIN. Please try again.');
             } else {

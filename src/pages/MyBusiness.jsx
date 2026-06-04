@@ -14,6 +14,7 @@ const MyBusiness = () => {
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState('');
     const [searched, setSearched] = useState(false);
+    const [ownerPhone, setOwnerPhone] = useState('');
 
     // Review states
     const [submittingReview, setSubmittingReview] = useState(false);
@@ -44,6 +45,59 @@ const MyBusiness = () => {
             setLoading(false);
             setProgress(100);
         }
+    };
+
+    // On mount, if the owner just logged in, hydrate the dashboard with their
+    // session: use the business cached at login when available, otherwise look
+    // it up by the stored phone. This skips re-entering the phone number.
+    useEffect(() => {
+        const sessionPhone = sessionStorage.getItem('vanigan_owner_phone');
+        if (!sessionPhone) return;
+        setOwnerPhone(sessionPhone);
+        setPhoneNumber(sessionPhone);
+
+        const cached = sessionStorage.getItem('vanigan_owner_business');
+        if (cached) {
+            try {
+                const biz = JSON.parse(cached);
+                setResults([biz]);
+                setSearched(true);
+                return;
+            } catch {
+                // fall through to a phone lookup
+            }
+        }
+
+        let active = true;
+        (async () => {
+            setLoading(true);
+            setSearched(true);
+            setProgress(0);
+            try {
+                const matches = await businessService.getByPhone(sessionPhone, (p) => active && setProgress(p));
+                if (active) setResults(matches);
+            } catch {
+                if (active) {
+                    setError('Failed to load your business. Please try again.');
+                    setResults([]);
+                }
+            } finally {
+                if (active) {
+                    setLoading(false);
+                    setProgress(100);
+                }
+            }
+        })();
+        return () => { active = false; };
+    }, []);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('vanigan_owner_phone');
+        sessionStorage.removeItem('vanigan_owner_business');
+        setOwnerPhone('');
+        setResults(null);
+        setSearched(false);
+        setPhoneNumber('');
     };
 
     // Load reviews for search results
@@ -196,6 +250,33 @@ const MyBusiness = () => {
 
                         {/* ── Main: Phone lookup form ── */}
                         <div className="lg:col-span-7 space-y-8 absolute-z-10">
+                            {ownerPhone ? (
+                                <div className="bg-raised rounded-[20px] p-6 sm:p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden">
+                                    <div className="flex items-start justify-between gap-4 flex-wrap">
+                                        <div>
+                                            <p className="text-[12px] font-bold text-patina uppercase tracking-wider flex items-center gap-2 mb-2">
+                                                <CheckCircle size={15} /> Signed in
+                                            </p>
+                                            <h2 className="text-[24px] font-extrabold text-champagne mb-1">Welcome back</h2>
+                                            <p className="text-[15px] text-muted font-normal leading-[1.7] flex items-center gap-2">
+                                                <Phone size={14} className="text-kinpaku" /> {ownerPhone}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="border border-rule text-champagne px-5 py-2.5 rounded-xl text-[13px] font-bold hover:bg-graphite hover:border-kinpaku/30 transition-all"
+                                        >
+                                            Log out
+                                        </button>
+                                    </div>
+                                    {loading && (
+                                        <p className="text-muted text-[14px] font-medium mt-5 flex items-center gap-2">
+                                            <Loader2 size={16} className="animate-spin" /> Loading your business… {progress}%
+                                        </p>
+                                    )}
+                                    {error && <p className="text-warning text-[13px] font-medium mt-4">{error}</p>}
+                                </div>
+                            ) : (
                             <div className="bg-raised rounded-[20px] p-6 sm:p-8 md:p-10 border border-rule shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
                                 <div className="absolute inset-0 bg-linear-to-tr from-kinpaku/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -234,6 +315,7 @@ const MyBusiness = () => {
                                     </button>
                                 </form>
                             </div>
+                            )}
 
                             {/* Search Results */}
                             {searched && !loading && results !== null && (

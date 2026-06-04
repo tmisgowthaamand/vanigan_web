@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [ownerPhone, setOwnerPhone] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,6 +14,27 @@ const Navbar = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Track the owner session so the navbar shows the right actions. We poll on
+    // focus/route changes via a storage + interval combo since sessionStorage
+    // changes in the same tab don't fire the 'storage' event.
+    useEffect(() => {
+        const read = () => setOwnerPhone(sessionStorage.getItem('vanigan_owner_phone') || '');
+        read();
+        window.addEventListener('focus', read);
+        const id = setInterval(read, 1000);
+        return () => { window.removeEventListener('focus', read); clearInterval(id); };
+    }, []);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('vanigan_owner_phone');
+        sessionStorage.removeItem('vanigan_owner_business');
+        setOwnerPhone('');
+        setIsMenuOpen(false);
+        navigate('/login');
+    };
+
+    const isLoggedIn = !!ownerPhone;
 
     const navLinks = [
         {
@@ -107,19 +129,32 @@ const Navbar = () => {
                 {/* Right: Actions */}
                 <div className="flex items-center gap-3 sm:gap-5 shrink-0">
                     <div className="hidden md:flex items-center gap-5">
-                        <Link to="/add-business" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors whitespace-nowrap">
-                            Add Business
-                        </Link>
-                        <Link to="/login" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors">
-                            Login
-                        </Link>
+                        {isLoggedIn ? (
+                            <>
+                                <Link to="/my-business" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors whitespace-nowrap">
+                                    My Business
+                                </Link>
+                                <button onClick={handleLogout} className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors">
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/add-business" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors whitespace-nowrap">
+                                    Add Business
+                                </Link>
+                                <Link to="/login" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors">
+                                    Login
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     <button
-                        onClick={() => navigate('/add-business')}
+                        onClick={() => navigate(isLoggedIn ? '/my-business' : '/add-business')}
                         className="hidden lg:inline-flex ks-button ks-button-primary min-h-10! px-6! text-[13.5px]! whitespace-nowrap"
                     >
-                        Join for free
+                        {isLoggedIn ? 'My Dashboard' : 'Join for free'}
                     </button>
 
                     <button
@@ -166,14 +201,29 @@ const Navbar = () => {
                                 </div>
                             ))}
                             <div className="pt-4 mt-2 border-t border-rule flex flex-col gap-3">
-                                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Login</Link>
-                                <Link to="/add-business" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Add Business</Link>
-                                <button
-                                    onClick={() => { navigate('/add-business'); setIsMenuOpen(false); }}
-                                    className="ks-button ks-button-primary w-full"
-                                >
-                                    Join for free
-                                </button>
+                                {isLoggedIn ? (
+                                    <>
+                                        <Link to="/my-business" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">My Business</Link>
+                                        <button onClick={handleLogout} className="text-[16px] font-semibold text-champagne text-left">Logout</button>
+                                        <button
+                                            onClick={() => { navigate('/my-business'); setIsMenuOpen(false); }}
+                                            className="ks-button ks-button-primary w-full"
+                                        >
+                                            My Dashboard
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Login</Link>
+                                        <Link to="/add-business" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Add Business</Link>
+                                        <button
+                                            onClick={() => { navigate('/add-business'); setIsMenuOpen(false); }}
+                                            className="ks-button ks-button-primary w-full"
+                                        >
+                                            Join for free
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </motion.div>
