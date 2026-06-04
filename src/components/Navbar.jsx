@@ -128,7 +128,7 @@ const Navbar = () => {
 
                 {/* Right: Actions */}
                 <div className="flex items-center gap-3 sm:gap-5 shrink-0">
-                    <div className="hidden md:flex items-center gap-5">
+                    <div className="hidden lg:flex items-center gap-5">
                         {isLoggedIn ? (
                             <>
                                 <Link to="/my-business" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors whitespace-nowrap">
@@ -158,7 +158,7 @@ const Navbar = () => {
                     </button>
 
                     <button
-                        className="lg:hidden text-champagne"
+                        className="lg:hidden text-champagne p-1 -mr-1"
                         aria-label="Toggle menu"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >

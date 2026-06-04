@@ -56,7 +56,7 @@ const HeroSection = () => {
             {/* Calibration grid field */}
             <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(232,119,34,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(232,119,34,0.045)_1px,transparent_1px)] bg-size-[56px_56px] mask-[radial-gradient(ellipse_at_top_left,black_20%,transparent_70%)] pointer-events-none" />
 
-            <div className="max-w-[1320px] mx-auto px-6 py-16 md:py-24 lg:py-32 relative z-10">
+            <div className="max-w-[1320px] mx-auto px-5 sm:px-6 py-16 md:py-24 lg:py-32 relative z-10">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-8">
 
                     {/* ─── LEFT COLUMN ─── */}
@@ -74,7 +74,7 @@ const HeroSection = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="ks-display text-[44px] sm:text-[58px] md:text-[72px] leading-[1.02] mb-8"
+                            className="ks-display text-[36px] sm:text-[58px] md:text-[72px] leading-[1.05] sm:leading-[1.02] mb-8"
                             style={{ fontWeight: 300 }}
                         >
                             Connect with trusted{' '}

@@ -12,7 +12,7 @@ const About = () => {
 
             {/* AI Platform Section */}
             <section className="py-16 sm:py-24">
-                <div className="max-w-[1280px] mx-auto px-6">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6">
                     <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                         <div className="order-2 lg:order-1">
                             <h4 className="text-kinpaku text-[13px] font-bold uppercase tracking-[0.12em] mb-4">India's Leading</h4>
@@ -54,7 +54,7 @@ const About = () => {
 
             {/* Our Core Values */}
             <section className="py-16 sm:py-24 bg-lacquer">
-                <div className="max-w-[1280px] mx-auto px-6">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-4">Our Core Values</h2>
                         <p className="text-muted text-[16px]">The standards that guide our every step.</p>
@@ -78,14 +78,14 @@ const About = () => {
 
             {/* The People Behind Vanigan */}
             <section className="py-16 sm:py-24 bg-raised">
-                <div className="max-w-[1280px] mx-auto px-6">
+                <div className="max-w-[1280px] mx-auto px-5 sm:px-6">
                     <div className="text-center mb-16">
                         <h2 className="text-[32px] md:text-[40px] font-extrabold text-champagne tracking-[-0.01em] mb-4">The People Behind Vanigan</h2>
                         <p className="text-muted text-[16px]">Driven leaders in technology and business development.</p>
                         <div className="w-12 h-1.5 bg-kinpaku rounded-full mx-auto mt-6" />
                     </div>
 
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
                         {[
                             { name: 'Sathish Kumar', role: 'CEO & Founder' },
                             { name: 'Priya Rajan', role: 'Chief Operating Officer' },
@@ -93,11 +93,11 @@ const About = () => {
                             { name: 'Meera Nair', role: 'Public Relations' }
                         ].map((person, i) => (
                             <div key={i} className="text-center group">
-                                <div className="w-32 h-32 bg-lacquer border border-rule rounded-full mx-auto mb-6 flex items-center justify-center text-faint italic font-bold group-hover:bg-graphite transition-colors">
+                                <div className="w-24 h-24 sm:w-32 sm:h-32 bg-lacquer border border-rule rounded-full mx-auto mb-4 sm:mb-6 flex items-center justify-center text-faint italic font-bold group-hover:bg-graphite transition-colors">
                                     Photo
                                 </div>
-                                <h4 className="font-extrabold text-champagne text-[18px] mb-1">{person.name}</h4>
-                                <p className="text-[12px] text-kinpaku font-bold uppercase tracking-wider">{person.role}</p>
+                                <h4 className="font-extrabold text-champagne text-[16px] sm:text-[18px] mb-1">{person.name}</h4>
+                                <p className="text-[11px] sm:text-[12px] text-kinpaku font-bold uppercase tracking-wider">{person.role}</p>
                             </div>
                         ))}
                     </div>
@@ -108,3 +108,4 @@ const About = () => {
 };
 
 export default About;
+

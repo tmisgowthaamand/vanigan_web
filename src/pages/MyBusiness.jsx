@@ -47,9 +47,10 @@ const MyBusiness = () => {
         }
     };
 
-    // On mount, hydrate the dashboard from the account session. We use the
-    // business linked to the account when available, refresh it via /me, and
-    // fall back to a phone lookup only if the account has no linked business.
+    // On mount, hydrate the dashboard from the account session. The account
+    // tells us the exact businessId, so we fetch that one record directly
+    // (fast, exact from the backend) instead of scanning every page. The slow
+    // phone-scan is only a last resort when there is no linked business at all.
     useEffect(() => {
         const auth = session.get();
         const sessionPhone = auth?.user?.phone || sessionStorage.getItem('vanigan_owner_phone');
@@ -58,7 +59,7 @@ const MyBusiness = () => {
         setPhoneNumber(sessionPhone);
         setSearched(true);
 
-        // Show the linked business immediately if we have it cached.
+        // Show the linked business immediately if we already have it cached.
         if (auth?.business) {
             setResults([auth.business]);
         }
@@ -66,16 +67,31 @@ const MyBusiness = () => {
         let active = true;
         (async () => {
             try {
-                // Refresh from the account so edits / links are up to date.
-                const fresh = await webAuthService.me(sessionPhone);
+                // Refresh the account so we have the latest user + linked id.
+                const fresh = await webAuthService.me(sessionPhone).catch(() => auth);
                 if (!active) return;
-                if (fresh?.business) {
-                    session.set(fresh);
-                    setResults([fresh.business]);
-                    return;
+                if (fresh?.user) session.set(fresh);
+
+                // Prefer the exact record by id — one quick, authoritative call.
+                const businessId = fresh?.business?._id || fresh?.user?.businessId || auth?.business?._id;
+                if (businessId) {
+                    try {
+                        const exact = await businessService.getById(businessId);
+                        const biz = exact?.business || exact;
+                        if (active && biz?._id) {
+                            setResults([biz]);
+                            session.set({ ...(fresh || auth), business: biz });
+                            return;
+                        }
+                    } catch {
+                        // fall through to the linked copy / phone lookup
+                    }
                 }
-                // Account exists but no linked business — try a phone lookup so
-                // an owner who registered a listing separately still sees it.
+
+                if (fresh?.business) { setResults([fresh.business]); return; }
+
+                // No linked business — last-resort phone scan so an owner who
+                // registered separately still finds their listing.
                 if (!auth?.business) {
                     setLoading(true);
                     setProgress(0);
@@ -83,7 +99,6 @@ const MyBusiness = () => {
                     if (active) setResults(matches);
                 }
             } catch {
-                // Fall back to whatever we cached; if nothing, do a phone lookup.
                 if (active && !auth?.business) {
                     try {
                         setLoading(true);
@@ -234,15 +249,15 @@ const MyBusiness = () => {
 
                         {/* Right — Stats cards */}
                         <div className="w-full lg:w-1/2">
-                            <div className="grid grid-cols-3 gap-3 sm:gap-6 bg-raised/80 backdrop-blur-xl p-5 sm:p-8 rounded-3xl border border-rule shadow-[0_8px_30px_rgba(232,119,34,0.06)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-500">
+                            <div className="grid grid-cols-3 gap-2 sm:gap-6 bg-raised/80 backdrop-blur-xl p-4 sm:p-8 rounded-3xl border border-rule shadow-[0_8px_30px_rgba(232,119,34,0.06)] hover:shadow-[0_20px_40px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-500">
                                 {[
                                     { value: stats.searches, label: 'Business searches' },
                                     { value: stats.total > 0 ? stats.total.toLocaleString() + '+' : '50K+', label: 'Verified listings' },
                                     { value: stats.leads, label: 'Direct leads' }
                                 ].map((m, i) => (
                                     <div key={i} className="text-center group">
-                                        <div className="text-[24px] sm:text-[36px] md:text-[44px] font-extrabold text-champagne leading-none mb-2 group-hover:text-kinpaku transition-colors">{m.value}</div>
-                                        <p className="text-[11px] sm:text-[14px] text-muted font-medium leading-tight">{m.label}</p>
+                                        <div className="text-[20px] sm:text-[36px] md:text-[44px] font-extrabold text-champagne leading-none mb-2 group-hover:text-kinpaku transition-colors wrap-break-word">{m.value}</div>
+                                        <p className="text-[10px] sm:text-[14px] text-muted font-medium leading-tight">{m.label}</p>
                                     </div>
                                 ))}
                             </div>
@@ -404,7 +419,7 @@ const MyBusiness = () => {
                                                         )}
                                                     </div>
 
-                                                    <div className="pt-4 border-t border-rule flex gap-3">
+                                                    <div className="pt-4 border-t border-rule flex flex-col sm:flex-row gap-3">
                                                         <Link
                                                             to={`/business/${biz._id}`}
                                                             className="flex-1 bg-kinpaku text-white text-center px-6 py-3 rounded-xl text-[13px] font-bold hover:bg-kinpaku-rich hover:shadow-[0_8px_16px_rgba(232,119,34,0.2)] transition-all flex items-center justify-center gap-2"
@@ -413,7 +428,7 @@ const MyBusiness = () => {
                                                         </Link>
                                                         <Link
                                                             to={`/business/${biz._id}`}
-                                                            className="border border-rule text-champagne px-5 py-3 rounded-xl text-[13px] font-bold hover:bg-graphite hover:border-kinpaku/30 transition-all flex items-center gap-2"
+                                                            className="border border-rule text-champagne px-5 py-3 rounded-xl text-[13px] font-bold hover:bg-graphite hover:border-kinpaku/30 transition-all flex items-center justify-center gap-2"
                                                         >
                                                             <ExternalLink size={14} /> Edit
                                                         </Link>
