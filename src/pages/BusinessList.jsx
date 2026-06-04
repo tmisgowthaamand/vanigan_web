@@ -4,12 +4,14 @@ import PageHeader from '../components/PageHeader';
 import BusinessCard from '../components/BusinessCard';
 import { businessService } from '../services/api';
 import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
+import { categorySubMap } from '../data/subCategories';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Loader2, AlertCircle, Plus, X, LayoutGrid, ChevronDown, MapPin, ChevronLeft, ChevronRight, Star, ArrowRight, Sparkles, TrendingUp, CheckCircle, Building2 } from 'lucide-react';
 
 const BusinessList = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const categorySubMap = {
+    /* categorySubMap is imported from src/data/subCategories.js (shared with AddBusiness).
+    const _inlineCategorySubMap = {
         "Advertising": ["All Sub-Categories", "Outdoor Advertising", "Digital Marketing Agencies", "Social Media Marketing", "Print Advertising", "Radio & TV Ads", "Brand Design Studios", "SEO & SEM Services", "Influencer Marketing", "Photography Studios", "Video Production"],
         "Advocate & Legal": ["All Sub-Categories", "Civil Lawyers", "Criminal Lawyers", "Family Law Advocates", "Property & Real Estate Lawyers", "Consumer Court Advocates", "Labor & Employment Lawyers", "Corporate Lawyers", "Notary Services", "Legal Document Services", "Cyber Law Consultants"],
         "Agriculture": ["All Sub-Categories", "Seed Suppliers", "Fertilizer Dealers", "Pesticide Shops", "Irrigation Equipment", "Farm Machinery Dealers", "Organic Farming Consultants", "Soil Testing Labs", "Agri Input Shops", "Poultry & Livestock Supplies", "Cold Storage & Warehousing"],
@@ -51,7 +53,7 @@ const BusinessList = () => {
         "Travel & Tourism": ["All Sub-Categories", "Travel Agencies", "Tour Operators", "Pilgrimage Tours", "Adventure Travel", "Holiday Packages", "Visa Consultants", "Hotel Booking Services", "Foreign Exchange", "Car Rentals for Tours", "Cruise & Air Bookings"],
         "Wedding Services": ["All Sub-Categories", "Wedding Services"]
     };
-
+    */
     // District / assembly names are sourced from src/data/constituencies.js,
     // which is generated from the live backend DB so filter values match the
     // raw strings the public businesses API expects.

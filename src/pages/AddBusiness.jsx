@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { businessService } from '../services/api';
+import { authService } from '../services/api';
 import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
+import { subCategoriesFor } from '../data/subCategories';
 import {
   CheckCircle,
   Plus,
@@ -26,9 +28,16 @@ const AddBusiness = () => {
   const [showPlatformSelector, setShowPlatformSelector] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('');
 
+  // Post-registration PIN setup (secures the owner account for My Business login)
+  const [pin, setPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  const [pinStatus, setPinStatus] = useState('idle'); // idle | loading | done | error
+  const [pinError, setPinError] = useState('');
+
   const [formData, setFormData] = useState({
     name: '',
     category: '',
+    subCategory: '',
     description: '',
     district: '',
     assembly: '',
@@ -67,6 +76,11 @@ const AddBusiness = () => {
       setFormData(prev => ({ ...prev, assembly: '' }));
     }
   }, [formData.district]);
+
+  useEffect(() => {
+    // Reset sub-category when the category changes
+    setFormData(prev => ({ ...prev, subCategory: '' }));
+  }, [formData.category]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -140,18 +154,60 @@ const AddBusiness = () => {
     }
   };
 
+  // Set the owner PIN after a successful registration. Uses the WhatsApp /
+  // primary phone the owner registered with.
+  const handleSetPin = async () => {
+    setPinError('');
+    if (pin.length < 4) { setPinError('Enter a 4-digit PIN.'); return; }
+    if (pin !== confirmPin) { setPinError('PINs do not match.'); return; }
+    const ownerPhone = (formData.whatsappPrimary || formData.whatsappNo || whatsappNumber || '').replace(/\D/g, '').slice(-10);
+    if (ownerPhone.length < 10) { setPinError('Could not determine your registered phone number.'); return; }
+    setPinStatus('loading');
+    try {
+      await authService.setPin(ownerPhone, pin);
+      setPinStatus('done');
+    } catch (err) {
+      const apiErr = err?.response?.data?.error;
+      if (apiErr === 'pin_already_set') setPinError('A PIN is already set for this business.');
+      else if (apiErr === 'Business not found.' || err?.response?.status === 404) setPinError('Your listing is still being created. Try setting your PIN from the Login page shortly.');
+      else setPinError('Could not set PIN. Please try again.');
+      setPinStatus('error');
+    }
+  };
+
   if (status === 'success') {
     return (
       <div className="min-h-screen bg-lacquer flex flex-col pt-20">
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-raised rounded-[24px] sm:rounded-[3rem] p-8 sm:p-12 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule text-center animate-in fade-in zoom-in duration-500">
-            <div className="w-24 h-24 bg-graphite rounded-4xl flex items-center justify-center text-kinpaku mx-auto mb-10 border border-kinpaku shadow-sm">
-              <CheckCircle size={48} />
+          <div className="max-w-md w-full bg-raised rounded-[24px] sm:rounded-[3rem] p-7 sm:p-12 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] border border-rule text-center animate-in fade-in zoom-in duration-500">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-graphite rounded-4xl flex items-center justify-center text-kinpaku mx-auto mb-6 sm:mb-8 border border-kinpaku shadow-sm">
+              <CheckCircle size={44} />
             </div>
-            <h2 className="text-3xl font-black text-champagne mb-4 tracking-tight">Success!</h2>
-            <p className="text-muted text-sm mb-12 font-bold uppercase tracking-widest leading-relaxed px-4">Your business registration has been submitted successfully.</p>
-            <button onClick={() => window.location.href = '/'} className="w-full py-6 bg-kinpaku text-lacquer-deep rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:bg-kinpaku-rich transition-all active:scale-95">Back to Home</button>
+            <h2 className="text-2xl sm:text-3xl font-black text-champagne mb-3 tracking-tight">Success!</h2>
+            <p className="text-muted text-[13px] mb-8 font-bold uppercase tracking-widest leading-relaxed px-2">Your business registration has been submitted successfully.</p>
+
+            {pinStatus === 'done' ? (
+              <div className="mb-8 p-5 bg-graphite rounded-2xl border border-[rgba(61,177,173,0.4)] text-left">
+                <p className="text-patina text-[13px] font-bold flex items-center gap-2 mb-1"><ShieldCheck size={16} /> PIN set successfully</p>
+                <p className="text-muted text-[12px] font-medium leading-relaxed">You can now log in to "My Business" using your phone number and this PIN.</p>
+              </div>
+            ) : (
+              <div className="mb-8 p-5 sm:p-6 bg-lacquer-deep rounded-2xl border border-rule text-left">
+                <p className="text-champagne text-[13px] font-black uppercase tracking-wider mb-1 flex items-center gap-2"><ShieldCheck size={16} className="text-kinpaku" /> Set Your Security PIN</p>
+                <p className="text-muted text-[12px] font-medium leading-relaxed mb-4">Create a 4-digit PIN to manage your listing later via the Login page.</p>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={(e) => { setPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }} placeholder="PIN" className="bg-raised border border-rule rounded-xl py-3 px-4 text-center text-[16px] font-bold tracking-[0.3em] text-champagne outline-none focus:border-kinpaku/50 placeholder:tracking-normal placeholder:text-faint" />
+                  <input type="password" inputMode="numeric" maxLength={4} value={confirmPin} onChange={(e) => { setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4)); setPinError(''); }} placeholder="Confirm" className="bg-raised border border-rule rounded-xl py-3 px-4 text-center text-[16px] font-bold tracking-[0.3em] text-champagne outline-none focus:border-kinpaku/50 placeholder:tracking-normal placeholder:text-faint" />
+                </div>
+                {pinError && <p className="text-warning text-[12px] font-medium mb-3">{pinError}</p>}
+                <button onClick={handleSetPin} disabled={pinStatus === 'loading'} className="w-full py-3.5 bg-graphite border border-kinpaku/50 text-kinpaku rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-kinpaku hover:text-lacquer-deep transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                  {pinStatus === 'loading' ? <><Loader2 size={15} className="animate-spin" /> Setting PIN…</> : 'Set PIN & Confirm'}
+                </button>
+              </div>
+            )}
+
+            <button onClick={() => window.location.href = '/'} className="w-full py-5 sm:py-6 bg-kinpaku text-lacquer-deep rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-[rgba(232,119,34,0.3)] hover:bg-kinpaku-rich transition-all active:scale-95">Back to Home</button>
           </div>
         </main>
       </div>
@@ -271,6 +327,17 @@ const AddBusiness = () => {
                         "Textiles & Garments", "Travel & Tourism", "Home Appliances", "Demand Services",
                         "Religious", "Organic Products", "Advertising", "Insurance", "Advocate & Legal", "Courier Services"
                       ].map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                    </select>
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-kinpaku"><ChevronDown size={16} /></div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[11px] font-black text-champagne uppercase tracking-widest pl-1">Sub-Category <span className="text-kinpaku">*</span></label>
+                  <div className="relative">
+                    <select name="subCategory" value={formData.subCategory} onChange={handleChange} className="form-input-light appearance-none pr-12" disabled={!formData.category} required>
+                      <option value="">{formData.category ? 'Select Sub-Category' : 'Choose Category First'}</option>
+                      {subCategoriesFor(formData.category).map(sub => <option key={sub} value={sub}>{sub}</option>)}
                     </select>
                     <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-kinpaku"><ChevronDown size={16} /></div>
                   </div>

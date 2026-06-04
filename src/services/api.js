@@ -166,4 +166,24 @@ export const businessService = {
     },
 };
 
+// Owner authentication. The backend has no traditional signup/login — an
+// "account" is a business owner's phone number secured by a 4-digit PIN.
+//   set-pin    : create the PIN right after registering a business
+//   verify-pin : log in to the owner dashboard (My Business)
+export const authService = {
+    // Set / create a 4-digit PIN for the owner phone (post-registration).
+    setPin: async (ownerPhone, pin) => {
+        const response = await api.post('/api/public/owner/set-pin', { ownerPhone, pin });
+        return response.data;
+    },
+
+    // Verify phone + PIN. Returns the owner's business data on success.
+    // Throws on failure: 404 {error:'no_business'} (phone has no listing) or
+    // 401/400 for an incorrect/invalid PIN.
+    verifyPin: async (ownerPhone, pin) => {
+        const response = await api.post('/api/public/owner/verify-pin', { ownerPhone, pin });
+        return response.data;
+    },
+};
+
 export default api;

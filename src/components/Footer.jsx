@@ -57,7 +57,7 @@ const Footer = () => {
 
             {/* Newsletter Strip */}
             <div className="border-b border-rule">
-                <div className="max-w-[1320px] mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6 py-8 sm:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
                     <div>
                         <p className="ks-eyebrow mb-2">Subscribe to the Vanigan newsletter</p>
                         <p className="text-[14px] text-muted font-normal">
@@ -70,7 +70,7 @@ const Footer = () => {
                             placeholder="Enter your email"
                             className="ks-input flex-1 min-w-0 md:flex-none md:w-[280px] h-[48px]!"
                         />
-                        <button className="ks-button ks-button-primary min-h-12! px-6! text-[14px]! shrink-0">
+                        <button className="ks-button ks-button-primary min-h-12! px-5! sm:px-6! text-[14px]! shrink-0">
                             Subscribe
                         </button>
                     </div>
@@ -78,20 +78,20 @@ const Footer = () => {
             </div>
 
             {/* Link Grid */}
-            <div className="max-w-[1320px] mx-auto px-6 py-14">
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-0">
+            <div className="max-w-[1320px] mx-auto px-5 sm:px-6 py-10 sm:py-14">
+                <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-0">
                     {/* Brand Column */}
                     <div className="lg:w-[28%] lg:pr-12">
                         <Link to="/" className="flex items-center gap-2 mb-5">
-                            <img src="https://vanigan.org/front/images/home/tnvslogo.png" alt="Vanigan" className="h-9 w-auto" />
+                            <img src="https://vanigan.org/front/images/home/tnvslogo.png" alt="Vanigan" className="h-8 sm:h-9 w-auto" />
                             <span
-                                className="text-[20px] text-champagne uppercase"
+                                className="text-[18px] sm:text-[20px] text-champagne uppercase"
                                 style={{ fontFamily: 'var(--ks-font-wordmark)', fontWeight: 500, letterSpacing: '0.12em' }}
                             >
                                 Vanigan<span className="text-kinpaku">.org</span>
                             </span>
                         </Link>
-                        <p className="text-[14px] text-muted leading-[1.7] mb-6 max-w-[240px]">
+                        <p className="text-[14px] text-muted leading-[1.7] mb-6 max-w-[280px]">
                             Tamil Nadu's largest network for traders and associates to list their business and connect with customers.
                         </p>
                         <div className="flex gap-3 mb-6">
@@ -124,7 +124,7 @@ const Footer = () => {
                     </div>
 
                     {/* Links */}
-                    <div className="lg:w-[72%] grid grid-cols-2 sm:grid-cols-4 gap-8">
+                    <div className="lg:w-[72%] grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-8 sm:gap-8">
                         {footerSections.map((section) => (
                             <div key={section.title}>
                                 <h4 className="ks-mono text-[12px] text-champagne mb-5">
@@ -150,7 +150,7 @@ const Footer = () => {
 
             {/* Bottom Bar */}
             <div className="border-t border-rule">
-                <div className="max-w-[1320px] mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="max-w-[1320px] mx-auto px-5 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                     <p className="text-[13px] text-faint font-normal">
                         © 2026 Vanigan.org. All rights reserved.
                     </p>

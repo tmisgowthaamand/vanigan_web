@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, Search } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -58,19 +58,19 @@ const Navbar = () => {
             className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-lacquer-deep/95 backdrop-blur-xl border-b border-rule' : 'bg-lacquer border-b border-transparent'}`}
             style={{ fontFamily: 'var(--ks-font-body)' }}
         >
-            <div className="max-w-[1320px] mx-auto px-6 h-[72px] flex items-center justify-between">
+            <div className="max-w-[1320px] mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between gap-2">
 
                 {/* Left: Logo + Nav */}
-                <div className="flex items-center gap-10">
-                    <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+                <div className="flex items-center gap-10 min-w-0">
+                    <Link to="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group">
                         <img
                             src="https://vanigan.org/front/images/home/tnvslogo.png"
                             alt="Vanigan"
-                            className="h-9 w-auto"
+                            className="h-8 sm:h-9 w-auto"
                         />
                         <span
-                            className="text-[20px] text-champagne uppercase"
-                            style={{ fontFamily: 'var(--ks-font-wordmark)', fontWeight: 500, letterSpacing: '0.12em' }}
+                            className="text-[16px] sm:text-[20px] text-champagne uppercase whitespace-nowrap"
+                            style={{ fontFamily: 'var(--ks-font-wordmark)', fontWeight: 500, letterSpacing: '0.1em' }}
                         >
                             Vanigan<span className="text-kinpaku">.org</span>
                         </span>
@@ -105,11 +105,8 @@ const Navbar = () => {
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-3 sm:gap-5 shrink-0">
                     <div className="hidden md:flex items-center gap-5">
-                        <button className="w-10 h-10 rounded-full bg-graphite border border-rule flex items-center justify-center text-muted hover:text-kinpaku hover:border-rule-strong transition-colors">
-                            <Search size={18} strokeWidth={2} />
-                        </button>
                         <Link to="/add-business" className="text-[13.5px] font-medium text-muted hover:text-kinpaku transition-colors whitespace-nowrap">
                             Add Business
                         </Link>
@@ -120,13 +117,14 @@ const Navbar = () => {
 
                     <button
                         onClick={() => navigate('/add-business')}
-                        className="ks-button ks-button-primary min-h-10! px-6! text-[13.5px]! whitespace-nowrap"
+                        className="hidden lg:inline-flex ks-button ks-button-primary min-h-10! px-6! text-[13.5px]! whitespace-nowrap"
                     >
                         Join for free
                     </button>
 
                     <button
-                        className="lg:hidden text-champagne ml-1"
+                        className="lg:hidden text-champagne"
+                        aria-label="Toggle menu"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -141,7 +139,7 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="lg:hidden bg-lacquer-deep border-t border-rule"
+                        className="lg:hidden bg-lacquer-deep border-t border-rule max-h-[calc(100vh-72px)] overflow-y-auto custom-scrollbar"
                     >
                         <div className="p-6 flex flex-col gap-5">
                             {navLinks.map((link) => (
@@ -168,7 +166,8 @@ const Navbar = () => {
                                 </div>
                             ))}
                             <div className="pt-4 mt-2 border-t border-rule flex flex-col gap-3">
-                                <Link to="/login" className="text-[16px] font-semibold text-champagne">Login</Link>
+                                <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Login</Link>
+                                <Link to="/add-business" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Add Business</Link>
                                 <button
                                     onClick={() => { navigate('/add-business'); setIsMenuOpen(false); }}
                                     className="ks-button ks-button-primary w-full"
