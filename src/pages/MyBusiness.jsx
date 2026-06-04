@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { MessageCircle, ArrowRight, ChevronLeft, Building2, MapPin, Phone, Star, ExternalLink, Loader2, ArrowUpRight, Sparkles, TrendingUp, LayoutGrid, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { businessService } from '../services/api';
+import { businessService, webAuthService, session } from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ROTATING_WORDS = ["listing", "presence", "business", "profile"];
@@ -47,53 +47,61 @@ const MyBusiness = () => {
         }
     };
 
-    // On mount, if the owner just logged in, hydrate the dashboard with their
-    // session: use the business cached at login when available, otherwise look
-    // it up by the stored phone. This skips re-entering the phone number.
+    // On mount, hydrate the dashboard from the account session. We use the
+    // business linked to the account when available, refresh it via /me, and
+    // fall back to a phone lookup only if the account has no linked business.
     useEffect(() => {
-        const sessionPhone = sessionStorage.getItem('vanigan_owner_phone');
+        const auth = session.get();
+        const sessionPhone = auth?.user?.phone || sessionStorage.getItem('vanigan_owner_phone');
         if (!sessionPhone) return;
         setOwnerPhone(sessionPhone);
         setPhoneNumber(sessionPhone);
+        setSearched(true);
 
-        const cached = sessionStorage.getItem('vanigan_owner_business');
-        if (cached) {
-            try {
-                const biz = JSON.parse(cached);
-                setResults([biz]);
-                setSearched(true);
-                return;
-            } catch {
-                // fall through to a phone lookup
-            }
+        // Show the linked business immediately if we have it cached.
+        if (auth?.business) {
+            setResults([auth.business]);
         }
 
         let active = true;
         (async () => {
-            setLoading(true);
-            setSearched(true);
-            setProgress(0);
             try {
-                const matches = await businessService.getByPhone(sessionPhone, (p) => active && setProgress(p));
-                if (active) setResults(matches);
+                // Refresh from the account so edits / links are up to date.
+                const fresh = await webAuthService.me(sessionPhone);
+                if (!active) return;
+                if (fresh?.business) {
+                    session.set(fresh);
+                    setResults([fresh.business]);
+                    return;
+                }
+                // Account exists but no linked business — try a phone lookup so
+                // an owner who registered a listing separately still sees it.
+                if (!auth?.business) {
+                    setLoading(true);
+                    setProgress(0);
+                    const matches = await businessService.getByPhone(sessionPhone, (p) => active && setProgress(p));
+                    if (active) setResults(matches);
+                }
             } catch {
-                if (active) {
-                    setError('Failed to load your business. Please try again.');
-                    setResults([]);
+                // Fall back to whatever we cached; if nothing, do a phone lookup.
+                if (active && !auth?.business) {
+                    try {
+                        setLoading(true);
+                        const matches = await businessService.getByPhone(sessionPhone, (p) => active && setProgress(p));
+                        if (active) setResults(matches);
+                    } catch {
+                        if (active) { setError('Failed to load your business. Please try again.'); setResults([]); }
+                    }
                 }
             } finally {
-                if (active) {
-                    setLoading(false);
-                    setProgress(100);
-                }
+                if (active) { setLoading(false); setProgress(100); }
             }
         })();
         return () => { active = false; };
     }, []);
 
     const handleLogout = () => {
-        sessionStorage.removeItem('vanigan_owner_phone');
-        sessionStorage.removeItem('vanigan_owner_business');
+        session.clear();
         setOwnerPhone('');
         setResults(null);
         setSearched(false);

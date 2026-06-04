@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { businessService } from '../services/api';
-import { authService } from '../services/api';
+import { authService, webAuthService, session } from '../services/api';
 import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
 import { subCategoriesFor } from '../data/subCategories';
 import {
@@ -28,11 +28,14 @@ const AddBusiness = () => {
   const [showPlatformSelector, setShowPlatformSelector] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState('');
 
-  // If the owner arrived here from Login as a "new member" (no listing for
-  // their number yet), prefill the verification phone so they can continue
-  // straight into registration.
+  // If the owner arrived here from Login/Signup, prefill the verification phone
+  // (either a bounced new-member phone, or their logged-in account phone).
   useEffect(() => {
-    const sessionPhone = sessionStorage.getItem('vanigan_owner_phone');
+    const auth = session.get();
+    const sessionPhone =
+      auth?.user?.phone ||
+      sessionStorage.getItem('vanigan_signup_phone') ||
+      sessionStorage.getItem('vanigan_owner_phone');
     if (sessionPhone && sessionPhone.length >= 10) {
       setWhatsappNumber(sessionPhone);
     }
@@ -204,11 +207,41 @@ const AddBusiness = () => {
     let alreadySet = false;
     let otherError = false;
 
-    // On a successful PIN set we log the owner in: fetch their business via
-    // verify-pin, cache it, and store the session so the navbar switches to
-    // "My Business" and the dashboard renders their profile immediately.
+    // On a successful PIN set we log the owner in. If they already have an
+    // account (web-auth), we link this business to it and refresh via /me so
+    // the dashboard + navbar reflect the account session. Otherwise we fall
+    // back to the legacy verify-pin business object.
     const establishSession = async (ownerPhone) => {
+      // Try the account model first.
+      try {
+        const me = await webAuthService.me(ownerPhone);
+        if (me?.user) {
+          let auth = me;
+          // Link the freshly registered business if the account has none.
+          if (!me.business) {
+            try {
+              const verify = await authService.verifyPin(ownerPhone, pin);
+              const bizId = verify?._id || verify?.business?._id;
+              if (bizId) {
+                await webAuthService.linkBusiness(ownerPhone, bizId).catch(() => {});
+                const refreshed = await webAuthService.me(ownerPhone).catch(() => null);
+                if (refreshed?.user) auth = refreshed;
+                else auth = { ...me, business: verify?._id ? verify : verify?.business };
+              }
+            } catch {
+              // keep the account session without a linked business
+            }
+          }
+          session.set(auth);
+          return;
+        }
+      } catch {
+        // No web-auth account — fall through to the legacy owner session.
+      }
+
+      // Legacy fallback: persist the owner business from verify-pin.
       sessionStorage.setItem('vanigan_owner_phone', ownerPhone);
+      localStorage.setItem('vanigan_owner_phone', ownerPhone);
       try {
         const res = await authService.verifyPin(ownerPhone, pin);
         const biz =
@@ -216,7 +249,11 @@ const AddBusiness = () => {
           res?.data?.business ||
           (Array.isArray(res?.businesses) ? res.businesses[0] : null) ||
           (res && res._id ? res : null);
-        if (biz) sessionStorage.setItem('vanigan_owner_business', JSON.stringify(biz));
+        if (biz) {
+          const bizStr = JSON.stringify(biz);
+          sessionStorage.setItem('vanigan_owner_business', bizStr);
+          localStorage.setItem('vanigan_owner_business', bizStr);
+        }
       } catch {
         // Session phone is enough; My Business will look the business up.
       }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { authService } from '../services/api';
+import { webAuthService, session } from '../services/api';
 import { Phone, Lock, ArrowRight, Loader2, ShieldCheck, AlertCircle } from 'lucide-react';
 
-// Owner login: phone + 4-digit PIN (the backend's auth model). On success we
-// stash the owner phone locally and send them to the My Business dashboard.
+// Account login: phone + 4-digit PIN against the web-auth API. On success the
+// backend returns { user, business }; we persist the session and route to the
+// My Business dashboard (which renders the linked business if there is one).
 const Login = () => {
     const navigate = useNavigate();
     const [phone, setPhone] = useState('');
@@ -27,31 +28,19 @@ const Login = () => {
         }
         setLoading(true);
         try {
-            const res = await authService.verifyPin(cleanPhone, pin);
-            // Persist a lightweight session for the dashboard to read.
-            sessionStorage.setItem('vanigan_owner_phone', cleanPhone);
-            // verify-pin returns the owner's business; cache it so the dashboard
-            // can render the profile instantly without a second phone lookup.
-            const biz =
-                res?.business ||
-                res?.data?.business ||
-                (Array.isArray(res?.businesses) ? res.businesses[0] : null) ||
-                (res && res._id ? res : null);
-            if (biz) sessionStorage.setItem('vanigan_owner_business', JSON.stringify(biz));
-            else sessionStorage.removeItem('vanigan_owner_business');
+            const auth = await webAuthService.login(cleanPhone, pin);
+            session.set(auth);
             navigate('/my-business');
         } catch (err) {
             const code = err?.response?.status;
             const apiErr = err?.response?.data?.error;
-            if (code === 404 || apiErr === 'no_business') {
-                // New member — this number has no listing yet. Send them straight
-                // to registration with the phone prefilled.
-                sessionStorage.setItem('vanigan_owner_phone', cleanPhone);
-                sessionStorage.removeItem('vanigan_owner_business');
-                navigate('/add-business');
-                return;
-            } else if (code === 401 || code === 400 || apiErr === 'invalid_pin') {
+            if (apiErr === 'wrong_pin' || code === 403 || code === 401 || code === 400) {
                 setError('Incorrect PIN. Please try again.');
+            } else if (apiErr === 'no_account' || apiErr === 'not_found' || code === 404) {
+                // No account for this number — send them to sign up, phone prefilled.
+                sessionStorage.setItem('vanigan_signup_phone', cleanPhone);
+                navigate('/signup');
+                return;
             } else {
                 setError('Could not sign you in. Please try again later.');
             }
@@ -69,15 +58,15 @@ const Login = () => {
                         <div className="w-14 h-14 bg-graphite rounded-2xl flex items-center justify-center text-kinpaku mx-auto mb-5 border border-kinpaku/50">
                             <ShieldCheck size={26} />
                         </div>
-                        <h1 className="text-2xl sm:text-3xl font-black text-champagne tracking-tight mb-2">Owner Login</h1>
+                        <h1 className="text-2xl sm:text-3xl font-black text-champagne tracking-tight mb-2">Welcome back</h1>
                         <p className="text-muted text-[14px] font-medium leading-relaxed">
-                            Access your dashboard with your registered phone number and PIN.
+                            Sign in to your account with your phone number and PIN.
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="space-y-2">
-                            <label className="text-[12px] font-bold text-champagne uppercase tracking-wider">Registered Phone</label>
+                            <label className="text-[12px] font-bold text-champagne uppercase tracking-wider">Phone Number</label>
                             <div className="relative">
                                 <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-faint" />
                                 <input
@@ -124,8 +113,8 @@ const Login = () => {
 
                     <div className="mt-8 pt-6 border-t border-rule text-center">
                         <p className="text-[14px] text-muted font-medium">
-                            Don't have a listing yet?{' '}
-                            <Link to="/add-business" className="text-kinpaku font-bold hover:text-kinpaku-pale transition-colors">Register your business</Link>
+                            Don't have an account?{' '}
+                            <Link to="/signup" className="text-kinpaku font-bold hover:text-kinpaku-pale transition-colors">Create one</Link>
                         </p>
                     </div>
                 </div>

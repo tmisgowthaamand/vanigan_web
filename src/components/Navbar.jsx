@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { session } from '../services/api';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [ownerPhone, setOwnerPhone] = useState('');
+    const [auth, setAuth] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,11 +16,11 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Track the owner session so the navbar shows the right actions. We poll on
-    // focus/route changes via a storage + interval combo since sessionStorage
-    // changes in the same tab don't fire the 'storage' event.
+    // Track the account session so the navbar shows the right actions. We poll
+    // on focus + a light interval since localStorage writes in the same tab
+    // don't fire the 'storage' event.
     useEffect(() => {
-        const read = () => setOwnerPhone(sessionStorage.getItem('vanigan_owner_phone') || '');
+        const read = () => setAuth(session.get());
         read();
         window.addEventListener('focus', read);
         const id = setInterval(read, 1000);
@@ -27,14 +28,13 @@ const Navbar = () => {
     }, []);
 
     const handleLogout = () => {
-        sessionStorage.removeItem('vanigan_owner_phone');
-        sessionStorage.removeItem('vanigan_owner_business');
-        setOwnerPhone('');
+        session.clear();
+        setAuth(null);
         setIsMenuOpen(false);
         navigate('/login');
     };
 
-    const isLoggedIn = !!ownerPhone;
+    const isLoggedIn = !!auth?.user;
 
     const navLinks = [
         {
@@ -151,10 +151,10 @@ const Navbar = () => {
                     </div>
 
                     <button
-                        onClick={() => navigate(isLoggedIn ? '/my-business' : '/add-business')}
+                        onClick={() => navigate(isLoggedIn ? '/my-business' : '/signup')}
                         className="hidden lg:inline-flex ks-button ks-button-primary min-h-10! px-6! text-[13.5px]! whitespace-nowrap"
                     >
-                        {isLoggedIn ? 'My Dashboard' : 'Join for free'}
+                        {isLoggedIn ? 'My Dashboard' : 'Sign up'}
                     </button>
 
                     <button
@@ -217,10 +217,10 @@ const Navbar = () => {
                                         <Link to="/login" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Login</Link>
                                         <Link to="/add-business" onClick={() => setIsMenuOpen(false)} className="text-[16px] font-semibold text-champagne">Add Business</Link>
                                         <button
-                                            onClick={() => { navigate('/add-business'); setIsMenuOpen(false); }}
+                                            onClick={() => { navigate('/signup'); setIsMenuOpen(false); }}
                                             className="ks-button ks-button-primary w-full"
                                         >
-                                            Join for free
+                                            Sign up
                                         </button>
                                     </>
                                 )}

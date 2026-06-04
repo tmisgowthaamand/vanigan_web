@@ -186,4 +186,81 @@ export const authService = {
     },
 };
 
+// Full web-account auth. Unlike the legacy phone+PIN owner model, this is a
+// real user account: signup creates a user record, login authenticates it,
+// and a user can optionally be linked to a business listing.
+//   signup        : create a user account (+ optional business metadata)
+//   login         : { phone, pin } -> { user, business }
+//   me            : fetch the current account by phone -> { user, business }
+//   checkPhone    : { exists, name } — used to detect existing accounts
+//   linkBusiness  : attach an existing business listing to the user account
+export const webAuthService = {
+    signup: async (payload) => {
+        // payload: { phone, name, district, assembly, pin, confirmPin,
+        //            bizName, bizCategory, bizSubCat }
+        const response = await api.post('/api/web-auth/signup', payload);
+        return response.data;
+    },
+
+    login: async (phone, pin) => {
+        const response = await api.post('/api/web-auth/login', { phone, pin });
+        return response.data; // { user, business }
+    },
+
+    me: async (phone) => {
+        const response = await api.get('/api/web-auth/me', { params: { phone } });
+        return response.data; // { user, business }
+    },
+
+    checkPhone: async (phone) => {
+        const response = await api.get('/api/web-auth/check-phone', { params: { phone } });
+        return response.data; // { exists, name }
+    },
+
+    linkBusiness: async (phone, businessId) => {
+        const response = await api.post('/api/web-auth/link-business', { phone, businessId });
+        return response.data;
+    },
+};
+
+// Lightweight session persistence shared by Login / Signup / Navbar /
+// MyBusiness. We persist the full auth object in localStorage (so the session
+// survives reloads, matching the account model) and mirror the owner phone +
+// business into the keys the dashboard and navbar already read.
+const AUTH_KEY = 'vanigan_auth';
+
+export const session = {
+    get: () => {
+        try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'); }
+        catch { return null; }
+    },
+
+    // Store { user, business } and mirror compatibility keys.
+    set: (auth) => {
+        if (!auth) { session.clear(); return; }
+        localStorage.setItem(AUTH_KEY, JSON.stringify(auth));
+        const phone = (auth.user?.phone || '').replace(/\D/g, '').slice(-10);
+        if (phone) {
+            localStorage.setItem('vanigan_owner_phone', phone);
+            sessionStorage.setItem('vanigan_owner_phone', phone);
+        }
+        if (auth.business) {
+            const bizStr = JSON.stringify(auth.business);
+            localStorage.setItem('vanigan_owner_business', bizStr);
+            sessionStorage.setItem('vanigan_owner_business', bizStr);
+        } else {
+            localStorage.removeItem('vanigan_owner_business');
+            sessionStorage.removeItem('vanigan_owner_business');
+        }
+    },
+
+    clear: () => {
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem('vanigan_owner_phone');
+        localStorage.removeItem('vanigan_owner_business');
+        sessionStorage.removeItem('vanigan_owner_phone');
+        sessionStorage.removeItem('vanigan_owner_business');
+    },
+};
+
 export default api;
