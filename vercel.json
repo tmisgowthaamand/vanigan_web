@@ -25,7 +25,7 @@
             "destination": "https://vanigan-app-automation-5il0.onrender.com/:path*"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/).*)",
             "destination": "/index.html"
         }
     ]

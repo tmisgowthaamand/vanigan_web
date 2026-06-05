@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { webAuthService, session } from '../services/api';
 import { districtAssemblies, districts as tnDistricts } from '../data/constituencies';
 import { Phone, Lock, User, MapPin, ArrowRight, ArrowLeft, Loader2, ShieldCheck, AlertCircle, CheckCircle, ChevronDown } from 'lucide-react';
+
+const mobileInput = (value) => {
+    const digits = (value || '').replace(/\D/g, '');
+    if (digits.length > 10 && digits.startsWith('91')) return digits.slice(-10);
+    return digits.slice(0, 10);
+};
 
 // Account signup against the web-auth API. Creates a real user record so the
 // owner can log in later, auto-fill registration, and manage their listing.
@@ -27,7 +33,7 @@ const Signup = () => {
     useEffect(() => {
         const pre = sessionStorage.getItem('vanigan_signup_phone');
         if (pre && pre.length >= 10) {
-            setPhone(pre);
+            setPhone(mobileInput(pre));
             sessionStorage.removeItem('vanigan_signup_phone');
         }
     }, []);
@@ -121,8 +127,11 @@ const Signup = () => {
                                     <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-faint" />
                                     <input
                                         type="tel"
+                                        inputMode="numeric"
+                                        maxLength={10}
+                                        pattern="[0-9]{10}"
                                         value={phone}
-                                        onChange={(e) => { setPhone(e.target.value); setError(''); }}
+                                        onChange={(e) => { setPhone(mobileInput(e.target.value)); setError(''); }}
                                         placeholder="10-digit mobile number"
                                         className="w-full bg-lacquer-deep border border-rule rounded-xl py-3.5 pl-11 pr-10 text-[15px] font-medium text-champagne outline-none focus:border-kinpaku/50 transition-all placeholder:text-faint"
                                     />

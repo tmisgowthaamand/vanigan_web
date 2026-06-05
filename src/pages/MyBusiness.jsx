@@ -427,7 +427,8 @@ const MyBusiness = () => {
                                                             View Profile <ArrowRight size={16} />
                                                         </Link>
                                                         <Link
-                                                            to={`/business/${biz._id}`}
+                                                            to={`/business/${biz._id}/edit`}
+                                                            state={{ business: biz, ownerPhone }}
                                                             className="border border-rule text-champagne px-5 py-3 rounded-xl text-[13px] font-bold hover:bg-graphite hover:border-kinpaku/30 transition-all flex items-center justify-center gap-2"
                                                         >
                                                             <ExternalLink size={14} /> Edit

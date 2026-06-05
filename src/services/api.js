@@ -157,50 +157,88 @@ export const businessService = {
         }
     },
 
-    // Robust search by phone using high-concurrency scanning
-    getByPhone: async (phone, onProgress) => {
+    // Owner-protected business update. Backend expects multipart data:
+    // ownerPhone, pin, editable business fields, optional newPin, and files.
+    updateOwnerBusiness: async (id, businessData) => {
         try {
-            // First wave: Fast-track check for first page
-            const initial = await api.get('/api/public/businesses?limit=60&page=1');
-            const total = initial.data.total || 0;
-            if (total === 0) return [];
-
-            const batchSize = 60;
-            const totalPages = Math.ceil(total / batchSize);
-            const concurrency = 20;
-            let allMatches = [];
-
-            // Check first page results immediately
-            const firstPageMatches = (initial.data.businesses || []).filter(b => {
-                return hasBusinessPhone(b, phone);
+            const response = await api.put(`/api/public/owner/update/${id}`, businessData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
-            if (firstPageMatches.length > 0) {
-                allMatches = [...firstPageMatches];
-                // If it's on the first page, we can return immediately
-                return allMatches;
+            return response.data;
+        } catch (error) {
+            console.error('Error updating business:', error);
+            throw error;
+        }
+    },
+
+    // Fast phone lookup — tries the Vercel serverless check-phone function
+    // first (runs the full DB scan server-side in ~1-2s), then falls back to
+    // the legacy concurrent client-side scan if the function is unavailable.
+    getByPhone: async (phone, onProgress, options = {}) => {
+        const { allowSlowFallback = true } = options;
+        try {
+            // ── Fast path: serverless function does the full scan in one call ──
+            if (onProgress) onProgress(10);
+            try {
+                const resp = await axios.get(
+                    `/api/check-phone?phone=${encodeURIComponent(phone)}`,
+                    { timeout: 20000, headers: { Accept: 'application/json' } }
+                );
+                const contentType = String(resp.headers?.['content-type'] || '');
+                const isJson = contentType.includes('application/json') && typeof resp.data === 'object';
+                if (!isJson) throw new Error('check-phone did not return JSON');
+
+                if (onProgress) onProgress(100);
+                if (resp.data?.exists && resp.data?.business) {
+                    return [resp.data.business];
+                }
+                if (resp.data?.exists === false) {
+                    return []; // definitive "not found"
+                }
+                // Unexpected shape — fall through to legacy scan
+            } catch {
+                // Serverless function unavailable — fall through
             }
 
+            if (!allowSlowFallback) {
+                if (onProgress) onProgress(100);
+                return [];
+            }
+
+            if (onProgress) onProgress(15);
+
+            // ── Legacy fallback: concurrent client-side scan ──
+            const initial = await api.get('/api/public/businesses?limit=100&page=1', { timeout: 15000 });
+            const total = initial.data.total || 0;
+            if (total === 0) { if (onProgress) onProgress(100); return []; }
+
+            const batchSize = 100;
+            const totalPages = Math.ceil(total / batchSize);
+            const concurrency = 30;
+
+            const firstHits = (initial.data.businesses || []).filter(b => hasBusinessPhone(b, phone));
+            if (firstHits.length > 0) { if (onProgress) onProgress(100); return firstHits; }
+
+            if (onProgress) onProgress(Math.max(15, Math.round((1 / totalPages) * 100)));
+
+            let allMatches = [];
             for (let waveStart = 2; waveStart <= totalPages; waveStart += concurrency) {
-                if (onProgress) onProgress(Math.min(Math.round((waveStart / totalPages) * 100), 100));
+                const waveEnd = Math.min(totalPages + 1, waveStart + concurrency);
+                if (onProgress) onProgress(Math.min(99, Math.round((waveStart / totalPages) * 100)));
 
                 const promises = [];
-                for (let i = waveStart; i < Math.min(totalPages + 1, waveStart + concurrency); i++) {
+                for (let i = waveStart; i < waveEnd; i++) {
                     promises.push(
                         api.get(`/api/public/businesses?limit=${batchSize}&page=${i}`, { timeout: 15000 })
                             .catch(() => ({ data: { businesses: [] } }))
                     );
                 }
-
                 const results = await Promise.all(promises);
                 for (const res of results) {
-                    const list = res.data.businesses || [];
-                    const matches = list.filter(b => {
-                        return hasBusinessPhone(b, phone);
-                    });
-                    if (matches.length > 0) allMatches = [...allMatches, ...matches];
+                    const hits = (res.data.businesses || []).filter(b => hasBusinessPhone(b, phone));
+                    if (hits.length > 0) allMatches = [...allMatches, ...hits];
                 }
-
-                if (allMatches.length > 0) break; // Return early once found
+                if (allMatches.length > 0) break;
             }
 
             if (onProgress) onProgress(100);
