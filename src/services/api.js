@@ -161,7 +161,7 @@ export const businessService = {
     // ownerPhone, pin, editable business fields, optional newPin, and files.
     updateOwnerBusiness: async (id, businessData) => {
         try {
-            const response = await api.put(`/api/public/owner/update/${id}`, businessData, {
+            const response = await api.put(`/public/owner/update/${id}`, businessData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             return response.data;
@@ -303,7 +303,7 @@ export const businessService = {
 export const authService = {
     // Set / create a 4-digit PIN for the owner phone (post-registration).
     setPin: async (ownerPhone, pin) => {
-        const response = await api.post('/api/public/owner/set-pin', { ownerPhone, pin });
+        const response = await api.post('/public/owner/set-pin', { ownerPhone, pin });
         return response.data;
     },
 
@@ -311,7 +311,7 @@ export const authService = {
     // Throws on failure: 404 {error:'no_business'} (phone has no listing) or
     // 401/400 for an incorrect/invalid PIN.
     verifyPin: async (ownerPhone, pin) => {
-        const response = await api.post('/api/public/owner/verify-pin', { ownerPhone, pin });
+        const response = await api.post('/public/owner/verify-pin', { ownerPhone, pin });
         return response.data;
     },
 };
