@@ -83,7 +83,7 @@ const Footer = () => {
                     {/* Brand Column */}
                     <div className="lg:w-[28%] lg:pr-12">
                         <Link to="/" className="flex items-center gap-2 mb-5">
-                            <img src="https://vanigan.org/front/images/home/tnvslogo.png" alt="Vanigan" className="h-8 sm:h-9 w-auto" />
+                            <img src="/tnvslogo.png" alt="Vanigan" className="h-10 sm:h-11 w-auto" />
                             <span
                                 className="text-[18px] sm:text-[20px] text-champagne uppercase"
                                 style={{ fontFamily: 'var(--ks-font-wordmark)', fontWeight: 500, letterSpacing: '0.12em' }}

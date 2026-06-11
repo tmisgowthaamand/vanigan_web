@@ -86,9 +86,9 @@ const Navbar = () => {
                 <div className="flex items-center gap-10 min-w-0">
                     <Link to="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group">
                         <img
-                            src="https://vanigan.org/front/images/home/tnvslogo.png"
+                            src="/tnvslogo.png"
                             alt="Vanigan"
-                            className="h-8 sm:h-9 w-auto"
+                            className="h-10 sm:h-11 w-auto"
                         />
                         <span
                             className="text-[16px] sm:text-[20px] text-champagne uppercase whitespace-nowrap"
